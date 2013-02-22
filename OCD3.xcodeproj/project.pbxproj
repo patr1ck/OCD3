@@ -1,0 +1,537 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		CDCA60F816D804DE004A0E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F716D804DE004A0E6E /* UIKit.framework */; };
+		CDCA60FA16D804DE004A0E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F916D804DE004A0E6E /* Foundation.framework */; };
+		CDCA60FC16D804DE004A0E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */; };
+		CDCA610216D804DE004A0E6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CDCA610016D804DE004A0E6E /* InfoPlist.strings */; };
+		CDCA610416D804DF004A0E6E /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA610316D804DF004A0E6E /* main.m */; };
+		CDCA610816D804DF004A0E6E /* OCDAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA610716D804DF004A0E6E /* OCDAppDelegate.m */; };
+		CDCA610A16D804DF004A0E6E /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = CDCA610916D804DF004A0E6E /* Default.png */; };
+		CDCA610C16D804DF004A0E6E /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDCA610B16D804DF004A0E6E /* Default@2x.png */; };
+		CDCA610E16D804DF004A0E6E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDCA610D16D804DF004A0E6E /* Default-568h@2x.png */; };
+		CDCA611116D804DF004A0E6E /* OCDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA611016D804DF004A0E6E /* OCDViewController.m */; };
+		CDCA611416D804DF004A0E6E /* OCDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDCA611216D804DF004A0E6E /* OCDViewController.xib */; };
+		CDCA611C16D804DF004A0E6E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA611B16D804DF004A0E6E /* SenTestingKit.framework */; };
+		CDCA611D16D804DF004A0E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F716D804DE004A0E6E /* UIKit.framework */; };
+		CDCA611E16D804DF004A0E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F916D804DE004A0E6E /* Foundation.framework */; };
+		CDCA612616D804DF004A0E6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CDCA612416D804DF004A0E6E /* InfoPlist.strings */; };
+		CDCA612916D804DF004A0E6E /* OCD3Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA612816D804DF004A0E6E /* OCD3Tests.m */; };
+		CDCA614016D80556004A0E6E /* OCDView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA613A16D80556004A0E6E /* OCDView.m */; };
+		CDCA614116D80556004A0E6E /* OCDSelection.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA613C16D80556004A0E6E /* OCDSelection.m */; };
+		CDCA614216D80556004A0E6E /* OCDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA613E16D80556004A0E6E /* OCDNode.m */; };
+		CDCA614316D80556004A0E6E /* OCDScale.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA613F16D80556004A0E6E /* OCDScale.m */; };
+		CDCA614616D806ED004A0E6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA614516D806ED004A0E6E /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		CDCA611F16D804DF004A0E6E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CDCA60EC16D804DE004A0E6E /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = CDCA60F316D804DE004A0E6E;
+			remoteInfo = OCD3;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		CDCA60F416D804DE004A0E6E /* OCD3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCD3.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDCA60F716D804DE004A0E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		CDCA60F916D804DE004A0E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		CDCA60FF16D804DE004A0E6E /* OCD3-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCD3-Info.plist"; sourceTree = "<group>"; };
+		CDCA610116D804DE004A0E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CDCA610316D804DF004A0E6E /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		CDCA610516D804DF004A0E6E /* OCD3-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "OCD3-Prefix.pch"; sourceTree = "<group>"; };
+		CDCA610616D804DF004A0E6E /* OCDAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCDAppDelegate.h; sourceTree = "<group>"; };
+		CDCA610716D804DF004A0E6E /* OCDAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCDAppDelegate.m; sourceTree = "<group>"; };
+		CDCA610916D804DF004A0E6E /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		CDCA610B16D804DF004A0E6E /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		CDCA610D16D804DF004A0E6E /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		CDCA610F16D804DF004A0E6E /* OCDViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCDViewController.h; sourceTree = "<group>"; };
+		CDCA611016D804DF004A0E6E /* OCDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCDViewController.m; sourceTree = "<group>"; };
+		CDCA611316D804DF004A0E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/OCDViewController.xib; sourceTree = "<group>"; };
+		CDCA611A16D804DF004A0E6E /* OCD3Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCD3Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDCA611B16D804DF004A0E6E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		CDCA612316D804DF004A0E6E /* OCD3Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCD3Tests-Info.plist"; sourceTree = "<group>"; };
+		CDCA612516D804DF004A0E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		CDCA612716D804DF004A0E6E /* OCD3Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCD3Tests.h; sourceTree = "<group>"; };
+		CDCA612816D804DF004A0E6E /* OCD3Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCD3Tests.m; sourceTree = "<group>"; };
+		CDCA613616D8054D004A0E6E /* OCDView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDView.h; sourceTree = "<group>"; };
+		CDCA613716D8054D004A0E6E /* OCDSelection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDSelection.h; sourceTree = "<group>"; };
+		CDCA613816D8054D004A0E6E /* OCDNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDNode.h; sourceTree = "<group>"; };
+		CDCA613916D8054D004A0E6E /* OCDScale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDScale.h; sourceTree = "<group>"; };
+		CDCA613A16D80556004A0E6E /* OCDView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDView.m; sourceTree = "<group>"; };
+		CDCA613B16D80556004A0E6E /* OCDSelection_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDSelection_Private.h; sourceTree = "<group>"; };
+		CDCA613C16D80556004A0E6E /* OCDSelection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDSelection.m; sourceTree = "<group>"; };
+		CDCA613D16D80556004A0E6E /* OCDNode_Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDNode_Private.h; sourceTree = "<group>"; };
+		CDCA613E16D80556004A0E6E /* OCDNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDNode.m; sourceTree = "<group>"; };
+		CDCA613F16D80556004A0E6E /* OCDScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDScale.m; sourceTree = "<group>"; };
+		CDCA614416D8062D004A0E6E /* OCD3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCD3.h; sourceTree = "<group>"; };
+		CDCA614516D806ED004A0E6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		CDCA60F116D804DE004A0E6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA614616D806ED004A0E6E /* QuartzCore.framework in Frameworks */,
+				CDCA60F816D804DE004A0E6E /* UIKit.framework in Frameworks */,
+				CDCA60FA16D804DE004A0E6E /* Foundation.framework in Frameworks */,
+				CDCA60FC16D804DE004A0E6E /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDCA611616D804DF004A0E6E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA611C16D804DF004A0E6E /* SenTestingKit.framework in Frameworks */,
+				CDCA611D16D804DF004A0E6E /* UIKit.framework in Frameworks */,
+				CDCA611E16D804DF004A0E6E /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		CDCA60EB16D804DE004A0E6E = {
+			isa = PBXGroup;
+			children = (
+				CDCA60FD16D804DE004A0E6E /* OCD3 */,
+				CDCA612116D804DF004A0E6E /* OCD3Tests */,
+				CDCA60F616D804DE004A0E6E /* Frameworks */,
+				CDCA60F516D804DE004A0E6E /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		CDCA60F516D804DE004A0E6E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA60F416D804DE004A0E6E /* OCD3.app */,
+				CDCA611A16D804DF004A0E6E /* OCD3Tests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		CDCA60F616D804DE004A0E6E /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA614516D806ED004A0E6E /* QuartzCore.framework */,
+				CDCA60F716D804DE004A0E6E /* UIKit.framework */,
+				CDCA60F916D804DE004A0E6E /* Foundation.framework */,
+				CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */,
+				CDCA611B16D804DF004A0E6E /* SenTestingKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		CDCA60FD16D804DE004A0E6E /* OCD3 */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA613316D80523004A0E6E /* OCD3 Library */,
+				CDCA613216D8051B004A0E6E /* Demo App */,
+			);
+			path = OCD3;
+			sourceTree = "<group>";
+		};
+		CDCA60FE16D804DE004A0E6E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA60FF16D804DE004A0E6E /* OCD3-Info.plist */,
+				CDCA610016D804DE004A0E6E /* InfoPlist.strings */,
+				CDCA610316D804DF004A0E6E /* main.m */,
+				CDCA610516D804DF004A0E6E /* OCD3-Prefix.pch */,
+				CDCA610916D804DF004A0E6E /* Default.png */,
+				CDCA610B16D804DF004A0E6E /* Default@2x.png */,
+				CDCA610D16D804DF004A0E6E /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CDCA612116D804DF004A0E6E /* OCD3Tests */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA612716D804DF004A0E6E /* OCD3Tests.h */,
+				CDCA612816D804DF004A0E6E /* OCD3Tests.m */,
+				CDCA612216D804DF004A0E6E /* Supporting Files */,
+			);
+			path = OCD3Tests;
+			sourceTree = "<group>";
+		};
+		CDCA612216D804DF004A0E6E /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA612316D804DF004A0E6E /* OCD3Tests-Info.plist */,
+				CDCA612416D804DF004A0E6E /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		CDCA613216D8051B004A0E6E /* Demo App */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA610616D804DF004A0E6E /* OCDAppDelegate.h */,
+				CDCA610716D804DF004A0E6E /* OCDAppDelegate.m */,
+				CDCA610F16D804DF004A0E6E /* OCDViewController.h */,
+				CDCA611016D804DF004A0E6E /* OCDViewController.m */,
+				CDCA611216D804DF004A0E6E /* OCDViewController.xib */,
+				CDCA60FE16D804DE004A0E6E /* Supporting Files */,
+			);
+			name = "Demo App";
+			sourceTree = "<group>";
+		};
+		CDCA613316D80523004A0E6E /* OCD3 Library */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA614416D8062D004A0E6E /* OCD3.h */,
+				CDCA613416D80532004A0E6E /* Headers */,
+				CDCA613516D8053A004A0E6E /* Private */,
+			);
+			name = "OCD3 Library";
+			sourceTree = "<group>";
+		};
+		CDCA613416D80532004A0E6E /* Headers */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA613616D8054D004A0E6E /* OCDView.h */,
+				CDCA613716D8054D004A0E6E /* OCDSelection.h */,
+				CDCA613816D8054D004A0E6E /* OCDNode.h */,
+				CDCA613916D8054D004A0E6E /* OCDScale.h */,
+			);
+			name = Headers;
+			sourceTree = "<group>";
+		};
+		CDCA613516D8053A004A0E6E /* Private */ = {
+			isa = PBXGroup;
+			children = (
+				CDCA613A16D80556004A0E6E /* OCDView.m */,
+				CDCA613B16D80556004A0E6E /* OCDSelection_Private.h */,
+				CDCA613C16D80556004A0E6E /* OCDSelection.m */,
+				CDCA613D16D80556004A0E6E /* OCDNode_Private.h */,
+				CDCA613E16D80556004A0E6E /* OCDNode.m */,
+				CDCA613F16D80556004A0E6E /* OCDScale.m */,
+			);
+			name = Private;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		CDCA60F316D804DE004A0E6E /* OCD3 */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDCA612C16D804DF004A0E6E /* Build configuration list for PBXNativeTarget "OCD3" */;
+			buildPhases = (
+				CDCA60F016D804DE004A0E6E /* Sources */,
+				CDCA60F116D804DE004A0E6E /* Frameworks */,
+				CDCA60F216D804DE004A0E6E /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = OCD3;
+			productName = OCD3;
+			productReference = CDCA60F416D804DE004A0E6E /* OCD3.app */;
+			productType = "com.apple.product-type.application";
+		};
+		CDCA611916D804DF004A0E6E /* OCD3Tests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = CDCA612F16D804DF004A0E6E /* Build configuration list for PBXNativeTarget "OCD3Tests" */;
+			buildPhases = (
+				CDCA611516D804DF004A0E6E /* Sources */,
+				CDCA611616D804DF004A0E6E /* Frameworks */,
+				CDCA611716D804DF004A0E6E /* Resources */,
+				CDCA611816D804DF004A0E6E /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				CDCA612016D804DF004A0E6E /* PBXTargetDependency */,
+			);
+			name = OCD3Tests;
+			productName = OCD3Tests;
+			productReference = CDCA611A16D804DF004A0E6E /* OCD3Tests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		CDCA60EC16D804DE004A0E6E /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = OCD;
+				LastUpgradeCheck = 0460;
+				ORGANIZATIONNAME = "Patrick B. Gibson";
+			};
+			buildConfigurationList = CDCA60EF16D804DE004A0E6E /* Build configuration list for PBXProject "OCD3" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = CDCA60EB16D804DE004A0E6E;
+			productRefGroup = CDCA60F516D804DE004A0E6E /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				CDCA60F316D804DE004A0E6E /* OCD3 */,
+				CDCA611916D804DF004A0E6E /* OCD3Tests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		CDCA60F216D804DE004A0E6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA610216D804DE004A0E6E /* InfoPlist.strings in Resources */,
+				CDCA610A16D804DF004A0E6E /* Default.png in Resources */,
+				CDCA610C16D804DF004A0E6E /* Default@2x.png in Resources */,
+				CDCA610E16D804DF004A0E6E /* Default-568h@2x.png in Resources */,
+				CDCA611416D804DF004A0E6E /* OCDViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDCA611716D804DF004A0E6E /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA612616D804DF004A0E6E /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CDCA611816D804DF004A0E6E /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		CDCA60F016D804DE004A0E6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA610416D804DF004A0E6E /* main.m in Sources */,
+				CDCA610816D804DF004A0E6E /* OCDAppDelegate.m in Sources */,
+				CDCA611116D804DF004A0E6E /* OCDViewController.m in Sources */,
+				CDCA614016D80556004A0E6E /* OCDView.m in Sources */,
+				CDCA614116D80556004A0E6E /* OCDSelection.m in Sources */,
+				CDCA614216D80556004A0E6E /* OCDNode.m in Sources */,
+				CDCA614316D80556004A0E6E /* OCDScale.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CDCA611516D804DF004A0E6E /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CDCA612916D804DF004A0E6E /* OCD3Tests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		CDCA612016D804DF004A0E6E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = CDCA60F316D804DE004A0E6E /* OCD3 */;
+			targetProxy = CDCA611F16D804DF004A0E6E /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		CDCA610016D804DE004A0E6E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CDCA610116D804DE004A0E6E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		CDCA611216D804DF004A0E6E /* OCDViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CDCA611316D804DF004A0E6E /* en */,
+			);
+			name = OCDViewController.xib;
+			sourceTree = "<group>";
+		};
+		CDCA612416D804DF004A0E6E /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CDCA612516D804DF004A0E6E /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		CDCA612A16D804DF004A0E6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		CDCA612B16D804DF004A0E6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		CDCA612D16D804DF004A0E6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OCD3/OCD3-Prefix.pch";
+				INFOPLIST_FILE = "OCD3/OCD3-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		CDCA612E16D804DF004A0E6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OCD3/OCD3-Prefix.pch";
+				INFOPLIST_FILE = "OCD3/OCD3-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		CDCA613016D804DF004A0E6E /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OCD3.app/OCD3";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OCD3/OCD3-Prefix.pch";
+				INFOPLIST_FILE = "OCD3Tests/OCD3Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		CDCA613116D804DF004A0E6E /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/OCD3.app/OCD3";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "OCD3/OCD3-Prefix.pch";
+				INFOPLIST_FILE = "OCD3Tests/OCD3Tests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		CDCA60EF16D804DE004A0E6E /* Build configuration list for PBXProject "OCD3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDCA612A16D804DF004A0E6E /* Debug */,
+				CDCA612B16D804DF004A0E6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDCA612C16D804DF004A0E6E /* Build configuration list for PBXNativeTarget "OCD3" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDCA612D16D804DF004A0E6E /* Debug */,
+				CDCA612E16D804DF004A0E6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		CDCA612F16D804DF004A0E6E /* Build configuration list for PBXNativeTarget "OCD3Tests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				CDCA613016D804DF004A0E6E /* Debug */,
+				CDCA613116D804DF004A0E6E /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = CDCA60EC16D804DE004A0E6E /* Project object */;
+}
