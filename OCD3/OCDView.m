@@ -66,4 +66,10 @@
     [self.nodes addObject:node];
 }
 
+- (void)remove:(OCDNode *)node;
+{
+    [node.shapeLayer removeFromSuperlayer];
+    [self.nodes removeObject:node];
+}
+
 @end

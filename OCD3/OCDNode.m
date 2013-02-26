@@ -66,18 +66,31 @@
 {    
     NSArray *array = [path componentsSeparatedByString:@"."];
     if ([[array objectAtIndex:0] isEqualToString:@"shape"]) {
+        CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"path"];
+        [animation setFromValue:(id)self.shapeLayer.path];
+        CGPathRef endPath = nil;
+        
         if ([[array objectAtIndex:1] isEqualToString:@"r"]) {
             float radius = [value floatValue];
             self.shapeLayer.path = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, radius, radius), NULL);
+            endPath = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, radius, radius), NULL);
         } else if ([[array objectAtIndex:1] isEqualToString:@"width"]) {
             float width = [value floatValue];
             self.shapeLayer.path = CGPathCreateWithRect(CGRectMake(0, 0, width, _previousHeight), NULL);
+            endPath = CGPathCreateWithRect(CGRectMake(0, 0, width, _previousHeight), NULL);
             _previousWidth = width;
         } else if ([[array objectAtIndex:1] isEqualToString:@"height"]) {
             float height = [value floatValue];
             self.shapeLayer.path = CGPathCreateWithRect(CGRectMake(0, 0, _previousWidth, height), NULL);
+            endPath = CGPathCreateWithRect(CGRectMake(0, 0, _previousWidth, height), NULL);
             _previousHeight = height;
         }
+        [animation setToValue:(__bridge id)endPath];
+        animation.duration = .5f;
+        [animation setRemovedOnCompletion:NO];
+        [animation setFillMode:kCAFillModeForwards]; ;
+        
+        [self.shapeLayer addAnimation:animation forKey:@"wat"];
     } else {
         [self.shapeLayer setValue:value forKeyPath:path];
     }

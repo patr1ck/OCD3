@@ -26,8 +26,7 @@
 @interface OCDSelection ()
 @property (nonatomic, strong) NSArray *enteringDataArray;
 @property (nonatomic, strong) NSArray *updatedDataArray;
-@property (nonatomic, strong) NSArray *exitingDataArray;
-@property (nonatomic, strong) OCDSelectionEnterBlock enterBlock;
+@property (nonatomic, strong) NSMutableArray *exitingNodeArray;
 @property (nonatomic, strong) OCDView *view;
 @end
 
@@ -59,6 +58,10 @@
     
     // Find our updated set
     for (int i = 0; i < previousDataCount; i++) {
+        if (i >= newDataCount) {
+            break;
+        }
+        
         id oldData = [self.dataArray objectAtIndex:i];
         id newData = [dataArray objectAtIndex:i];
         if (![oldData isEqual:newData]) {
@@ -67,8 +70,9 @@
     }
     
     // Find our exit set
+    // Not sure if this is useful.
     if (newDataCount < previousDataCount) {
-        for (int i = (newDataCount - 1); i < previousDataCount; i++) {
+        for (int i = newDataCount; i < previousDataCount; i++) {
             id oldDeletedData = [self.dataArray objectAtIndex:i];
             [dataToRemove addObject:oldDeletedData];
         }
@@ -76,22 +80,33 @@
 
     self.enteringDataArray = dataToAdd;
     self.updatedDataArray = dataToUpdate;
-    self.exitingDataArray = dataToRemove;
+//    self.exitingDataArray = dataToRemove;
     self.dataArray = dataArray;
     
-//    [CATransaction begin];
     if (self.selectedNodes) {
-        for (int i = 0; i < previousDataCount; i++) {
+        for (int i = 0; i < newDataCount; i++) {
             OCDNode *node = [self.selectedNodes objectAtIndex:i];
             [node setData:[self.dataArray objectAtIndex:i]];
         }
     }
-//    [CATransaction commit];
+    
+    self.exitingNodeArray = [NSMutableArray arrayWithCapacity:10];
+    if ([dataToRemove count] > 0) {
+        
+        NSMutableArray *newSelected = [self.selectedNodes mutableCopy];
+        for (int i = 0; i < [dataToRemove count]; i++) {
+            int indexToRemove = [self.selectedNodes count] - [dataToRemove count];
+            OCDNode *nodeToRemoveFromSelection = [newSelected objectAtIndex:indexToRemove];
+            [self.exitingNodeArray addObject:nodeToRemoveFromSelection];
+            [newSelected removeObjectAtIndex:indexToRemove];
+        }
+        self.selectedNodes = newSelected;
+    }
     
     return self;
 }
 
-- (OCDSelection *)setEnter:(OCDSelectionEnterBlock)enterBlock;
+- (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
 {
     NSMutableArray *selectedNodes = [NSMutableArray arrayWithCapacity:10];
     
@@ -110,12 +125,11 @@
     return self;
 }
 
-- (OCDSelection *)setExit:(OCDSelectionEnterBlock)exitBlock;
-{    
-    for (NSValue *value in self.exitingDataArray) {
+- (OCDSelection *)setExit:(OCDSelectionBlock)exitBlock;
+{
+    for (OCDNode *node in self.exitingNodeArray) {
         [CATransaction begin];
-#warning how do we get this node?
-//        exitBlock(node);
+        exitBlock(node);
         [CATransaction commit];
     }
     

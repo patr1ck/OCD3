@@ -66,7 +66,7 @@
     [bars setValue:xScale forAttributePath:@"shape.width"];
     [bars setValue:@20 forAttributePath:@"shape.height"];
     
-    [self performSelector:@selector(drawBarChartStep2) withObject:nil afterDelay:1];
+    [self performSelector:@selector(drawBarChartStep2) withObject:nil afterDelay:2];
 }
 
 - (void)drawBarChartStep2
@@ -75,6 +75,19 @@
 
     NSArray *data =  @[@8, @15, @16, @23, @42, @32];
     [[self.OCDView selectAllWithIdentifier:@"bar"] setData:data];
+    
+    [self performSelector:@selector(drawBarChartStep3) withObject:nil afterDelay:2];
 }
+
+- (void)drawBarChartStep3
+{
+    NSLog(@"Firing step 3");
+    
+    NSArray *data =  @[@8, @15, @16, @2];
+    [[[self.OCDView selectAllWithIdentifier:@"bar"] setData:data] setExit:^(OCDNode *node) {
+        [self.OCDView remove:node];
+    }];
+}
+
 
 @end

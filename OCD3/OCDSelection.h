@@ -11,7 +11,7 @@
 @class OCDView;
 @class OCDNode;
 
-typedef void (^OCDSelectionEnterBlock)(OCDNode *node);
+typedef void (^OCDSelectionBlock)(OCDNode *node);
 typedef NSValue * (^OCDSelectionValueBlock)(NSValue *data, NSUInteger index);
 
 @interface OCDNodeData : NSObject
@@ -23,7 +23,8 @@ typedef NSValue * (^OCDSelectionValueBlock)(NSValue *data, NSUInteger index);
 @property (nonatomic, readonly) NSString *identifier;
 
 - (OCDSelection *)setData:(NSArray *)dataArray;
-- (OCDSelection *)setEnter:(OCDSelectionEnterBlock)enterBlock;
+- (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
+- (OCDSelection *)setExit:(OCDSelectionBlock)exitBlock;
 - (OCDSelection *)setValue:(id)value forAttributePath:(NSString *)path;
 
 @end

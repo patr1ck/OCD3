@@ -14,5 +14,7 @@
 
 - (OCDSelection *)selectAllWithIdentifier:(NSString *)identifier;
 - (void)append:(OCDNode *)node;
+- (void)remove:(OCDNode *)node;
+
 
 @end
