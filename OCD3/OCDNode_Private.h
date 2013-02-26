@@ -14,8 +14,10 @@
 @property (nonatomic, strong) CAShapeLayer *shapeLayer;
 @property (nonatomic, weak) OCDView *view;
 @property (nonatomic, strong) NSValue *data;
+@property (nonatomic, assign) NSUInteger index;
 
 - (void)instantiateLayer;
-- (void)setValue:(id)value forAttributePath:(NSString *)path;
+- (void)updateAttributes;
+- (void)saveValue:(id)value forAttributePath:(NSString *)path;
 
 @end

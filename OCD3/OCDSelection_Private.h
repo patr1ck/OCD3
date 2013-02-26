@@ -11,5 +11,6 @@
 
 @property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, strong) NSArray *selectedNodes;
+@property (nonatomic, strong) NSArray *dataArray;
 
 @end

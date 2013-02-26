@@ -8,12 +8,14 @@
 #import <QuartzCore/QuartzCore.h>
 
 #import "OCDView.h"
+#import "OCDView_Private.h"
+
 #import "OCDNode.h"
 #import "OCDSelection_Private.h"
 #import "OCDNode_Private.h"
 
 @interface OCDView ()
-@property (nonatomic, strong) NSMutableArray *nodes;
+
 @end
 
 @implementation OCDView
@@ -35,14 +37,17 @@
     
     // Search view for existing nodes with given identifier.
     NSMutableArray *existingNodes = [[NSMutableArray alloc] initWithCapacity:10];
+    NSMutableArray *existingData = [[NSMutableArray alloc] initWithCapacity:10];
     for (OCDNode *node in self.nodes) {
         if ([node.identifier isEqualToString:identifier]) {
             [existingNodes addObject:node];
+            [existingData addObject:node.data];
         }
     }
     
     // Attache the selection to the nodes.
     selection.selectedNodes = existingNodes;
+    selection.dataArray = existingData;
     
     return selection;
 }
@@ -58,6 +63,7 @@
     
     // Add the sublayer
     [self.layer addSublayer:node.shapeLayer];
+    [self.nodes addObject:node];
 }
 
 @end

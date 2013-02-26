@@ -75,6 +75,7 @@
 		CDCA613F16D80556004A0E6E /* OCDScale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDScale.m; sourceTree = "<group>"; };
 		CDCA614416D8062D004A0E6E /* OCD3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCD3.h; sourceTree = "<group>"; };
 		CDCA614516D806ED004A0E6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CDCA614716D84558004A0E6E /* OCDView_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCDView_Private.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +214,7 @@
 			isa = PBXGroup;
 			children = (
 				CDCA613A16D80556004A0E6E /* OCDView.m */,
+				CDCA614716D84558004A0E6E /* OCDView_Private.h */,
 				CDCA613B16D80556004A0E6E /* OCDSelection_Private.h */,
 				CDCA613C16D80556004A0E6E /* OCDSelection.m */,
 				CDCA613D16D80556004A0E6E /* OCDNode_Private.h */,

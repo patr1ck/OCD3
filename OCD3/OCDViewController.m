@@ -50,9 +50,9 @@
     NSNumber *max = [[data sortedArrayUsingDescriptors:@[sorter]] objectAtIndex:0];
     
     OCDScale *xScale = [OCDScale linearScaleWithDomainStart:@0
-                                                domainEnd:max
-                                               rangeStart:0
-                                                 rangeEnd:300];
+                                                  domainEnd:max
+                                                 rangeStart:0
+                                                   rangeEnd:300];
     
     OCDSelection *bars = [[[self.OCDView selectAllWithIdentifier:@"bar"]
                           setData:data]
@@ -65,7 +65,16 @@
     } forAttributePath:@"position.y"];
     [bars setValue:xScale forAttributePath:@"shape.width"];
     [bars setValue:@20 forAttributePath:@"shape.height"];
-    //    [bars setValue:(id)[UIColor whiteColor].CGColor forAttributePath:@"strokeColor"];
+    
+    [self performSelector:@selector(drawBarChartStep2) withObject:nil afterDelay:1];
+}
+
+- (void)drawBarChartStep2
+{
+    NSLog(@"Firing step 2");
+
+    NSArray *data =  @[@8, @15, @16, @23, @42, @32];
+    [[self.OCDView selectAllWithIdentifier:@"bar"] setData:data];
 }
 
 @end
