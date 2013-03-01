@@ -24,9 +24,16 @@
 @end
 
 @interface OCDSelection ()
+// Old
 @property (nonatomic, strong) NSArray *enteringDataArray;
 @property (nonatomic, strong) NSArray *updatedDataArray;
 @property (nonatomic, strong) NSMutableArray *exitingNodeArray;
+
+// New
+@property (nonatomic, strong) NSMutableArray *enteringNodeArray;
+@property (nonatomic, strong) NSMutableArray *updatedNodeArray;
+
+
 @property (nonatomic, strong) OCDView *view;
 @end
 
@@ -107,33 +114,99 @@
     return self;
 }
 
-- (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
+- (OCDSelection *)setData:(NSArray *)dataArray usingKey:(id)key;
 {
-    NSMutableArray *selectedNodes = [NSMutableArray arrayWithCapacity:10];
+    self.enteringNodeArray = [NSMutableArray arrayWithCapacity:10];
+    self.updatedNodeArray = [NSMutableArray arrayWithCapacity:10];
+    self.exitingNodeArray = [NSMutableArray arrayWithCapacity:10];
+    
+    // Shortcut for a new selection
+    if ([self.dataArray count] == 0) {
+        
+        int index = 0;
+        for (id value in dataArray) {
+            OCDNode *node = [OCDNode nodeWithIdentifier:self.identifier];
+            node.data = value;
+            node.index = index++;
+            node.key = key;
+            [self.enteringNodeArray addObject:node];
+        }
+        
+        self.dataArray = dataArray;
+        return self;
+    }
+    
+    // We already have data, so we want to do a data join.
     
     int index = 0;
-    for (NSValue *value in self.enteringDataArray) {
-        OCDNode *node = [OCDNode nodeWithIdentifier:self.identifier];
-        node.view = self.view;
-        node.data = value;
-        [selectedNodes addObject:node];
+    if (key) {
+        for (id data in dataArray) {
+            id lookupValue = [data objectForKey:key];
+            BOOL updated = NO;
+            
+            NSLog(@"Looking up by value %@", lookupValue);
+            
+            // See if we have an existing node for this key/value. If we do, updated it.
+            for (OCDNode *existingNode in self.selectedNodes) {
+                NSLog(@"Existing value: %@", [existingNode.data objectForKey:key]);
+                if ([[existingNode.data objectForKey:key] isEqual:lookupValue]) {
+                    existingNode.data = data;
+                    existingNode.index = index;
+                    [self.updatedNodeArray addObject:existingNode];
+                    updated = YES;
+                    NSLog(@"updating object with data: %@", data);
+                    break;
+                }
+            }
+            
+            // If we don't have an existing node, create a new one.
+            if (!updated) {
+                OCDNode *node = [OCDNode nodeWithIdentifier:self.identifier];
+                node.data = data;
+                node.index = index;
+                node.key = key;
+                [self.enteringNodeArray addObject:node];
+                NSLog(@"creating new object with data: %@", data);
+            }
+            
+            index++;
+        } // end looping through dataArray
         
+        // Remove nodes
+        for (OCDNode *oldNode in self.selectedNodes) {
+            if ([self.updatedNodeArray containsObject:oldNode] || [self.enteringNodeArray containsObject:oldNode]) {
+                continue;
+            }
+            [self.exitingNodeArray addObject:oldNode];
+        }
+        
+        self.selectedNodes = [self.updatedNodeArray arrayByAddingObjectsFromArray:self.enteringNodeArray];
+        
+        self.dataArray = dataArray;
+    } // End if key
+    
+    return self;
+}
+
+
+- (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
+{
+    for (OCDNode *node in self.enteringNodeArray) {        
         [CATransaction begin];
         enterBlock(node); // the block is responsible for appending it to the view.
         [CATransaction commit];
         
-        node.index = index;
         [node updateAttributes];
-        index++;
     }
-    
-    [selectedNodes addObjectsFromArray:self.selectedNodes];
-    self.selectedNodes = selectedNodes;
     return self;
 }
 
-- (OCDSelection *)transition:(OCDSelectionAnimationBlock)animationBlock withDuration:(NSUInteger)duration;
+- (OCDSelection *)setTransition:(OCDSelectionAnimationBlock)animationBlock withDuration:(NSUInteger)duration;
 {
+    for (OCDNode *node in self.updatedNodeArray) {
+        [node updateAttributes];
+    }
+    
     
 //    for (OCDNode *node in self.updatedNodeArray) {
 //        [CATransaction begin];

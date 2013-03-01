@@ -25,8 +25,9 @@ typedef NSValue * (^OCDSelectionAnimationBlock)(CABasicAnimation *animation);
 @property (nonatomic, readonly) NSString *identifier;
 
 - (OCDSelection *)setData:(NSArray *)dataArray;
+- (OCDSelection *)setData:(NSArray *)dataArray usingKey:(id)key;
 - (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
+- (OCDSelection *)setTransition:(OCDSelectionAnimationBlock)animationBlock withDuration:(NSUInteger)duration;
 - (OCDSelection *)setExit:(OCDSelectionBlock)exitBlock;
-- (OCDSelection *)setValue:(id)value forAttributePath:(NSString *)path;
 
 @end

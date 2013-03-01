@@ -9,12 +9,16 @@
 #import "OCDViewController.h"
 #import "OCD3.h"
 
+#import "OCDSelection_Private.h"
+#import "OCDNode_Private.h"
+
 #define kMinBar 20
 #define kMaxBar 80
 #define ARC4RANDOM_MAX      0x100000000
 
 @interface OCDViewController () {
     NSUInteger _vector;
+    NSUInteger _count;
 }
 @property (nonatomic, weak) OCDView *OCDView;
 @property (nonatomic, strong) NSMutableArray *randomWalkData;
@@ -30,24 +34,43 @@
     [self.view addSubview:view];
     self.OCDView = view;
     _vector = (kMaxBar + kMinBar)/2;
+    _count = 0;
     
     self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
     for (int i = 0; i < 15; i++) {
-        [self.randomWalkData addObject:[self nextRandomWalk]];
+        [self.randomWalkData addObject:[self nextData]];
     }
     
-    [self performSelector:@selector(redrawChart) withObject:nil afterDelay:1];
+    NSLog(@"walk data: %@", self.randomWalkData);
+    
+//    [self performSelector:@selector(redrawChart) withObject:nil afterDelay:1];
+    NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(stepUp) userInfo:nil repeats:YES];
+    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    
 }
 
-- (NSNumber *)nextRandomWalk
+- (void)stepUp
+{
+    [self.randomWalkData removeObjectAtIndex:0];
+    [self.randomWalkData addObject:[self nextData]];
+    [self redrawChart];
+}
+
+- (NSDictionary *)nextData
 {
     int value = MAX(kMinBar, MIN(kMaxBar, abs(_vector + kMinBar * ( (((double)arc4random() / ARC4RANDOM_MAX)) - 0.5) )));
     _vector = value;
-    return [NSNumber numberWithInt:value];
+    return @{ @"value": [NSNumber numberWithInt:value], @"time": [NSNumber numberWithInt:_count++] };
 }
 
 - (void)redrawChart
 {
+    printf("Walk Data: ");
+    for (NSDictionary *d in self.randomWalkData) {
+        printf("(%d, %d) ", [[d objectForKey:@"value"] intValue], [[d objectForKey:@"time"] intValue]);
+    }
+    printf("\n");
+    
     int w = 20;
     int h = 80;
     
@@ -75,10 +98,16 @@
                                                  rangeStart:0 rangeEnd:w];
     OCDScale *yScale = [OCDScale linearScaleWithDomainStart:@0 domainEnd:@100
                                                  rangeStart:0 rangeEnd:h];
-    
         
-    OCDSelection *bars = [[self.OCDView selectAllWithIdentifier:@"rects"]
-                             setData:self.randomWalkData];
+    OCDSelection *bars = [self.OCDView selectAllWithIdentifier:@"rects"];
+    [bars setData:self.randomWalkData usingKey:@"time"];
+    
+    printf("Nodes: ");
+    for (OCDNode *d in bars.selectedNodes) {
+        printf("(%d, %d, %d) ", [[d.data objectForKey:@"time"] intValue], [[d.data objectForKey:@"value"] intValue], d.index);
+    }
+    printf("\n");
+    
     [bars setEnter:^(OCDNode *node) {
         [node setNodeType:OCDNodeTypeRectangle];
         
@@ -86,16 +115,24 @@
             CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
             return [NSNumber numberWithFloat:scaledValue + index];
         } forAttributePath:@"frame.origin.x"];
+        
         [node setValue:^(id data, NSUInteger index){
-            CGFloat computed = h - [[yScale scaleValue:data] floatValue];
+            CGFloat computed = h - [[yScale scaleValue:[data objectForKey:@"value"]] floatValue];
             return [NSNumber numberWithFloat:computed];
         } forAttributePath:@"frame.origin.y"];
+        
         [node setValue:@20 forAttributePath:@"shape.width"];
         [node setValue:^(id data, NSUInteger index){
-            return [yScale scaleValue:data];
+            return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
         
         [self.OCDView append:node];
+    }];
+    
+    [bars setTransition:^NSValue *(CABasicAnimation *animation) {return nil;} withDuration:0];
+    
+    [bars setExit:^(OCDNode *node) {
+        [self.OCDView remove:node];
     }];
     
 }

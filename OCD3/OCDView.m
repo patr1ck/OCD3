@@ -38,12 +38,16 @@
     // Search view for existing nodes with given identifier.
     NSMutableArray *existingNodes = [[NSMutableArray alloc] initWithCapacity:10];
     NSMutableArray *existingData = [[NSMutableArray alloc] initWithCapacity:10];
+    NSLog(@"old EKISTING: %d", [self.nodes count]);
+    
     for (OCDNode *node in self.nodes) {
         if ([node.identifier isEqualToString:identifier]) {
             [existingNodes addObject:node];
             [existingData addObject:node.data];
         }
     }
+    
+    NSLog(@"EKISTING: %d", [existingNodes count]);
     
     // Attache the selection to the nodes.
     selection.selectedNodes = existingNodes;
@@ -55,10 +59,8 @@
 - (void)append:(OCDNode *)node;
 {
     // Ensure the node doesn't already exist in the view
-    for (OCDNode *existingNode in self.nodes) {
-        if ([existingNode isEqual:node]) {
-            return;
-        }
+    if ([self.nodes containsObject:node]) {
+        return;
     }
     
     // Add the sublayer
@@ -69,7 +71,9 @@
 - (void)remove:(OCDNode *)node;
 {
     [node.shapeLayer removeFromSuperlayer];
+    NSLog(@"before EKISTING: %d", [self.nodes count]);
     [self.nodes removeObject:node];
+    NSLog(@"after EKISTING: %d", [self.nodes count]);
 }
 
 @end

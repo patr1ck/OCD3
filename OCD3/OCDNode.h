@@ -17,7 +17,8 @@ typedef enum {
 
 @property (nonatomic, assign) OCDNodeType nodeType;
 @property (nonatomic, readonly) NSString *identifier;
-@property (nonatomic, readonly) NSValue *data;
+@property (nonatomic, readonly) id data;
+@property (nonatomic, readonly) id key;
 
 + (id)nodeWithIdentifier:(NSString *)identifier;
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
