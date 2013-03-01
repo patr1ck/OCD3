@@ -6,13 +6,15 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <QuartzCore/QuartzCore.h>
 
 @class OCDSelection;
 @class OCDView;
 @class OCDNode;
 
 typedef void (^OCDSelectionBlock)(OCDNode *node);
-typedef NSValue * (^OCDSelectionValueBlock)(NSValue *data, NSUInteger index);
+typedef NSValue * (^OCDSelectionValueBlock)(id data, NSUInteger index);
+typedef NSValue * (^OCDSelectionAnimationBlock)(CABasicAnimation *animation);
 
 @interface OCDNodeData : NSObject
 + (id)data;

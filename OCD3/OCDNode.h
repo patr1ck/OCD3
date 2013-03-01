@@ -20,5 +20,6 @@ typedef enum {
 @property (nonatomic, readonly) NSValue *data;
 
 + (id)nodeWithIdentifier:(NSString *)identifier;
+- (void)setValue:(id)value forAttributePath:(NSString *)path;
 
 @end

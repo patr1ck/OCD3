@@ -80,9 +80,10 @@
 
     self.enteringDataArray = dataToAdd;
     self.updatedDataArray = dataToUpdate;
-//    self.exitingDataArray = dataToRemove;
     self.dataArray = dataArray;
     
+    
+    // This should be moved out into an update / transition method
     if (self.selectedNodes) {
         for (int i = 0; i < newDataCount; i++) {
             OCDNode *node = [self.selectedNodes objectAtIndex:i];
@@ -110,14 +111,20 @@
 {
     NSMutableArray *selectedNodes = [NSMutableArray arrayWithCapacity:10];
     
+    int index = 0;
     for (NSValue *value in self.enteringDataArray) {
         OCDNode *node = [OCDNode nodeWithIdentifier:self.identifier];
         node.view = self.view;
         node.data = value;
         [selectedNodes addObject:node];
+        
         [CATransaction begin];
         enterBlock(node); // the block is responsible for appending it to the view.
         [CATransaction commit];
+        
+        node.index = index;
+        [node updateAttributes];
+        index++;
     }
     
     [selectedNodes addObjectsFromArray:self.selectedNodes];
@@ -125,11 +132,26 @@
     return self;
 }
 
+- (OCDSelection *)transition:(OCDSelectionAnimationBlock)animationBlock withDuration:(NSUInteger)duration;
+{
+    
+//    for (OCDNode *node in self.updatedNodeArray) {
+//        [CATransaction begin];
+//        CABasicAnimation *animation = [CABasicAnimation animation];
+//        
+//        animationBlock(animation); // the block is responsible for removing it from the view.
+//        [node.shapeLayer addAnimation:animation forKey:@"updatingAnimation"];
+//        [CATransaction commit];
+//    }
+    
+    return self;
+}
+
 - (OCDSelection *)setExit:(OCDSelectionBlock)exitBlock;
 {
     for (OCDNode *node in self.exitingNodeArray) {
         [CATransaction begin];
-        exitBlock(node);
+        exitBlock(node); // the block is responsible for removing it from the view.
         [CATransaction commit];
     }
     
@@ -141,7 +163,7 @@
     int index = 0;
     for (OCDNode *node in self.selectedNodes) {
         [node setIndex:index];
-        [node saveValue:value forAttributePath:path];
+        [node setValue:value forAttributePath:path];
         [node updateAttributes];
         index++;
     }

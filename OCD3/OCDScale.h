@@ -18,6 +18,6 @@
                       rangeStart:(NSUInteger)startIndex
                         rangeEnd:(NSUInteger)endIndex;
 
-- (id)valueAtIndex:(NSUInteger)index;
+- (id)scaleValue:(NSNumber *)value;
 
 @end

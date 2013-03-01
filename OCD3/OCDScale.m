@@ -56,12 +56,19 @@ typedef enum {
     return self;
 }
 
-- (id)valueAtIndex:(NSUInteger)index
-{    
+- (id)scaleValue:(NSNumber *)value;
+{
+    CGFloat valuef = [value floatValue];
+    
     switch (self.scaleType) {
         case OCDScaleTypeLinear: {
-            CGFloat scaleFactor = (float) _rangeEnd / _domainEnd;
-            return [NSNumber numberWithFloat:scaleFactor];
+            // Shift the domain and range to be zero based
+            CGFloat shiftedDomainEnd = (float) _domainEnd - _domainStart;
+            CGFloat shiftedRangeEnd = (float) _rangeEnd - _rangeStart;
+            
+            // scale the number
+            CGFloat scaled = (float) ( (float) (shiftedRangeEnd * (valuef - _domainStart)) / shiftedDomainEnd ) + _rangeStart;
+            return [NSNumber numberWithFloat:scaled];
             break;
         }
             

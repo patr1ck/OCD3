@@ -18,6 +18,5 @@
 
 - (void)instantiateLayer;
 - (void)updateAttributes;
-- (void)saveValue:(id)value forAttributePath:(NSString *)path;
 
 @end
