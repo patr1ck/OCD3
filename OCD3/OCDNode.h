@@ -9,9 +9,11 @@
 
 typedef enum {
     OCDNodeTypeCircle,
-    OCDNodeTypeSquare,
+    OCDNodeTypeLine,
     OCDNodeTypeRectangle
 } OCDNodeType;
+
+typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data, NSUInteger index);
 
 @interface OCDNode : NSObject
 
@@ -22,5 +24,6 @@ typedef enum {
 
 + (id)nodeWithIdentifier:(NSString *)identifier;
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
+- (void)setTransition:(OCDNodeAnimationBlock)animationBlock;
 
 @end

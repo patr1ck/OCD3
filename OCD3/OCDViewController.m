@@ -14,6 +14,8 @@
 
 #define kMinBar 20
 #define kMaxBar 80
+#define kBarWidth 20
+#define kBarHeight 80
 #define ARC4RANDOM_MAX      0x100000000
 
 @interface OCDViewController () {
@@ -65,59 +67,59 @@
 
 - (void)redrawChart
 {
-    printf("Walk Data: ");
-    for (NSDictionary *d in self.randomWalkData) {
-        printf("(%d, %d) ", [[d objectForKey:@"value"] intValue], [[d objectForKey:@"time"] intValue]);
-    }
-    printf("\n");
-    
-    int w = 20;
-    int h = 80;
-    
     /* 
-     Similar to the code of the D3.js "A Simple Bar Chart, Part 2":
      
-     var x = d3.scale.linear()
-          .domain([0, 1])
-          .range([0, w]);
+    Similar to the code of the D3.js "A Simple Bar Chart, Part 2":
      
-     var y = d3.scale.linear()
-          .domain([0, 100])
-          .rangeRound([0, h]);
+    var x = d3.scale.linear()
+            .domain([0, 1])
+            .range([0, w]);
      
-    chart.selectAll("rect")
-         .data(data)
-       .enter().append("rect")
-         .attr("x", function(d, i) { return x(i) - .5; })
-         .attr("y", function(d) { return h - y(d.value) - .5; })
-         .attr("width", w)
-         .attr("height", function(d) { return y(d.value); });
+    var y = d3.scale.linear()
+            .domain([0, 100])
+            .rangeRound([0, h]);
+     
+    var rect = chart.selectAll("rect")
+            .data(data, function(d) { return d.time; });
+     
+    rect.enter().insert("rect", "line")
+        .attr("x", function(d, i) { return x(i + 1) - .5; })
+        .attr("y", function(d) { return h - y(d.value) - .5; })
+        .attr("width", w)
+        .attr("height", function(d) { return y(d.value); })
+    .transition()
+        .duration(1000)
+        .attr("x", function(d, i) { return x(i) - .5; });
+ 
+    rect.transition()
+        .duration(1000)
+        .attr("x", function(d, i) { return x(i) - .5; });
+ 
+    rect.exit().transition()
+        .duration(1000)
+        .attr("x", function(d, i) { return x(i - 1) - .5; })
+        .remove();
+     
      */
     
     OCDScale *xScale = [OCDScale linearScaleWithDomainStart:@0 domainEnd:@1
-                                                 rangeStart:0 rangeEnd:w];
+                                                 rangeStart:0 rangeEnd:kBarWidth];
     OCDScale *yScale = [OCDScale linearScaleWithDomainStart:@0 domainEnd:@100
-                                                 rangeStart:0 rangeEnd:h];
+                                                 rangeStart:0 rangeEnd:kBarHeight];
         
     OCDSelection *bars = [self.OCDView selectAllWithIdentifier:@"rects"];
     [bars setData:self.randomWalkData usingKey:@"time"];
-    
-    printf("Nodes: ");
-    for (OCDNode *d in bars.selectedNodes) {
-        printf("(%d, %d, %d) ", [[d.data objectForKey:@"time"] intValue], [[d.data objectForKey:@"value"] intValue], d.index);
-    }
-    printf("\n");
     
     [bars setEnter:^(OCDNode *node) {
         [node setNodeType:OCDNodeTypeRectangle];
         
         [node setValue:^(id data, NSUInteger index){
-            CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
+            CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:1 + index]] floatValue];
             return [NSNumber numberWithFloat:scaledValue + index];
         } forAttributePath:@"frame.origin.x"];
         
         [node setValue:^(id data, NSUInteger index){
-            CGFloat computed = h - [[yScale scaleValue:[data objectForKey:@"value"]] floatValue];
+            CGFloat computed = kBarHeight - [[yScale scaleValue:[data objectForKey:@"value"]] floatValue];
             return [NSNumber numberWithFloat:computed];
         } forAttributePath:@"frame.origin.y"];
         
@@ -126,10 +128,21 @@
             return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
         
+        [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"frame.origin.x"];
+            CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
+            move.toValue = [NSNumber numberWithFloat:scaledValue + index];
+            
+            animationGroup.duration = 1;
+            [animationGroup setAnimations:@[move]];
+        }];
+        
         [self.OCDView append:node];
     }];
     
-    [bars setTransition:^NSValue *(CABasicAnimation *animation) {return nil;} withDuration:0];
+    [bars setUpdate:^(OCDNode *node) {
+        
+    }];
     
     [bars setExit:^(OCDNode *node) {
         [self.OCDView remove:node];

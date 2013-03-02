@@ -14,7 +14,6 @@
 
 typedef void (^OCDSelectionBlock)(OCDNode *node);
 typedef NSValue * (^OCDSelectionValueBlock)(id data, NSUInteger index);
-typedef NSValue * (^OCDSelectionAnimationBlock)(CABasicAnimation *animation);
 
 @interface OCDNodeData : NSObject
 + (id)data;
@@ -24,10 +23,9 @@ typedef NSValue * (^OCDSelectionAnimationBlock)(CABasicAnimation *animation);
 
 @property (nonatomic, readonly) NSString *identifier;
 
-- (OCDSelection *)setData:(NSArray *)dataArray;
 - (OCDSelection *)setData:(NSArray *)dataArray usingKey:(id)key;
 - (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
-- (OCDSelection *)setTransition:(OCDSelectionAnimationBlock)animationBlock withDuration:(NSUInteger)duration;
+- (OCDSelection *)setUpdate:(OCDSelectionBlock)updateBlock;
 - (OCDSelection *)setExit:(OCDSelectionBlock)exitBlock;
 
 @end

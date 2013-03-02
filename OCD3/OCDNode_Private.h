@@ -16,6 +16,7 @@
 @property (nonatomic, strong) id data;
 @property (nonatomic, strong) id key;
 @property (nonatomic, assign) NSUInteger index;
+@property (nonatomic, strong) OCDNodeAnimationBlock animationBlock;
 
 - (void)instantiateLayer;
 - (void)updateAttributes;
