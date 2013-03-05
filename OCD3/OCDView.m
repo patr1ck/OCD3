@@ -26,6 +26,7 @@
     if (self) {
         self.nodes = [[NSMutableArray alloc] initWithCapacity:10];
         self.backgroundColor = [UIColor whiteColor];
+        self.clipsToBounds = YES;
     }
     return self;
 }

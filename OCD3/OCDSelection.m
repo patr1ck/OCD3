@@ -61,7 +61,10 @@
     
     // We already have data, so we want to do a data join.
     
+    // Our sentinal value to track how far we have gone through dataArray
     int index = 0;
+    
+    // If we have a key, we will want to look for existing nodes with the same one.
     if (key) {
         for (id data in dataArray) {
             id lookupValue = [data objectForKey:key];
@@ -102,7 +105,11 @@
         self.selectedNodes = [self.updatedNodeArray arrayByAddingObjectsFromArray:self.enteringNodeArray];
         
         self.dataArray = dataArray;
-    } // End if key
+    } else {
+        // If we do NOT have a key, we should simply replace/update elements based on index.
+        
+        
+    }
     
     return self;
 }

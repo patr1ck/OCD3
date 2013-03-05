@@ -22,7 +22,7 @@
     NSUInteger _vector;
     NSUInteger _count;
 }
-@property (nonatomic, weak) OCDView *OCDView;
+@property (nonatomic, weak) OCDView *movingBarView;
 @property (nonatomic, strong) NSMutableArray *randomWalkData;
 @end
 
@@ -32,11 +32,25 @@
 {
     [super viewDidLoad];
     
-    OCDView *view = [[OCDView alloc] initWithFrame:self.view.bounds];
-    [self.view addSubview:view];
-    self.OCDView = view;
+    
+    // Moving Bar
+    OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.view.bounds.size.width, kMaxBar)];
+    [self.view addSubview:movingBarView];
+    self.movingBarView = movingBarView;
     _vector = (kMaxBar + kMinBar)/2;
     _count = 0;
+    
+    OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
+    line.nodeType = OCDNodeTypeLine;
+    [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight)]
+  forAttributePath:@"shape.startPoint"];
+    [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.view.bounds.size.width, kBarHeight)]
+  forAttributePath:@"shape.endPoint"];
+    [line setValue:(id)[UIColor blackColor].CGColor forAttributePath:@"strokeColor"];
+    [line setValue:[NSNumber numberWithInt:2] forAttributePath:@"lineWidth"];
+    [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
+    [line updateAttributes];
+    [self.movingBarView append:line];
     
     self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
     for (int i = 0; i < 15; i++) {
@@ -45,12 +59,17 @@
     
     NSLog(@"walk data: %@", self.randomWalkData);
 
-    NSTimer *timer = [NSTimer timerWithTimeInterval:4
+    NSTimer *timer = [NSTimer timerWithTimeInterval:2
                                              target:self
                                            selector:@selector(stepUp)
                                            userInfo:nil
                                             repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    
+    // Static bar
+//    OCDView *staticBar = [[OCDView alloc] initWithFrame:CGRectMake(3, kMaxBar + 5, self.view.bounds.size.width - 6, kMaxBar)];
+//    [self.view addSubview:staticBar];
+
 }
 
 - (void)stepUp
@@ -109,7 +128,7 @@
     OCDScale *yScale = [OCDScale linearScaleWithDomainStart:@0 domainEnd:@100
                                                  rangeStart:0 rangeEnd:kBarHeight];
         
-    OCDSelection *bars = [self.OCDView selectAllWithIdentifier:@"rects"];
+    OCDSelection *bars = [self.movingBarView selectAllWithIdentifier:@"rects"];
     [bars setData:self.randomWalkData usingKey:@"time"];
     
     [bars setEnter:^(OCDNode *node) {
@@ -142,7 +161,7 @@
             [animationGroup setAnimations:@[move]];
         }];
 
-        [self.OCDView append:node];
+        [self.movingBarView append:node];
     }];
     
     [bars setUpdate:^(OCDNode *node) {
@@ -157,7 +176,6 @@
             CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
             move.fromValue = [NSNumber numberWithFloat:scaledValueFrom - 1.f]; // Keep the 1px spacing.
             move.toValue = [NSNumber numberWithFloat:scaledValueTo - 1.f]; // Keep the 1px spacing.
-            move.duration = 1.0f;
             move.fillMode = kCAFillModeForwards;
             move.removedOnCompletion = NO;
             [animationGroup setAnimations:@[move]];
@@ -175,14 +193,14 @@
                              setData:@[@32, @57, @112, @293]]
                             setEnter:^(OCDNode *node) {
                                 [node setNodeType:OCDNodeTypeCircle];
-                                [self.OCDView append:node];
+                                 [node setValue:[OCDNodeData data] forAttributePath:@"position.y"];
+                                 [node setValue:@90 forAttributePath:@"position.x"];
+                                 [node setValue:^(NSValue *value, NSUInteger index){
+                                     float valuef = [(NSNumber *)value floatValue];
+                                     return [NSNumber numberWithFloat:sqrtf(valuef)];
+                                 } forAttributePath:@"shape.r"];
+                                 [self.OCDView append:node];
                             }];
-    [circles setValue:[OCDNodeData data] forAttributePath:@"position.y"];
-    [circles setValue:@90 forAttributePath:@"position.x"];
-    [circles setValue:^(NSValue *value, NSUInteger index){
-        float valuef = [(NSNumber *)value floatValue];
-        return [NSNumber numberWithFloat:sqrtf(valuef)];
-    } forAttributePath:@"shape.r"];
 }
 
 - (void)drawBarChart
