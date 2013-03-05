@@ -40,16 +40,15 @@
     _vector = (kMaxBar + kMinBar)/2;
     _count = 0;
     
+    // Create the line on the bottom and add it.
     OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
     line.nodeType = OCDNodeTypeLine;
     [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight)]
   forAttributePath:@"shape.startPoint"];
     [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.view.bounds.size.width, kBarHeight)]
   forAttributePath:@"shape.endPoint"];
-    [line setValue:(id)[UIColor blackColor].CGColor forAttributePath:@"strokeColor"];
-    [line setValue:[NSNumber numberWithInt:2] forAttributePath:@"lineWidth"];
     [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
-    [line updateAttributes];
+    [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
     [self.movingBarView append:line];
     
     self.randomWalkData = [NSMutableArray arrayWithCapacity:10];

@@ -63,6 +63,8 @@
             CGPathMoveToPoint(path, NULL, 0, 0);
             CGPathAddLineToPoint(path, NULL, 0, 10);
             self.shapeLayer.path = path;
+            self.shapeLayer.strokeColor = [UIColor blackColor].CGColor;
+            self.shapeLayer.lineWidth = 1.f;
             CGPathRelease(path);
             break;
         }
