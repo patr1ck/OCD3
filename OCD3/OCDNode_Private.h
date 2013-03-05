@@ -6,6 +6,7 @@
 //
 
 #import "OCDNode.h"
+#import "OCDSelection.h"
 
 @class OCDView;
 
@@ -16,9 +17,14 @@
 @property (nonatomic, strong) id data;
 @property (nonatomic, strong) id key;
 @property (nonatomic, assign) NSUInteger index;
+
+@property (nonatomic, assign) BOOL shouldFireExit;
 @property (nonatomic, strong) OCDNodeAnimationBlock animationBlock;
+@property (nonatomic, strong) OCDSelectionBlock exitBlock;
 
 - (void)instantiateLayer;
 - (void)updateAttributes;
+- (void)runAnimations;
+- (void)fireExitBlock;
 
 @end

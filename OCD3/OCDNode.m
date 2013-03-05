@@ -42,6 +42,7 @@
 {
     self.shapeLayer = [CAShapeLayer layer];
     self.shapeLayer.fillColor = [UIColor blueColor].CGColor;
+    self.shouldFireExit = NO;
     
     switch (self.nodeType) {
         case OCDNodeTypeCircle:
@@ -96,6 +97,29 @@
     } else {
         [self.shapeLayer setValue:value forKeyPath:path];
     }
+}
+
+- (void)runAnimations;
+{
+    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+    animationGroup.duration = 2.f;
+    animationGroup.delegate = self;
+    if (self.animationBlock) {
+        self.animationBlock(animationGroup, self.data, self.index);
+    }
+    [self.shapeLayer addAnimation:animationGroup forKey:@"runningAnimations"];
+}
+
+- (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
+{
+    if (self.shouldFireExit) {
+        [self fireExitBlock];
+    }
+}
+
+- (void)fireExitBlock;
+{
+    self.exitBlock(self);
 }
 
 - (void)setValue:(id)value forAttributePath:(NSString *)path

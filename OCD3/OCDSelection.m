@@ -115,7 +115,9 @@
         [node updateAttributes];
         
         if (node.animationBlock) {
-//            [node runAnimations];
+            [CATransaction begin];
+            [node runAnimations];
+            [CATransaction commit];
         }
     }
     return self;
@@ -125,6 +127,10 @@
 {
     for (OCDNode *node in self.updatedNodeArray) {
         [node updateAttributes];
+        
+        if (node.animationBlock) {
+            [node runAnimations];
+        }
     }
     
     return self;
@@ -133,11 +139,15 @@
 - (OCDSelection *)setExit:(OCDSelectionBlock)exitBlock;
 {
     for (OCDNode *node in self.exitingNodeArray) {
-        if (node.animationBlock) {
-//            [node runAnimations];
-        }
+        [node updateAttributes];
         
-        exitBlock(node); // the block is responsible for removing it from the view.
+        node.exitBlock = exitBlock;
+        if (node.animationBlock) {
+            node.shouldFireExit = YES;
+            [node runAnimations];
+        } else {
+            [node fireExitBlock];
+        }
     }
     
     return self;

@@ -64,6 +64,7 @@
     }
     
     // Add the sublayer
+    node.view = self;
     [self.layer addSublayer:node.shapeLayer];
     [self.nodes addObject:node];
 }

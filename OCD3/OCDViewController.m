@@ -44,11 +44,13 @@
     }
     
     NSLog(@"walk data: %@", self.randomWalkData);
-    
-//    [self performSelector:@selector(redrawChart) withObject:nil afterDelay:1];
-    NSTimer *timer = [NSTimer timerWithTimeInterval:1 target:self selector:@selector(stepUp) userInfo:nil repeats:YES];
+
+    NSTimer *timer = [NSTimer timerWithTimeInterval:4
+                                             target:self
+                                           selector:@selector(stepUp)
+                                           userInfo:nil
+                                            repeats:YES];
     [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
-    
 }
 
 - (void)stepUp
@@ -114,9 +116,9 @@
         [node setNodeType:OCDNodeTypeRectangle];
         
         [node setValue:^(id data, NSUInteger index){
-            CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:1 + index]] floatValue];
+            CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
             return [NSNumber numberWithFloat:scaledValue + index];
-        } forAttributePath:@"frame.origin.x"];
+        } forAttributePath:@"position.x"];
         
         [node setValue:^(id data, NSUInteger index){
             CGFloat computed = kBarHeight - [[yScale scaleValue:[data objectForKey:@"value"]] floatValue];
@@ -127,24 +129,47 @@
         [node setValue:^(id data, NSUInteger index){
             return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
+        double hue = (double) arc4random() / 0x100000000;
+        [node setValue:(id)[UIColor colorWithHue:hue saturation:1.0 brightness:0.9 alpha:1.0].CGColor forAttributePath:@"fillColor"];
         
         [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"frame.origin.x"];
-            CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
-            move.toValue = [NSNumber numberWithFloat:scaledValue + index];
-            
-            animationGroup.duration = 1;
+            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index+1]] floatValue];
+            CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
+            move.fromValue = [NSNumber numberWithFloat:scaledValueFrom + index];
+            move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
+            move.duration = 1.0f;
             [animationGroup setAnimations:@[move]];
         }];
-        
+
+        NSLog(@"Entering: %@", node);
+
         [self.OCDView append:node];
     }];
     
     [bars setUpdate:^(OCDNode *node) {
+        [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
+            CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
+            move.fromValue = [NSNumber numberWithFloat:scaledValueFrom + index];
+            move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
+            move.duration = 1.0f;
+            [animationGroup setAnimations:@[move]];
+        }];
         
     }];
-    
+
     [bars setExit:^(OCDNode *node) {
+        [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
+            CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
+            CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-2]] floatValue];
+            move.fromValue = [NSNumber numberWithFloat:scaledValueFrom + index];
+            move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
+            move.duration = 1.0f;
+            [animationGroup setAnimations:@[move]];
+        }];
         [self.OCDView remove:node];
     }];
     
