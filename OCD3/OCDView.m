@@ -38,7 +38,6 @@
     // Search view for existing nodes with given identifier.
     NSMutableArray *existingNodes = [[NSMutableArray alloc] initWithCapacity:10];
     NSMutableArray *existingData = [[NSMutableArray alloc] initWithCapacity:10];
-    NSLog(@"old EKISTING: %d", [self.nodes count]);
     
     for (OCDNode *node in self.nodes) {
         if ([node.identifier isEqualToString:identifier]) {
@@ -46,9 +45,7 @@
             [existingData addObject:node.data];
         }
     }
-    
-    NSLog(@"EKISTING: %d", [existingNodes count]);
-    
+        
     // Attache the selection to the nodes.
     selection.selectedNodes = existingNodes;
     selection.dataArray = existingData;

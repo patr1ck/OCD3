@@ -142,8 +142,6 @@
             [animationGroup setAnimations:@[move]];
         }];
 
-        NSLog(@"Entering: %@", node);
-
         [self.OCDView append:node];
     }];
     
