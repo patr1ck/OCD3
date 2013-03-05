@@ -72,9 +72,7 @@
 - (void)remove:(OCDNode *)node;
 {
     [node.shapeLayer removeFromSuperlayer];
-    NSLog(@"before EKISTING: %d", [self.nodes count]);
     [self.nodes removeObject:node];
-    NSLog(@"after EKISTING: %d", [self.nodes count]);
 }
 
 @end

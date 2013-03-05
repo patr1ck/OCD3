@@ -114,7 +114,7 @@
         enterBlock(node); // the block is responsible for appending it to the view.
         [node updateAttributes];
         
-        if (node.animationBlock) {
+        if (node.transition) {
             [CATransaction begin];
             [node runAnimations];
             [CATransaction commit];
@@ -123,12 +123,13 @@
     return self;
 }
 
-- (OCDSelection *)setUpdate:(OCDSelectionBlock)enterBlock;
+- (OCDSelection *)setUpdate:(OCDSelectionBlock)updateBlock;
 {
     for (OCDNode *node in self.updatedNodeArray) {
+        updateBlock(node);
         [node updateAttributes];
         
-        if (node.animationBlock) {
+        if (node.transition) {
             [node runAnimations];
         }
     }
@@ -140,11 +141,11 @@
 {
     for (OCDNode *node in self.exitingNodeArray) {
         [node updateAttributes];
+        exitBlock(node);
         
-        node.exitBlock = exitBlock;
-        if (node.animationBlock) {
+        if (node.exitTransition) {
             node.shouldFireExit = YES;
-            [node runAnimations];
+            [node runExitAnimations];
         } else {
             [node fireExitBlock];
         }

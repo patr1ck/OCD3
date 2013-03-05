@@ -25,5 +25,6 @@ typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data,
 + (id)nodeWithIdentifier:(NSString *)identifier;
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
 - (void)setTransition:(OCDNodeAnimationBlock)animationBlock;
+- (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
 
 @end

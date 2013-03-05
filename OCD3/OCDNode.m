@@ -104,10 +104,21 @@
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
     animationGroup.duration = 2.f;
     animationGroup.delegate = self;
-    if (self.animationBlock) {
-        self.animationBlock(animationGroup, self.data, self.index);
+    if (self.transition) {
+        self.transition(animationGroup, self.data, self.index);
     }
     [self.shapeLayer addAnimation:animationGroup forKey:@"runningAnimations"];
+}
+
+- (void)runExitAnimations;
+{
+    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+    animationGroup.duration = 2.f;
+    animationGroup.delegate = self;
+    if (self.exitTransition) {
+        self.exitTransition(animationGroup, self.data, self.index);
+    }
+    [self.shapeLayer addAnimation:animationGroup forKey:@"runningExitAnimations"];
 }
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
@@ -119,7 +130,7 @@
 
 - (void)fireExitBlock;
 {
-    self.exitBlock(self);
+    [self.view remove:self];
 }
 
 - (void)setValue:(id)value forAttributePath:(NSString *)path
@@ -175,9 +186,13 @@
 
 - (void)setTransition:(OCDNodeAnimationBlock)animationBlock;
 {
-    self.animationBlock = animationBlock;
+    _transition = animationBlock;
 }
 
+- (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
+{
+    _exitTransition = animationBlock;
+}
 
 - (NSString *)description
 {

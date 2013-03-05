@@ -148,29 +148,22 @@
     }];
     
     [bars setUpdate:^(OCDNode *node) {
-        [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-            CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
-            CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
-            CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
-            move.fromValue = [NSNumber numberWithFloat:scaledValueFrom + index];
-            move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
-            move.duration = 1.0f;
-            [animationGroup setAnimations:@[move]];
-        }];
-        
+        // We don't need to do anything here since our update transition remains the same as above.
     }];
 
     [bars setExit:^(OCDNode *node) {
-        [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+        [node setExitTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
             CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
-            CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
-            CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-2]] floatValue];
-            move.fromValue = [NSNumber numberWithFloat:scaledValueFrom + index];
-            move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
+            // Index will be Zero
+            CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
+            CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
+            move.fromValue = [NSNumber numberWithFloat:scaledValueFrom - 1.f]; // Keep the 1px spacing.
+            move.toValue = [NSNumber numberWithFloat:scaledValueTo - 1.f]; // Keep the 1px spacing.
             move.duration = 1.0f;
+            move.fillMode = kCAFillModeForwards;
+            move.removedOnCompletion = NO;
             [animationGroup setAnimations:@[move]];
         }];
-        [self.OCDView remove:node];
     }];
     
 }
