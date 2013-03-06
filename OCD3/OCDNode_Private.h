@@ -13,6 +13,7 @@
 @interface OCDNode ()
 
 @property (nonatomic, strong) CAShapeLayer *shapeLayer;
+@property (nonatomic, strong) CATextLayer *textLayer;
 @property (nonatomic, weak) OCDView *view;
 @property (nonatomic, strong) id data;
 @property (nonatomic, strong) id key;

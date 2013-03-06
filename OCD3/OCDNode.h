@@ -10,7 +10,7 @@
 typedef enum {
     OCDNodeTypeCircle,
     OCDNodeTypeLine,
-    OCDNodeTypeRectangle
+    OCDNodeTypeRectangle,
 } OCDNodeType;
 
 typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data, NSUInteger index);
@@ -21,6 +21,7 @@ typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data,
 @property (nonatomic, readonly) NSString *identifier;
 @property (nonatomic, readonly) id data;
 @property (nonatomic, readonly) id key;
+@property (nonatomic, strong) NSString *text;
 
 + (id)nodeWithIdentifier:(NSString *)identifier;
 - (void)setValue:(id)value forAttributePath:(NSString *)path;

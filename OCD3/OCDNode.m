@@ -69,7 +69,6 @@
             break;
         }
             
-            break;
         case OCDNodeTypeRectangle: {
             CGPathRef path = CGPathCreateWithRect(CGRectMake(0, 0, 20, 20), NULL);
             self.shapeLayer.path = path;
@@ -78,9 +77,22 @@
             _previousWidth = 20;
             break;
         }
-            
         default:
             break;
+    }
+}
+
+- (void)setText:(NSString *)text
+{
+    if (![_text isEqualToString:text]) {
+        _text = text;
+        
+        if (!self.textLayer) {
+            self.textLayer = [CATextLayer layer];
+            self.textLayer.foregroundColor = [UIColor blackColor].CGColor;
+            [self.shapeLayer addSublayer:self.textLayer];
+        }
+        [self.textLayer setString:_text];
     }
 }
 

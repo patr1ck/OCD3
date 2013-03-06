@@ -148,7 +148,10 @@
             return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
         double hue = (double) arc4random() / 0x100000000;
-        [node setValue:(id)[UIColor colorWithHue:hue saturation:1.0 brightness:0.9 alpha:1.0].CGColor forAttributePath:@"fillColor"];
+        [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
+        
+        [node setText:[NSString stringWithFormat:@"h %d", node.index]];
+
         
         [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
             CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
