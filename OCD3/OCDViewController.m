@@ -150,7 +150,7 @@
         double hue = (double) arc4random() / 0x100000000;
         [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
         
-        [node setText:[NSString stringWithFormat:@"h %d", node.index]];
+        [node setText:[NSString stringWithFormat:@"%.0f", [[node.data objectForKey:@"value"] floatValue]]];
 
         
         [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
@@ -168,6 +168,7 @@
     
     [bars setUpdate:^(OCDNode *node) {
         // We don't need to do anything here since our update transition remains the same as above.
+        [node setText:[NSString stringWithFormat:@"%.0f", [[node.data objectForKey:@"value"] floatValue]]];
     }];
 
     [bars setExit:^(OCDNode *node) {

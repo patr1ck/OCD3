@@ -56,6 +56,7 @@
             CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 20, 20), NULL);
             self.shapeLayer.path = path;
             CGPathRelease(path);
+            self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
             break;
         }
         case OCDNodeTypeLine:{
@@ -75,6 +76,8 @@
             CGPathRelease(path);
             _previousHeight = 20;
             _previousWidth = 20;
+            self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
+            self.shapeLayer.anchorPoint = CGPointMake(0, 0);
             break;
         }
         default:
@@ -89,7 +92,19 @@
         
         if (!self.textLayer) {
             self.textLayer = [CATextLayer layer];
+            NSAttributedString *string = [[NSAttributedString alloc] initWithString:text
+                                                                         attributes:@{
+                                        NSFontAttributeName: [UIFont systemFontOfSize:2.f]
+                                          
+                                          }];
+
+            self.textLayer.string = string;
             self.textLayer.foregroundColor = [UIColor blackColor].CGColor;
+            self.textLayer.bounds = self.shapeLayer.bounds;
+            self.textLayer.backgroundColor = [UIColor clearColor].CGColor;
+            self.textLayer.anchorPoint = CGPointMake(0, 0);
+            self.textLayer.fontSize = 12.f;
+            self.textLayer.alignmentMode = kCAAlignmentCenter;
             [self.shapeLayer addSublayer:self.textLayer];
         }
         [self.textLayer setString:_text];
@@ -141,10 +156,12 @@
                     float width = [value floatValue];
                     newPath = CGPathCreateWithRect(CGRectMake(0, 0, width, _previousHeight), NULL);
                     _previousWidth = width;
+                    self.shapeLayer.bounds = CGRectMake(0, 0, width, _previousHeight);
                 } else if ([attribute isEqualToString:@"height"]) {
                     float height = [value floatValue];
                     newPath = CGPathCreateWithRect(CGRectMake(0, 0, _previousWidth, height), NULL);
                     _previousHeight = height;
+                    self.shapeLayer.bounds = CGRectMake(0, 0, _previousWidth, height);
                 }
                 break;
             }
