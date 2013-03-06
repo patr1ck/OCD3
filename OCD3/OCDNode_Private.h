@@ -25,7 +25,6 @@
 @property (nonatomic, strong) OCDSelectionBlock exitBlock;
 
 - (void)instantiateLayer;
-- (void)updateAttributes;
 - (void)runAnimations;
 - (void)runExitAnimations;
 - (void)fireExitBlock;

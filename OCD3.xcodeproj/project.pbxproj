@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CDAB210416E80A570009183A /* BarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAB210316E80A570009183A /* BarChartView.m */; };
 		CDCA60F816D804DE004A0E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F716D804DE004A0E6E /* UIKit.framework */; };
 		CDCA60FA16D804DE004A0E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F916D804DE004A0E6E /* Foundation.framework */; };
 		CDCA60FC16D804DE004A0E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */; };
@@ -41,6 +42,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		CDAB210216E80A570009183A /* BarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarChartView.h; sourceTree = "<group>"; };
+		CDAB210316E80A570009183A /* BarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarChartView.m; sourceTree = "<group>"; };
 		CDCA60F416D804DE004A0E6E /* OCD3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCD3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDCA60F716D804DE004A0E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CDCA60F916D804DE004A0E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -179,6 +182,8 @@
 		CDCA613216D8051B004A0E6E /* Demo App */ = {
 			isa = PBXGroup;
 			children = (
+				CDAB210216E80A570009183A /* BarChartView.h */,
+				CDAB210316E80A570009183A /* BarChartView.m */,
 				CDCA610616D804DF004A0E6E /* OCDAppDelegate.h */,
 				CDCA610716D804DF004A0E6E /* OCDAppDelegate.m */,
 				CDCA610F16D804DF004A0E6E /* OCDViewController.h */,
@@ -342,6 +347,7 @@
 				CDCA614116D80556004A0E6E /* OCDSelection.m in Sources */,
 				CDCA614216D80556004A0E6E /* OCDNode.m in Sources */,
 				CDCA614316D80556004A0E6E /* OCDScale.m in Sources */,
+				CDAB210416E80A570009183A /* BarChartView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
