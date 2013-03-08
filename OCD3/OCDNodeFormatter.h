@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+@class OCDNode;
 @interface OCDNodeFormatter : NSObject
 
 + (id)arcNodeFormatterWithInnerRadius:(CGFloat)innerRadius outerRadius:(CGFloat)outerRadius;
+- (void)formatNode:(OCDNode *)node;
 
 @end

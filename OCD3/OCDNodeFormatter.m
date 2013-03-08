@@ -13,7 +13,11 @@
 + (id)arcNodeFormatterWithInnerRadius:(CGFloat)innerRadius outerRadius:(CGFloat)outerRadius;
 {
     
-    
+    return nil;
+}
+
+- (void)formatNode:(OCDNode *)node;
+{
     
 }
 

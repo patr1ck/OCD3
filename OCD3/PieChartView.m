@@ -30,7 +30,7 @@
                                                                     usingKey:nil];
         
         [arcs setEnter:^(OCDNode *node) {
-            [node setFormatter:arcFormatter];
+            [arcFormatter formatNode:node];
         }];
         
         

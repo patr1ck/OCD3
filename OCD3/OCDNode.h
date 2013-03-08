@@ -7,8 +7,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "OCDNodeFormatter.h"
-
 typedef enum {
     OCDNodeTypeCircle,
     OCDNodeTypeLine,
@@ -33,7 +31,5 @@ typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data,
 - (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
 
 - (void)updateAttributes;
-
-- (void)setFormatter:(OCDNodeFormatter *)formatter;
 
 @end

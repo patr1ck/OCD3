@@ -22,6 +22,12 @@
     CGPoint _previousStartPoint;
     CGPoint _previousEndPoint;
     
+    // OCDNodeTypeArc
+    CGFloat _innerRadius; // Not yet implemented.
+    CGFloat _outerRadius;
+    CGFloat _startAngle;
+    CGFloat _endAngle;
+    
 }
 @property (nonatomic, strong) NSString *identifier;
 @property (nonatomic, strong) NSMutableDictionary *attributesDictionary;
@@ -150,7 +156,6 @@
                 break;
             }
                 
-                break;
             case OCDNodeTypeRectangle: {
                 if ([attribute isEqualToString:@"width"]) {
                     float width = [value floatValue];
@@ -166,6 +171,22 @@
                 break;
             }
                 
+            case OCDNodeTypeArc: {
+                if ([attribute isEqualToString:@"startAngle"]) {
+                    float angle = [value floatValue];
+                    _startAngle = angle;
+                } else if ([attribute isEqualToString:@"endAngle"]) {
+                    float angle = [value floatValue];
+                    _endAngle = angle;
+                } else if ([attribute isEqualToString:@"outerRadius"]) {
+                    float radius = [value floatValue];
+                    _outerRadius = radius;
+                }
+                newPath = [self generateArcPath];
+                self.shapeLayer.bounds = CGRectMake(0, 0, _outerRadius*2, _outerRadius*2);
+                break;
+            }
+                
             default:
                 break;
         }
@@ -176,6 +197,20 @@
     } else {
         [self.shapeLayer setValue:value forKeyPath:path];
     }
+}
+
+- (CGPathRef)generateArcPath
+{
+    float radius = _outerRadius/2;
+    
+    CGMutablePathRef path = CGPathCreateMutable();
+    CGPathMoveToPoint(path, NULL, radius, radius);
+    // Some basic trig at play here: http://en.wikipedia.org/wiki/Circle#Equations
+    CGPathAddLineToPoint(path, NULL, radius + radius * cosf(_startAngle),
+                         radius + radius * sinf(_startAngle));
+    CGPathAddArc(path, NULL, radius, radius, radius, _startAngle, _endAngle, 0);
+    CGPathAddLineToPoint(path, NULL, radius, radius);
+    return path;
 }
 
 - (void)runAnimations;
@@ -271,11 +306,6 @@
 - (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
 {
     _exitTransition = animationBlock;
-}
-
-- (void)setFormatter:(OCDNodeFormatter *)formatter;
-{
-    // Set the appropriate node details
 }
 
 - (NSString *)description
