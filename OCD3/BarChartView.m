@@ -85,9 +85,7 @@ rect.exit().transition()
     for (int i = 0; i < 15; i++) {
         [self.randomWalkData addObject:[self nextData]];
     }
-    
-    NSLog(@"walk data: %@", self.randomWalkData);
-    
+        
     NSTimer *timer = [NSTimer timerWithTimeInterval:2
                                              target:self
                                            selector:@selector(stepUp)
@@ -157,7 +155,8 @@ rect.exit().transition()
     }];
     
     [bars setUpdate:^(OCDNode *node) {
-        // We don't need to do anything here since our update transition remains the same as above.
+        // We don't need to do much here since our update transition remains the same as above.
+        // Just update the text of the nodes.
         [node setText:[NSString stringWithFormat:@"%.0f", [[node.data objectForKey:@"value"] floatValue]]];
     }];
     

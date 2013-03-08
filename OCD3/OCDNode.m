@@ -273,6 +273,11 @@
     _exitTransition = animationBlock;
 }
 
+- (void)setFormatter:(OCDNodeFormatter *)formatter;
+{
+    // Set the appropriate node details
+}
+
 - (NSString *)description
 {
     return [NSString stringWithFormat:@"OCDNode: %p - nodeType: %d - shapeLayer: %@", self, self.nodeType, self.shapeLayer];

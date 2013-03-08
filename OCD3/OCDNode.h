@@ -7,10 +7,13 @@
 
 #import <Foundation/Foundation.h>
 
+#import "OCDNodeFormatter.h"
+
 typedef enum {
     OCDNodeTypeCircle,
     OCDNodeTypeLine,
     OCDNodeTypeRectangle,
+    OCDNodeTypeArc
 } OCDNodeType;
 
 typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data, NSUInteger index);
@@ -25,8 +28,12 @@ typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data,
 
 + (id)nodeWithIdentifier:(NSString *)identifier;
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
+
 - (void)setTransition:(OCDNodeAnimationBlock)animationBlock;
 - (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
+
 - (void)updateAttributes;
+
+- (void)setFormatter:(OCDNodeFormatter *)formatter;
 
 @end

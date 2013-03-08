@@ -94,22 +94,42 @@
             index++;
         } // end looping through dataArray
         
-        // Remove nodes
-        for (OCDNode *oldNode in self.selectedNodes) {
-            if ([self.updatedNodeArray containsObject:oldNode] || [self.enteringNodeArray containsObject:oldNode]) {
-                continue;
-            }
-            [self.exitingNodeArray addObject:oldNode];
-        }
-        
-        self.selectedNodes = [self.updatedNodeArray arrayByAddingObjectsFromArray:self.enteringNodeArray];
-        
-        self.dataArray = dataArray;
     } else {
         // If we do NOT have a key, we should simply replace/update elements based on index.
-        
-        
+        for (id data in dataArray) {
+
+            // Check for updated values
+            if (index < [self.selectedNodes count]) {
+                OCDNode *existingNode = [self.selectedNodes objectAtIndex:index];
+                if (![existingNode.data isEqual:data]) {
+                    existingNode.data = data;
+                    [self.updatedNodeArray addObject:existingNode];
+                }
+            }
+            
+            // Check for new values
+            if (index >= [self.selectedNodes count]) {
+                OCDNode *node = [OCDNode nodeWithIdentifier:self.identifier];
+                node.data = data;
+                node.index = index;
+                node.key = key;
+                [self.enteringNodeArray addObject:node];
+            }
+            
+            index++;
+        } // end looping through dataArray
     }
+    
+    // Remove old nodes
+    for (OCDNode *oldNode in self.selectedNodes) {
+        if ([self.updatedNodeArray containsObject:oldNode] || [self.enteringNodeArray containsObject:oldNode]) {
+            continue;
+        }
+        [self.exitingNodeArray addObject:oldNode];
+    }
+    
+    self.selectedNodes = [self.updatedNodeArray arrayByAddingObjectsFromArray:self.enteringNodeArray];
+    self.dataArray = dataArray;
     
     return self;
 }

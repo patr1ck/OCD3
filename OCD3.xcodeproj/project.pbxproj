@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		CDAB210416E80A570009183A /* BarChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAB210316E80A570009183A /* BarChartView.m */; };
+		CDAB210716E80D320009183A /* PieChartView.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAB210616E80D320009183A /* PieChartView.m */; };
+		CDAB210B16E81A400009183A /* OCDNodeFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAB210A16E81A400009183A /* OCDNodeFormatter.m */; };
+		CDAB210E16E9255B0009183A /* OCDPieLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAB210D16E9255B0009183A /* OCDPieLayout.m */; };
 		CDCA60F816D804DE004A0E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F716D804DE004A0E6E /* UIKit.framework */; };
 		CDCA60FA16D804DE004A0E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F916D804DE004A0E6E /* Foundation.framework */; };
 		CDCA60FC16D804DE004A0E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */; };
@@ -44,6 +47,12 @@
 /* Begin PBXFileReference section */
 		CDAB210216E80A570009183A /* BarChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BarChartView.h; sourceTree = "<group>"; };
 		CDAB210316E80A570009183A /* BarChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BarChartView.m; sourceTree = "<group>"; };
+		CDAB210516E80D320009183A /* PieChartView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieChartView.h; sourceTree = "<group>"; };
+		CDAB210616E80D320009183A /* PieChartView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieChartView.m; sourceTree = "<group>"; };
+		CDAB210916E81A400009183A /* OCDNodeFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDNodeFormatter.h; sourceTree = "<group>"; };
+		CDAB210A16E81A400009183A /* OCDNodeFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDNodeFormatter.m; sourceTree = "<group>"; };
+		CDAB210C16E9255B0009183A /* OCDPieLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDPieLayout.h; sourceTree = "<group>"; };
+		CDAB210D16E9255B0009183A /* OCDPieLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDPieLayout.m; sourceTree = "<group>"; };
 		CDCA60F416D804DE004A0E6E /* OCD3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCD3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDCA60F716D804DE004A0E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CDCA60F916D804DE004A0E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -106,6 +115,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CDAB210816E80D380009183A /* Example Views */ = {
+			isa = PBXGroup;
+			children = (
+				CDAB210216E80A570009183A /* BarChartView.h */,
+				CDAB210316E80A570009183A /* BarChartView.m */,
+				CDAB210516E80D320009183A /* PieChartView.h */,
+				CDAB210616E80D320009183A /* PieChartView.m */,
+			);
+			name = "Example Views";
+			sourceTree = "<group>";
+		};
 		CDCA60EB16D804DE004A0E6E = {
 			isa = PBXGroup;
 			children = (
@@ -182,8 +202,7 @@
 		CDCA613216D8051B004A0E6E /* Demo App */ = {
 			isa = PBXGroup;
 			children = (
-				CDAB210216E80A570009183A /* BarChartView.h */,
-				CDAB210316E80A570009183A /* BarChartView.m */,
+				CDAB210816E80D380009183A /* Example Views */,
 				CDCA610616D804DF004A0E6E /* OCDAppDelegate.h */,
 				CDCA610716D804DF004A0E6E /* OCDAppDelegate.m */,
 				CDCA610F16D804DF004A0E6E /* OCDViewController.h */,
@@ -210,7 +229,9 @@
 				CDCA613616D8054D004A0E6E /* OCDView.h */,
 				CDCA613716D8054D004A0E6E /* OCDSelection.h */,
 				CDCA613816D8054D004A0E6E /* OCDNode.h */,
+				CDAB210916E81A400009183A /* OCDNodeFormatter.h */,
 				CDCA613916D8054D004A0E6E /* OCDScale.h */,
+				CDAB210C16E9255B0009183A /* OCDPieLayout.h */,
 			);
 			name = Headers;
 			sourceTree = "<group>";
@@ -225,6 +246,8 @@
 				CDCA613D16D80556004A0E6E /* OCDNode_Private.h */,
 				CDCA613E16D80556004A0E6E /* OCDNode.m */,
 				CDCA613F16D80556004A0E6E /* OCDScale.m */,
+				CDAB210A16E81A400009183A /* OCDNodeFormatter.m */,
+				CDAB210D16E9255B0009183A /* OCDPieLayout.m */,
 			);
 			name = Private;
 			sourceTree = "<group>";
@@ -348,6 +371,9 @@
 				CDCA614216D80556004A0E6E /* OCDNode.m in Sources */,
 				CDCA614316D80556004A0E6E /* OCDScale.m in Sources */,
 				CDAB210416E80A570009183A /* BarChartView.m in Sources */,
+				CDAB210716E80D320009183A /* PieChartView.m in Sources */,
+				CDAB210B16E81A400009183A /* OCDNodeFormatter.m in Sources */,
+				CDAB210E16E9255B0009183A /* OCDPieLayout.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
