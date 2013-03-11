@@ -23,9 +23,8 @@
     
     CGSize viewSize = self.view.bounds.size;
     
-//    BarChartView *barChart = [[BarChartView alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, 100)];
-//    [self.view addSubview:barChart];
-//    [barChart setup];
+    BarChartView *barChart = [[BarChartView alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, 100)];
+    [self.view addSubview:barChart];
     
     PieChartView *pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(0, 110, viewSize.width, viewSize.width)];
     [self.view addSubview:pieChart];

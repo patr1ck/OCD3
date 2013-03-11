@@ -61,37 +61,41 @@ rect.exit().transition()
 
 @implementation BarChartView
 
-- (void)setup
+- (id)initWithFrame:(CGRect)frame
 {
-    // Moving Bar
-    OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kMaxBar)];
-    [self addSubview:movingBarView];
-    self.movingBarView = movingBarView;
-    _vector = (kMaxBar + kMinBar)/2;
-    _count = 0;
-    
-    // Create the line on the bottom and add it.
-    OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
-    line.nodeType = OCDNodeTypeLine;
-    [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight)]
-  forAttributePath:@"shape.startPoint"];
-    [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarHeight)]
-  forAttributePath:@"shape.endPoint"];
-    [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
-    [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
-    [self.movingBarView append:line];
-    
-    self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
-    for (int i = 0; i < 15; i++) {
-        [self.randomWalkData addObject:[self nextData]];
-    }
+    self = [super initWithFrame:frame];
+    if (self) {
+        // Moving Bar
+        OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kMaxBar)];
+        [self addSubview:movingBarView];
+        self.movingBarView = movingBarView;
+        _vector = (kMaxBar + kMinBar)/2;
+        _count = 0;
         
-    NSTimer *timer = [NSTimer timerWithTimeInterval:2
-                                             target:self
-                                           selector:@selector(stepUp)
-                                           userInfo:nil
-                                            repeats:YES];
-    [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        // Create the line on the bottom and add it.
+        OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
+        line.nodeType = OCDNodeTypeLine;
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight)]
+      forAttributePath:@"shape.startPoint"];
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarHeight)]
+      forAttributePath:@"shape.endPoint"];
+        [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
+        [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
+        [self.movingBarView append:line];
+        
+        self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
+        for (int i = 0; i < 15; i++) {
+            [self.randomWalkData addObject:[self nextData]];
+        }
+        
+        NSTimer *timer = [NSTimer timerWithTimeInterval:2
+                                                 target:self
+                                               selector:@selector(stepUp)
+                                               userInfo:nil
+                                                repeats:YES];
+        [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+    }
+    return self;
 }
 
 - (void)stepUp

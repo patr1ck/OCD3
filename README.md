@@ -7,6 +7,9 @@ I'd encourage you to have a general understanding of D3.js before diving into th
 
 [Three Little Circles](http://mbostock.github.com/d3/tutorial/circle.html)   
 [A Bar Chart, Part 1](http://mbostock.github.com/d3/tutorial/bar-1.html)    
-[A Bar Chart, Part 2](http://mbostock.github.com/d3/tutorial/bar-2.html)   
+[A Bar Chart, Part 2](http://mbostock.github.com/d3/tutorial/bar-2.html)
+
+Also implemented:
+[Pie Chart](http://bl.ocks.org/mbostock/3887235)
 
 These are mostly implemented in the demo app.
