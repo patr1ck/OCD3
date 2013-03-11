@@ -86,6 +86,15 @@
             self.shapeLayer.anchorPoint = CGPointMake(0, 0);
             break;
         }
+        case OCDNodeTypeArc: {
+            CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 20, 20), NULL);
+            self.shapeLayer.path = path;
+            CGPathRelease(path);
+            self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
+//            self.shapeLayer.backgroundColor = [UIColor purpleColor].CGColor;
+            break;
+        }
+            
         default:
             break;
     }
@@ -183,6 +192,7 @@
                     _outerRadius = radius;
                 }
                 newPath = [self generateArcPath];
+                
                 self.shapeLayer.bounds = CGRectMake(0, 0, _outerRadius*2, _outerRadius*2);
                 break;
             }
@@ -201,15 +211,21 @@
 
 - (CGPathRef)generateArcPath
 {
-    float radius = _outerRadius/2;
+    float radius = _outerRadius;
+    
+    NSLog(@"Start angle: %f", _startAngle);
     
     CGMutablePathRef path = CGPathCreateMutable();
     CGPathMoveToPoint(path, NULL, radius, radius);
     // Some basic trig at play here: http://en.wikipedia.org/wiki/Circle#Equations
-    CGPathAddLineToPoint(path, NULL, radius + radius * cosf(_startAngle),
-                         radius + radius * sinf(_startAngle));
+    CGPoint arcStartPoint = CGPointMake(radius + radius * cosf(_startAngle), radius + radius * sinf(_startAngle));
+    NSLog(@"Arc start: %@", NSStringFromCGPoint(arcStartPoint));
+    CGPathAddLineToPoint(path, NULL, arcStartPoint.x, arcStartPoint.y);
     CGPathAddArc(path, NULL, radius, radius, radius, _startAngle, _endAngle, 0);
     CGPathAddLineToPoint(path, NULL, radius, radius);
+    CGPathCloseSubpath(path);
+    
+//    path = CGPathCreateWithRect(CGRectMake(0, 0, 20, 20), NULL);
     return path;
 }
 

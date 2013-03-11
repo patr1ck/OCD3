@@ -135,6 +135,7 @@ rect.exit().transition()
         [node setValue:^(id data, NSUInteger index){
             return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
+        
         double hue = (double) arc4random() / 0x100000000;
         [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
         

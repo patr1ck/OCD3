@@ -25,14 +25,18 @@
                            @{@"Browser": @"Other",              @"Percent": @5} ];
         
         OCDNodeFormatter *arcFormatter = [OCDNodeFormatter arcNodeFormatterWithInnerRadius:0
-                                                                               outerRadius:self.bounds.size.width/2 - 10];
+                                                                               outerRadius:(self.bounds.size.width/2)];
         OCDSelection *arcs = [[view selectAllWithIdentifier:@"arcs"] setData:[OCDPieLayout layoutForDataArray:data usingKey:@"Percent"]
                                                                     usingKey:nil];
         
         [arcs setEnter:^(OCDNode *node) {
             [arcFormatter formatNode:node];
+            
+            double hue = (double) arc4random() / 0x100000000;
+            [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
+            
+            [view append:node];
         }];
-        
         
     }
     return self;
