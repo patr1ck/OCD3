@@ -24,7 +24,7 @@
                            @{@"Browser": @"Firefox",            @"Percent": @10},
                            @{@"Browser": @"Other",              @"Percent": @5} ];
         
-        OCDNodeFormatter *arcFormatter = [OCDNodeFormatter arcNodeFormatterWithInnerRadius:0
+        OCDNodeFormatter *arcFormatter = [OCDNodeFormatter arcNodeFormatterWithInnerRadius:100
                                                                                outerRadius:(self.bounds.size.width/2)];
         OCDSelection *arcs = [[view selectAllWithIdentifier:@"arcs"] setData:[OCDPieLayout layoutForDataArray:data usingKey:@"Percent"]
                                                                     usingKey:nil];

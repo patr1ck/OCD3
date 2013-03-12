@@ -23,7 +23,7 @@
     CGPoint _previousEndPoint;
     
     // OCDNodeTypeArc
-    CGFloat _innerRadius; // Not yet implemented.
+    CGFloat _innerRadius;
     CGFloat _outerRadius;
     CGFloat _startAngle;
     CGFloat _endAngle;
@@ -91,7 +91,8 @@
             self.shapeLayer.path = path;
             CGPathRelease(path);
             self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
-//            self.shapeLayer.backgroundColor = [UIColor purpleColor].CGColor;
+            _innerRadius = 0.0f;
+            _outerRadius = 0.0f;
             break;
         }
             
@@ -190,7 +191,11 @@
                 } else if ([attribute isEqualToString:@"outerRadius"]) {
                     float radius = [value floatValue];
                     _outerRadius = radius;
+                } else if ([attribute isEqualToString:@"innerRadius"]) {
+                    float radius = [value floatValue];
+                    _innerRadius = radius;
                 }
+                
                 newPath = [self generateArcPath];
                 
                 self.shapeLayer.bounds = CGRectMake(0, 0, _outerRadius*2, _outerRadius*2);
@@ -211,21 +216,29 @@
 
 - (CGPathRef)generateArcPath
 {
-    float radius = _outerRadius;
+    float center = _outerRadius;
+    CGMutablePathRef path = CGPathCreateMutable();    
+    CGPathMoveToPoint(path, NULL, center, center);
     
-    NSLog(@"Start angle: %f", _startAngle);
+    CGPoint arcStartPointOuter = CGPointMake(center + _outerRadius * cosf(_startAngle), center + _outerRadius * sinf(_startAngle));    
     
-    CGMutablePathRef path = CGPathCreateMutable();
-    CGPathMoveToPoint(path, NULL, radius, radius);
     // Some basic trig at play here: http://en.wikipedia.org/wiki/Circle#Equations
-    CGPoint arcStartPoint = CGPointMake(radius + radius * cosf(_startAngle), radius + radius * sinf(_startAngle));
-    NSLog(@"Arc start: %@", NSStringFromCGPoint(arcStartPoint));
-    CGPathAddLineToPoint(path, NULL, arcStartPoint.x, arcStartPoint.y);
-    CGPathAddArc(path, NULL, radius, radius, radius, _startAngle, _endAngle, 0);
-    CGPathAddLineToPoint(path, NULL, radius, radius);
+    if (_innerRadius != 0) {
+        CGPoint arcStartPointInner = CGPointMake(center + _innerRadius * cosf(_startAngle), center + _innerRadius * sinf(_startAngle));
+        CGPathMoveToPoint(path, NULL, arcStartPointInner.x, arcStartPointInner.y);
+    }
+    CGPathAddLineToPoint(path, NULL, arcStartPointOuter.x, arcStartPointOuter.y);
+    CGPathAddArc(path, NULL, center, center, _outerRadius, _startAngle, _endAngle, 0);
+    if (_innerRadius != 0) {
+        CGPoint arcEndPointInner = CGPointMake(center + _innerRadius * cosf(_endAngle), center + _innerRadius * sinf(_endAngle));
+        CGPathAddLineToPoint(path, NULL, arcEndPointInner.x, arcEndPointInner.y);
+        CGPathAddArc(path, NULL, center, center, _innerRadius, _endAngle, _startAngle, 1);
+    } else {
+        CGPathAddLineToPoint(path, NULL, center, center);
+    }
     CGPathCloseSubpath(path);
     
-//    path = CGPathCreateWithRect(CGRectMake(0, 0, 20, 20), NULL);
+        
     return path;
 }
 
