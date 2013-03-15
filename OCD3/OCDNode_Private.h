@@ -22,12 +22,8 @@
 @property (nonatomic, assign) BOOL shouldFireExit;
 @property (nonatomic, strong) OCDNodeAnimationBlock transition;
 @property (nonatomic, strong) OCDNodeAnimationCompletionBlock completion;
-//@property (nonatomic, strong) OCDNodeAnimationBlock exitTransition;
-//@property (nonatomic, strong) OCDSelectionBlock exitBlock;
 
 - (void)instantiateLayer;
 - (void)runAnimations;
-//- (void)runExitAnimations;
-//- (void)fireExitBlock;
 
 @end

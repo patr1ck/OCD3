@@ -259,28 +259,12 @@
     [self.shapeLayer addAnimation:animationGroup forKey:@"runningAnimations"];
 }
 
-//- (void)runExitAnimations;
-//{
-//    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-//    animationGroup.duration = 1.f;
-//    animationGroup.delegate = self;
-//    if (self.exitTransition) {
-//        self.exitTransition(animationGroup, self.data, self.index);
-//    }
-//    [self.shapeLayer addAnimation:animationGroup forKey:@"runningExitAnimations"];
-//}
-
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
     if (self.completion) {
         self.completion(flag);
     }
 }
-
-//- (void)fireExitBlock;
-//{
-//    [self.view remove:self];
-//}
 
 - (void)setValue:(id)value forAttributePath:(NSString *)path
 {
@@ -338,11 +322,6 @@
     _transition = animationBlock;
     _completion = completion;
 }
-
-//- (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
-//{
-//    _exitTransition = animationBlock;
-//}
 
 - (NSString *)description
 {

@@ -40,8 +40,6 @@
                 _displayLink = [CADisplayLink displayLinkWithTarget:self selector:@selector(tick)];
                 [_displayLink addToRunLoop:[NSRunLoop currentRunLoop] forMode:NSRunLoopCommonModes];
             }
-            _touchedPoint = [gesture locationInView:self];
-            break;
             
         case UIGestureRecognizerStateChanged:
             _touchedPoint = [gesture locationInView:self];
@@ -64,6 +62,9 @@
         OCDNode *node = [OCDNode nodeWithIdentifier:@"circle"];
         node.nodeType = OCDNodeTypeCircle;
         [node setValue:[NSValue valueWithCGPoint:_touchedPoint] forAttributePath:@"position"];
+        double hue = (double) arc4random() / 0x100000000;
+        [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"strokeColor"];
+        [node setValue:(id)[UIColor clearColor].CGColor forAttributePath:@"fillColor"];
         
         [self.particlesView appendNode:node
                         withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
@@ -72,7 +73,7 @@
                             fade.toValue = @0.0;
                             CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"transform"];
                             grow.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-                            grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(4, 4, 1)];
+                            grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(5, 5, 1)];
                             
                             [animationGroup setAnimations:@[fade, grow]];
                         }
