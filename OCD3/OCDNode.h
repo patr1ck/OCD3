@@ -16,6 +16,7 @@ typedef enum {
 } OCDNodeType;
 
 typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data, NSUInteger index);
+typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
 
 @interface OCDNode : NSObject
 
@@ -28,8 +29,7 @@ typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data,
 + (id)nodeWithIdentifier:(NSString *)identifier;
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
 
-- (void)setTransition:(OCDNodeAnimationBlock)animationBlock;
-- (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
+- (void)setTransition:(OCDNodeAnimationBlock)animationBlock completion:(OCDNodeAnimationCompletionBlock)completion;
 
 - (void)updateAttributes;
 

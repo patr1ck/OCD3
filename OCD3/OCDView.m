@@ -54,7 +54,7 @@
     return selection;
 }
 
-- (void)append:(OCDNode *)node;
+- (void)appendNode:(OCDNode *)node;
 {
     // Ensure the node doesn't already exist in the view
     if ([self.nodes containsObject:node]) {

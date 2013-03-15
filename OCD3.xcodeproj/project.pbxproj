@@ -32,6 +32,7 @@
 		CDCA614216D80556004A0E6E /* OCDNode.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA613E16D80556004A0E6E /* OCDNode.m */; };
 		CDCA614316D80556004A0E6E /* OCDScale.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA613F16D80556004A0E6E /* OCDScale.m */; };
 		CDCA614616D806ED004A0E6E /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA614516D806ED004A0E6E /* QuartzCore.framework */; };
+		CDDA4E5316EFEEBD00A4AF35 /* OMGParticles.m in Sources */ = {isa = PBXBuildFile; fileRef = CDDA4E5216EFEEBD00A4AF35 /* OMGParticles.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,6 +89,8 @@
 		CDCA614416D8062D004A0E6E /* OCD3.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCD3.h; sourceTree = "<group>"; };
 		CDCA614516D806ED004A0E6E /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CDCA614716D84558004A0E6E /* OCDView_Private.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCDView_Private.h; sourceTree = "<group>"; };
+		CDDA4E5116EFEEBD00A4AF35 /* OMGParticles.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OMGParticles.h; sourceTree = "<group>"; };
+		CDDA4E5216EFEEBD00A4AF35 /* OMGParticles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OMGParticles.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -122,6 +125,8 @@
 				CDAB210316E80A570009183A /* BarChartView.m */,
 				CDAB210516E80D320009183A /* PieChartView.h */,
 				CDAB210616E80D320009183A /* PieChartView.m */,
+				CDDA4E5116EFEEBD00A4AF35 /* OMGParticles.h */,
+				CDDA4E5216EFEEBD00A4AF35 /* OMGParticles.m */,
 			);
 			name = "Example Views";
 			sourceTree = "<group>";
@@ -374,6 +379,7 @@
 				CDAB210716E80D320009183A /* PieChartView.m in Sources */,
 				CDAB210B16E81A400009183A /* OCDNodeFormatter.m in Sources */,
 				CDAB210E16E9255B0009183A /* OCDPieLayout.m in Sources */,
+				CDDA4E5316EFEEBD00A4AF35 /* OMGParticles.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

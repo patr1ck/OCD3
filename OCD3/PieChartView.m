@@ -35,7 +35,7 @@
             double hue = (double) arc4random() / 0x100000000;
             [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
             
-            [view append:node];
+            [view appendNode:node];
         }];
         
     }

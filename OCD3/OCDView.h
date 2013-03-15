@@ -13,7 +13,10 @@
 @interface OCDView : UIView
 
 - (OCDSelection *)selectAllWithIdentifier:(NSString *)identifier;
-- (void)append:(OCDNode *)node;
+- (void)appendNode:(OCDNode *)node;
+- (void)appendNode:(OCDNode *)node
+    withTransition:(OCDNodeAnimationBlock)transition
+        completion:(OCDNodeAnimationCompletionBlock)completion;
 - (void)remove:(OCDNode *)node;
 
 

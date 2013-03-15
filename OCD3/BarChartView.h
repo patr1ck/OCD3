@@ -9,7 +9,4 @@
 #import <UIKit/UIKit.h>
 
 @interface BarChartView : UIView
-
-- (void)setup;
-
 @end

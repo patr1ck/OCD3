@@ -81,7 +81,7 @@ rect.exit().transition()
       forAttributePath:@"shape.endPoint"];
         [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
         [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
-        [self.movingBarView append:line];
+        [self.movingBarView appendNode:line];
         
         self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
         for (int i = 0; i < 15; i++) {
@@ -154,9 +154,11 @@ rect.exit().transition()
             move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
             move.duration = 1.0f;
             [animationGroup setAnimations:@[move]];
+        } completion:^(BOOL finished) {
+            
         }];
         
-        [self.movingBarView append:node];
+        [self.movingBarView appendNode:node];
     }];
     
     [bars setUpdate:^(OCDNode *node) {
@@ -166,7 +168,8 @@ rect.exit().transition()
     }];
     
     [bars setExit:^(OCDNode *node) {
-        [node setExitTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+        __weak OCDNode *blockNode = node;
+        [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
             CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
             // Index will be Zero
             CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
@@ -176,6 +179,8 @@ rect.exit().transition()
             move.fillMode = kCAFillModeForwards;
             move.removedOnCompletion = NO;
             [animationGroup setAnimations:@[move]];
+        } completion:^(BOOL finished) {
+            [self.movingBarView remove:blockNode];
         }];
     }];
     

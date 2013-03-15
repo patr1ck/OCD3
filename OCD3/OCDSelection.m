@@ -157,7 +157,9 @@
         [node updateAttributes];
         
         if (node.transition) {
+            [CATransaction begin];
             [node runAnimations];
+            [CATransaction commit];
         }
     }
     
@@ -169,13 +171,19 @@
     for (OCDNode *node in self.exitingNodeArray) {
         [node updateAttributes];
         exitBlock(node);
-        
-        if (node.exitTransition) {
-            node.shouldFireExit = YES;
-            [node runExitAnimations];
-        } else {
-            [node fireExitBlock];
+
+        if (node.transition) {
+            [CATransaction begin];
+            [node runAnimations];
+            [CATransaction commit];
         }
+        
+//        if (node.exitTransition) {
+//            node.shouldFireExit = YES;
+//            [node runExitAnimations];
+//        } else {
+//            [node fireExitBlock];
+//        }
     }
     
     return self;

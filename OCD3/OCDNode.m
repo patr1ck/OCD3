@@ -141,6 +141,7 @@
         
         CGPathRef newPath = nil;
         
+        // TODO: These should be broken out into subclasses as some point.
         switch (self.nodeType) {
             case OCDNodeTypeCircle: {
                 if ([attribute isEqualToString:@"r"]) {
@@ -253,28 +254,28 @@
     [self.shapeLayer addAnimation:animationGroup forKey:@"runningAnimations"];
 }
 
-- (void)runExitAnimations;
-{
-    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
-    animationGroup.duration = 1.f;
-    animationGroup.delegate = self;
-    if (self.exitTransition) {
-        self.exitTransition(animationGroup, self.data, self.index);
-    }
-    [self.shapeLayer addAnimation:animationGroup forKey:@"runningExitAnimations"];
-}
+//- (void)runExitAnimations;
+//{
+//    CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
+//    animationGroup.duration = 1.f;
+//    animationGroup.delegate = self;
+//    if (self.exitTransition) {
+//        self.exitTransition(animationGroup, self.data, self.index);
+//    }
+//    [self.shapeLayer addAnimation:animationGroup forKey:@"runningExitAnimations"];
+//}
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-    if (self.shouldFireExit) {
-        [self fireExitBlock];
+    if (self.completion) {
+        self.completion(flag);
     }
 }
 
-- (void)fireExitBlock;
-{
-    [self.view remove:self];
-}
+//- (void)fireExitBlock;
+//{
+//    [self.view remove:self];
+//}
 
 - (void)setValue:(id)value forAttributePath:(NSString *)path
 {
@@ -327,15 +328,16 @@
     }
 }
 
-- (void)setTransition:(OCDNodeAnimationBlock)animationBlock;
+- (void)setTransition:(OCDNodeAnimationBlock)animationBlock completion:(OCDNodeAnimationCompletionBlock)completion;
 {
     _transition = animationBlock;
+    _completion = completion;
 }
 
-- (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
-{
-    _exitTransition = animationBlock;
-}
+//- (void)setExitTransition:(OCDNodeAnimationBlock)animationBlock;
+//{
+//    _exitTransition = animationBlock;
+//}
 
 - (NSString *)description
 {
