@@ -24,14 +24,14 @@
     
     CGSize viewSize = self.view.bounds.size;
     
-    BarChartView *barChart = [[BarChartView alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, 100)];
-    [self.view addSubview:barChart];
+//    BarChartView *barChart = [[BarChartView alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, 100)];
+//    [self.view addSubview:barChart];
+//    
+//    PieChartView *pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(0, 110, viewSize.width, viewSize.width)];
+//    [self.view addSubview:pieChart];
     
-    PieChartView *pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(0, 110, viewSize.width, viewSize.width)];
-    [self.view addSubview:pieChart];
-    
-//    OMGParticles *particlesView = [[OMGParticles alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
-//    [self.view addSubview:particlesView];
+    OMGParticles *particlesView = [[OMGParticles alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
+    [self.view addSubview:particlesView];
 }
 
 

@@ -71,10 +71,13 @@
                             CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
                             fade.fromValue = @1.0;
                             fade.toValue = @0.0;
+                            fade.fillMode = kCAFillModeForwards;
                             CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"transform"];
                             grow.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
                             grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(5, 5, 1)];
                             
+                            animationGroup.removedOnCompletion = NO;
+                            animationGroup.fillMode = kCAFillModeForwards;
                             [animationGroup setAnimations:@[fade, grow]];
                         }
                             completion:^(BOOL finished) {

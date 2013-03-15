@@ -36,11 +36,10 @@
             [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
             
             [view appendNode:node withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-                CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform"];
-                rotate.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-                rotate.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeRotation((3*M_PI)/4, 0, 0, 1)];
-                animationGroup.duration = 20;
-                animationGroup.removedOnCompletion = NO;
+                CABasicAnimation *rotate = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
+                rotate.fromValue = @0;
+                rotate.toValue = [NSNumber numberWithFloat:M_PI * 2];
+                animationGroup.duration = 30;
                 animationGroup.repeatCount = HUGE_VALF;
                 
                 [animationGroup setAnimations:@[rotate]];
