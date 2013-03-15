@@ -67,6 +67,16 @@
     [self.nodes addObject:node];
 }
 
+- (void)appendNode:(OCDNode *)node
+    withTransition:(OCDNodeAnimationBlock)transition
+        completion:(OCDNodeAnimationCompletionBlock)completion;
+{
+    [self appendNode:node];
+    [node updateAttributes];
+    [node setTransition:transition completion:completion];
+    [node runAnimations];    
+}
+
 - (void)remove:(OCDNode *)node;
 {
     [node.shapeLayer removeFromSuperlayer];

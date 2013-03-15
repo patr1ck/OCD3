@@ -14,6 +14,10 @@
 
 @interface OCDNode () {
     
+    // OCDNodeTypeCircle
+    CGPoint _center;
+    CGFloat _radius;
+    
     // OCDNodeTypeRectangle
     CGFloat _previousHeight;
     CGFloat _previousWidth;
@@ -145,9 +149,10 @@
         switch (self.nodeType) {
             case OCDNodeTypeCircle: {
                 if ([attribute isEqualToString:@"r"]) {
-                    float radius = [value floatValue];
-                    newPath = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, radius, radius), NULL);
+                    _radius = [value floatValue];
+                    newPath = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, _radius, _radius), NULL);
                 }
+                self.shapeLayer.bounds = CGRectMake(0, 0, _radius*2, _radius*2);
                 break;
             }
             case OCDNodeTypeLine:{

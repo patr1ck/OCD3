@@ -59,17 +59,22 @@
 }
 
 - (void)tick
-{
-    NSLog(@"Ticking");
-    
+{    
     if (! CGPointEqualToPoint(_touchedPoint, _previousTouchedPoint)) {
         OCDNode *node = [OCDNode nodeWithIdentifier:@"circle"];
         node.nodeType = OCDNodeTypeCircle;
-        [node setValue:[NSValue valueWithCGPoint:_touchedPoint] forAttributePath:@"shape.center"];
+        [node setValue:[NSValue valueWithCGPoint:_touchedPoint] forAttributePath:@"position"];
         
         [self.particlesView appendNode:node
                         withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+                            CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
+                            fade.fromValue = @1.0;
+                            fade.toValue = @0.0;
+                            CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"transform"];
+                            grow.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+                            grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(4, 4, 1)];
                             
+                            [animationGroup setAnimations:@[fade, grow]];
                         }
                             completion:^(BOOL finished) {
                                 [self.particlesView remove:node];
