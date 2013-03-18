@@ -34,7 +34,7 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _barWidth = self.bounds.size.width / kBarDataPerScreen;
+        _barWidth = (self.bounds.size.width + kBarDataPerScreen) / kBarDataPerScreen;
 
         // Create our containing view and set up some details
         OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kBarMaxHeight)];
@@ -49,7 +49,7 @@
         line.nodeType = OCDNodeTypeLine;
         [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarMaxHeight - 0.5)]
       forAttributePath:@"shape.startPoint"];
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarMaxHeight - 0.5)]
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(movingBarView.bounds.size.width, kBarMaxHeight - 0.5)]
       forAttributePath:@"shape.endPoint"];
         [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
         [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
@@ -58,7 +58,7 @@
         
         // Initialize our data set
         self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
-        for (int i = 0; i < 15; i++) {
+        for (int i = 0; i < kBarDataPerScreen; i++) {
             [self.randomWalkData addObject:[self nextData]];
         }
         
@@ -120,7 +120,7 @@
         
         
         // Set the width and height of the bars. Here, the height is a function: the scaled data.
-        [node setValue:@20 forAttributePath:@"shape.width"];
+        [node setValue:[NSNumber numberWithFloat:_barWidth] forAttributePath:@"shape.width"];
         [node setValue:^(id data, NSUInteger index){
             return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
