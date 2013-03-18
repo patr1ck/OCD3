@@ -10,7 +10,6 @@
 
 @interface OMGParticles () {
     CADisplayLink *_displayLink;
-    CGPoint _previousTouchedPoint;
     CGPoint _touchedPoint;
 }
 @property (nonatomic, weak) OCDView *particlesView;
@@ -58,32 +57,29 @@
 
 - (void)tick
 {    
-    if (! CGPointEqualToPoint(_touchedPoint, _previousTouchedPoint)) {
-        OCDNode *node = [OCDNode nodeWithIdentifier:@"circle"];
-        node.nodeType = OCDNodeTypeCircle;
-        [node setValue:[NSValue valueWithCGPoint:_touchedPoint] forAttributePath:@"position"];
-        double hue = (double) arc4random() / 0x100000000;
-        [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"strokeColor"];
-        [node setValue:(id)[UIColor clearColor].CGColor forAttributePath:@"fillColor"];
-        
-        [self.particlesView appendNode:node
-                        withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-                            CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
-                            fade.fromValue = @1.0;
-                            fade.toValue = @0.0;
-                            fade.fillMode = kCAFillModeForwards;
-                            CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"transform"];
-                            grow.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-                            grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(5, 5, 1)];
-                            
-                            animationGroup.removedOnCompletion = NO;
-                            animationGroup.fillMode = kCAFillModeForwards;
-                            [animationGroup setAnimations:@[fade, grow]];
-                        }
-                            completion:^(BOOL finished) {
-                                [self.particlesView remove:node];
-                            }];
-    }
+    OCDNode *node = [OCDNode nodeWithIdentifier:@"circle"];
+    node.nodeType = OCDNodeTypeCircle;
+    [node setValue:[NSValue valueWithCGPoint:_touchedPoint] forAttributePath:@"position"];
+    double hue = (double) arc4random() / 0x100000000;
+    [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"strokeColor"];
+    [node setValue:(id)[UIColor clearColor].CGColor forAttributePath:@"fillColor"];
+    
+    [self.particlesView appendNode:node
+                    withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+                        CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
+                        fade.fromValue = @1.0;
+                        fade.toValue = @0.0;
+                        CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"transform"];
+                        grow.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
+                        grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(5, 5, 1)];
+                        
+                        animationGroup.removedOnCompletion = NO;
+                        animationGroup.fillMode = kCAFillModeForwards;
+                        [animationGroup setAnimations:@[fade, grow]];
+                    }
+                        completion:^(BOOL finished) {
+                            [self.particlesView remove:node];
+                        }];
 }
 
 @end

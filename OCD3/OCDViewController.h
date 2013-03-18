@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface OCDViewController : UIViewController
+@interface OCDViewController : UITableViewController
 
 @end

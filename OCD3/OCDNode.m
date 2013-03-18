@@ -261,7 +261,6 @@
 
 - (void)animationDidStop:(CAAnimation *)theAnimation finished:(BOOL)flag
 {
-    NSLog(@"Stopped: %@", theAnimation);
     if (self.completion) {
         self.completion(flag);
     }

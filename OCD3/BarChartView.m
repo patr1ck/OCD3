@@ -75,9 +75,9 @@ rect.exit().transition()
         // Create the line on the bottom and add it.
         OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
         line.nodeType = OCDNodeTypeLine;
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight)]
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight - 0.5)]
       forAttributePath:@"shape.startPoint"];
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarHeight)]
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarHeight - 0.5)]
       forAttributePath:@"shape.endPoint"];
         [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
         [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
