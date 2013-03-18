@@ -7,53 +7,21 @@
 //
 
 
-/*
- 
- Similar to the code of the D3.js "A Simple Bar Chart, Part 2":
- 
- var x = d3.scale.linear()
-   .domain([0, 1])
-   .range([0, w]);
- 
- var y = d3.scale.linear()
-   .domain([0, 100])
-   .rangeRound([0, h]);
- 
- var rect = chart.selectAll("rect")
-   .data(data, function(d) { return d.time; });
- 
-rect.enter().insert("rect", "line")
-  .attr("x", function(d, i) { return x(i + 1) - .5; })
-  .attr("y", function(d) { return h - y(d.value) - .5; })
-  .attr("width", w)
-  .attr("height", function(d) { return y(d.value); })
-  .transition()
-    .duration(1000)
-    .attr("x", function(d, i) { return x(i) - .5; });
- 
-rect.transition()
-  .duration(1000)
-  .attr("x", function(d, i) { return x(i) - .5; });
- 
-rect.exit().transition()
-  .duration(1000)
-  .attr("x", function(d, i) { return x(i - 1) - .5; })
-  .remove();
- 
- */
+// Similar to the code of the D3.js "A Simple Bar Chart, Part 2":
+// http://mbostock.github.com/d3/tutorial/bar-2.html
 
 #import "BarChartView.h"
 #import "OCD3.h"
 
-#define kMinBar 20
-#define kMaxBar 80
-#define kBarWidth 20
-#define kBarHeight 80
-#define ARC4RANDOM_MAX      0x100000000
+#define kBarDataPerScreen 15
+#define kBarMaxHeight 80
+#define kBarMinHeight 20
+#define ARC4RANDOM_MAX 0x100000000
 
 @interface BarChartView () {
     NSUInteger _vector;
     NSUInteger _count;
+    CGFloat _barWidth;
 }
 @property (nonatomic, weak) OCDView *movingBarView;
 @property (nonatomic, strong) NSMutableArray *randomWalkData;
@@ -65,40 +33,48 @@ rect.exit().transition()
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Moving Bar
-        OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kMaxBar)];
+        
+        _barWidth = self.bounds.size.width / kBarDataPerScreen;
+
+        // Create our containing view and set up some details
+        OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kBarMaxHeight)];
         [self addSubview:movingBarView];
         self.movingBarView = movingBarView;
-        _vector = (kMaxBar + kMinBar)/2;
+        _vector = (kBarMinHeight + kBarMaxHeight)/2;
         _count = 0;
+        
         
         // Create the line on the bottom and add it.
         OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
         line.nodeType = OCDNodeTypeLine;
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarHeight - 0.5)]
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarMaxHeight - 0.5)]
       forAttributePath:@"shape.startPoint"];
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarHeight - 0.5)]
+        [line setValue:[NSValue valueWithCGPoint:CGPointMake(self.bounds.size.width, kBarMaxHeight - 0.5)]
       forAttributePath:@"shape.endPoint"];
         [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
         [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
         [self.movingBarView appendNode:line];
         
+        
+        // Initialize our data set
         self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
         for (int i = 0; i < 15; i++) {
             [self.randomWalkData addObject:[self nextData]];
         }
         
+        // Setup a timer to redraw every few seconds
         NSTimer *timer = [NSTimer timerWithTimeInterval:2
                                                  target:self
-                                               selector:@selector(stepUp)
+                                               selector:@selector(stepData)
                                                userInfo:nil
                                                 repeats:YES];
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSRunLoopCommonModes];
+        [self redrawChart];
     }
     return self;
 }
 
-- (void)stepUp
+- (void)stepData
 {
     [self.randomWalkData removeObjectAtIndex:0];
     [self.randomWalkData addObject:[self nextData]];
@@ -107,7 +83,7 @@ rect.exit().transition()
 
 - (NSDictionary *)nextData
 {
-    int value = MAX(kMinBar, MIN(kMaxBar, abs(_vector + kMinBar * ( (((double)arc4random() / ARC4RANDOM_MAX)) - 0.5) )));
+    int value = MAX(kBarMinHeight, MIN(kBarMaxHeight, abs(_vector + kBarMinHeight * ( (((double)arc4random() / ARC4RANDOM_MAX)) - 0.5) )));
     _vector = value;
     return @{ @"value": [NSNumber numberWithInt:value], @"time": [NSNumber numberWithInt:_count++] };
 }
@@ -115,69 +91,90 @@ rect.exit().transition()
 - (void)redrawChart
 {
     OCDScale *xScale = [OCDScale linearScaleWithDomainStart:@0 domainEnd:@1
-                                                 rangeStart:0 rangeEnd:kBarWidth];
+                                                 rangeStart:0 rangeEnd:_barWidth];
     OCDScale *yScale = [OCDScale linearScaleWithDomainStart:@0 domainEnd:@100
-                                                 rangeStart:0 rangeEnd:kBarHeight];
+                                                 rangeStart:0 rangeEnd:kBarMaxHeight];
     
     OCDSelection *bars = [self.movingBarView selectAllWithIdentifier:@"rects"];
     [bars setData:self.randomWalkData usingKey:@"time"];
     
     [bars setEnter:^(OCDNode *node) {
+        
+        // We want to represent our data as a bar chart, so each data point will be a rectangle
         [node setNodeType:OCDNodeTypeRectangle];
         
+        // The x position depends on which peice of data we're looking at, so we use our scale to set it
+        // We add the index value again to give it a 1px space from the previous bar.
         [node setValue:^(id data, NSUInteger index){
             CGFloat scaledValue = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
             return [NSNumber numberWithFloat:scaledValue + index];
         } forAttributePath:@"position.x"];
         
-        [node setValue:^(id data, NSUInteger index){
-            CGFloat computed = kBarHeight - [[yScale scaleValue:[data objectForKey:@"value"]] floatValue];
-            return [NSNumber numberWithFloat:computed];
-        } forAttributePath:@"frame.origin.y"];
         
+        // Likewise, we set the y position to be the max bar height minus our real height,
+        // in order to align them to the bottom of the frame
+        [node setValue:^(id data, NSUInteger index){
+            CGFloat computed = kBarMaxHeight - [[yScale scaleValue:[data objectForKey:@"value"]] floatValue];
+            return [NSNumber numberWithFloat:computed];
+        } forAttributePath:@"position.y"];
+        
+        
+        // Set the width and height of the bars. Here, the height is a function: the scaled data.
         [node setValue:@20 forAttributePath:@"shape.width"];
         [node setValue:^(id data, NSUInteger index){
             return [yScale scaleValue:[data objectForKey:@"value"]];
         } forAttributePath:@"shape.height"];
         
-        double hue = (double) arc4random() / 0x100000000;
+        
+        // Set a random color for the bar
+        double hue = (double) arc4random() / ARC4RANDOM_MAX;
         [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
         
+        
+        // Put the value inside the bar
         [node setText:[NSString stringWithFormat:@"%.0f", [[node.data objectForKey:@"value"] floatValue]]];
         
         
+        // Have the bar move from +1 of it's normal x position into where it should be.
         [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
             CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
             CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index+1]] floatValue];
             CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
+            
+            // We add the index again to leave a 1px space between the bars
             move.fromValue = [NSNumber numberWithFloat:scaledValueFrom + index];
             move.toValue = [NSNumber numberWithFloat:scaledValueTo + index];
+            
             move.duration = 1.0f;
             [animationGroup setAnimations:@[move]];
-        } completion:^(BOOL finished) {
-            
-        }];
+        } completion:nil];
         
+        
+        // Add the node to the view.
         [self.movingBarView appendNode:node];
     }];
     
     [bars setUpdate:^(OCDNode *node) {
-        // We don't need to do much here since our update transition remains the same as above.
-        // Just update the text of the nodes.
-        [node setText:[NSString stringWithFormat:@"%.0f", [[node.data objectForKey:@"value"] floatValue]]];
+        // We don't need to do anything here since our update transition remains the same as above.
     }];
     
     [bars setExit:^(OCDNode *node) {
+        
+        // We're going to reference the given node in a completion block below, so we should mark
+        // it as weak so we don't cause a memory leak.
         __weak OCDNode *blockNode = node;
+        
         [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
             CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.x"];
-            // Index will be Zero
             CGFloat scaledValueFrom = [[xScale scaleValue:[NSNumber numberWithInt:index]] floatValue];
             CGFloat scaledValueTo = [[xScale scaleValue:[NSNumber numberWithInt:index-1]] floatValue];
             move.fromValue = [NSNumber numberWithFloat:scaledValueFrom - 1.f]; // Keep the 1px spacing.
             move.toValue = [NSNumber numberWithFloat:scaledValueTo - 1.f]; // Keep the 1px spacing.
-            move.fillMode = kCAFillModeForwards;
-            move.removedOnCompletion = NO;
+            
+            // We want the animation to hold in position at the end, (for the split second before
+            // it is removed) so the user doesn't see any flickering.
+            animationGroup.fillMode = kCAFillModeForwards;
+            animationGroup.removedOnCompletion = NO;
             [animationGroup setAnimations:@[move]];
         } completion:^(BOOL finished) {
             [self.movingBarView remove:blockNode];
