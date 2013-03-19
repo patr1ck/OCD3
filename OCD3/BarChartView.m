@@ -20,7 +20,7 @@
 
 @interface BarChartView () {
     NSUInteger _vector;
-    NSUInteger _count;
+    NSUInteger _time;
     CGFloat _barWidth;
 }
 @property (nonatomic, weak) OCDView *movingBarView;
@@ -34,15 +34,19 @@
     self = [super initWithFrame:frame];
     if (self) {
         
-        _barWidth = (self.bounds.size.width + kBarDataPerScreen) / kBarDataPerScreen;
-
         // Create our containing view and set up some details
         OCDView *movingBarView = [[OCDView alloc] initWithFrame:CGRectMake(0, 0, self.bounds.size.width, kBarMaxHeight)];
         [self addSubview:movingBarView];
         self.movingBarView = movingBarView;
         _vector = (kBarMinHeight + kBarMaxHeight)/2;
-        _count = 0;
-        
+        _time = 0;
+        _barWidth = (self.bounds.size.width + kBarDataPerScreen) / kBarDataPerScreen;
+
+        // Initialize our data set
+        self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
+        for (int i = 0; i < kBarDataPerScreen; i++) {
+            [self.randomWalkData addObject:[self nextData]];
+        }
         
         // Create the line on the bottom and add it.
         OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
@@ -51,16 +55,10 @@
       forAttributePath:@"shape.startPoint"];
         [line setValue:[NSValue valueWithCGPoint:CGPointMake(movingBarView.bounds.size.width, kBarMaxHeight - 0.5)]
       forAttributePath:@"shape.endPoint"];
-        [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"];
+        [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"]; // ensure it's in front
         [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
         [self.movingBarView appendNode:line];
         
-        
-        // Initialize our data set
-        self.randomWalkData = [NSMutableArray arrayWithCapacity:10];
-        for (int i = 0; i < kBarDataPerScreen; i++) {
-            [self.randomWalkData addObject:[self nextData]];
-        }
         
         // Setup a timer to redraw every few seconds
         NSTimer *timer = [NSTimer timerWithTimeInterval:2
@@ -85,7 +83,7 @@
 {
     int value = MAX(kBarMinHeight, MIN(kBarMaxHeight, abs(_vector + kBarMinHeight * ( (((double)arc4random() / ARC4RANDOM_MAX)) - 0.5) )));
     _vector = value;
-    return @{ @"value": [NSNumber numberWithInt:value], @"time": [NSNumber numberWithInt:_count++] };
+    return @{ @"value": [NSNumber numberWithInt:value], @"time": [NSNumber numberWithInt:_time++] };
 }
 
 - (void)redrawChart
