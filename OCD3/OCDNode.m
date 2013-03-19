@@ -234,8 +234,10 @@
         CGPoint arcStartPointInner = CGPointMake(center + _innerRadius * cosf(_startAngle), center + _innerRadius * sinf(_startAngle));
         CGPathMoveToPoint(path, NULL, arcStartPointInner.x, arcStartPointInner.y);
     }
+    
     CGPathAddLineToPoint(path, NULL, arcStartPointOuter.x, arcStartPointOuter.y);
     CGPathAddArc(path, NULL, center, center, _outerRadius, _startAngle, _endAngle, 0);
+    
     if (_innerRadius != 0) {
         CGPoint arcEndPointInner = CGPointMake(center + _innerRadius * cosf(_endAngle), center + _innerRadius * sinf(_endAngle));
         CGPathAddLineToPoint(path, NULL, arcEndPointInner.x, arcEndPointInner.y);
@@ -243,8 +245,6 @@
     } else {
         CGPathAddLineToPoint(path, NULL, center, center);
     }
-    CGPathCloseSubpath(path);
-    
         
     return path;
 }

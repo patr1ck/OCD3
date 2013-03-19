@@ -8,34 +8,55 @@
 
 #import "OCDPieLayout.h"
 
+@interface OCDPieLayout ()
+@property (nonatomic, strong) NSArray *dataArray;
+@property (nonatomic, strong) NSString *key;
+@end
+
 @implementation OCDPieLayout
 
-+ (NSArray *)layoutForDataArray:(NSArray *)data usingKey:(NSString *)key;
+- (id)init
 {
-    // These should be use configurable
-    float startAngle = 0;
-    float endAngle = M_PI * 2;
-    
+    self = [super init];
+    if (self) {
+        _startAngle = 0;
+        _endAngle = (M_PI * 2);
+    }
+    return self;
+}
+
++ (id)layoutForDataArray:(NSArray *)data
+                usingKey:(NSString *)key;
+{
+    OCDPieLayout *pieLayout = [[OCDPieLayout alloc] init];
+    pieLayout.dataArray = data;
+    pieLayout.key = key;
+
+    return pieLayout;
+}
+
+- (NSArray *)layoutData;
+{
     // find the total, we need it to scale the individual values below
     float valuesTotal = 0;
-    for (id value in data) {
+    for (id value in self.dataArray) {
         id extractedValue = value;
-        if (key) {
-            extractedValue = [value valueForKey:key];
+        if (self.key) {
+            extractedValue = [value valueForKey:self.key];
         }
         if ([extractedValue isKindOfClass:[NSNumber class]]) {
             valuesTotal += [(NSNumber *)extractedValue floatValue];
         }
     }
     
-    float a = startAngle;
-    float k = (endAngle - startAngle) / valuesTotal;
+    float a = _startAngle;
+    float k = (_endAngle - _startAngle) / valuesTotal;
     
     NSMutableArray *layout = [[NSMutableArray alloc] initWithCapacity:10];
-    for (id value in data) {
+    for (id value in self.dataArray) {
         id extractedValue = value;
-        if (key) {
-            extractedValue = [value valueForKey:key];
+        if (self.key) {
+            extractedValue = [value valueForKey:self.key];
         }
         if ([extractedValue isKindOfClass:[NSNumber class]]) {
             float floatValue = [(NSNumber *)extractedValue floatValue];

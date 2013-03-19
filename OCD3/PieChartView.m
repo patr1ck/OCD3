@@ -26,7 +26,10 @@
         
         OCDNodeFormatter *arcFormatter = [OCDNodeFormatter arcNodeFormatterWithInnerRadius:100
                                                                                outerRadius:(self.bounds.size.width/2)];
-        OCDSelection *arcs = [[view selectAllWithIdentifier:@"arcs"] setData:[OCDPieLayout layoutForDataArray:data usingKey:@"Percent"]
+        OCDPieLayout *pieLayout = [OCDPieLayout layoutForDataArray:data usingKey:@"Percent"];
+        pieLayout.startAngle = M_PI_2;
+        pieLayout.endAngle = (2 * M_PI) + M_PI_2;
+        OCDSelection *arcs = [[view selectAllWithIdentifier:@"arcs"] setData:[pieLayout layoutData]
                                                                     usingKey:nil];
         
         [arcs setEnter:^(OCDNode *node) {
@@ -42,7 +45,7 @@
                 animationGroup.duration = 30;
                 animationGroup.repeatCount = HUGE_VALF;
                 
-                [animationGroup setAnimations:@[rotate]];
+//                [animationGroup setAnimations:@[rotate]];
             } completion:^(BOOL finished) {
                 
             }];

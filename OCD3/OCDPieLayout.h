@@ -10,6 +10,10 @@
 
 @interface OCDPieLayout : NSObject
 
-+ (NSArray *)layoutForDataArray:(NSArray *)data usingKey:(NSString *)key;
+@property (nonatomic, assign) CGFloat startAngle;
+@property (nonatomic, assign) CGFloat endAngle;
+
++ (id)layoutForDataArray:(NSArray *)data usingKey:(NSString *)key;
+- (NSArray *)layoutData;
 
 @end
