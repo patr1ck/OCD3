@@ -112,6 +112,7 @@
         
         if (!self.textLayer) {
             self.textLayer = [CATextLayer layer];
+            self.textLayer.contentsScale = [[UIScreen mainScreen] scale];
             NSAttributedString *string = [[NSAttributedString alloc] initWithString:text
                                                                          attributes:@{
                                         NSFontAttributeName: [UIFont systemFontOfSize:2.f]
