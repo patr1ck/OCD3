@@ -36,7 +36,7 @@ no longer needed are destroyed, and others are updated as needed. This is known 
 OCD3 also provides `OCDScale`, `OCDNodeFormatter`, and `OCD*Layout` classes. `OCDScale` is analogous
 to `d3.scale`, `OCDNodeFormatter` is analogous to the `d3.svg` shape generators, and the `OCD*Layout`
 classes try to help with node layout, similar to the `d3.layout` library.
-<<<<<<< Local Changes
+
 
 ## Tutorial
 
