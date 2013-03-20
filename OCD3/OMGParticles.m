@@ -27,6 +27,14 @@
         
         UIPanGestureRecognizer *pan = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(pan:)];
         [particlesView addGestureRecognizer:pan];
+        
+        UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(0, 0, 200, 20)];
+        label.text = @"touch me";
+        label.textAlignment = NSTextAlignmentCenter;
+        label.textColor = [UIColor lightGrayColor];
+        label.backgroundColor = [UIColor clearColor];
+        [self addSubview:label];
+        label.center = CGPointMake(CGRectGetMidX(self.bounds), CGRectGetMidY(self.bounds) - 20);
     }
     return self;
 }
