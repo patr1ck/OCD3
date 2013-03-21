@@ -39,4 +39,4 @@ classes try to help with node layout, similar to the `d3.layout` library.
 
 ## Documentation
 
-Soon!
+Appledoc-generated documentation is available for most classes here: [OCD3 Documentation](http://tildeio.github.com/OCD3/docs/)
