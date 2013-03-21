@@ -606,10 +606,12 @@ It can be used to later select the node.</p>
 
 <p>There are several kinds of values you can pass:</p>
 
-<pre><code>- A normal value, like an NSString or NSNumber.  
-- An OCDNodeData object, which will substitute for the joined data's value at run time.  
-- An OCDSelectionValueBlock, which will be evaluated using the data's value and its index at run time.  
-</code></pre>
+<ul>
+<li>A normal value, like an NSString or NSNumber.</li>
+<li>An <a href="../Classes/OCDNodeData.html">OCDNodeData</a> object, which will substitute for the joined data&rsquo;s value at run time.</li>
+<li>An OCDSelectionValueBlock, which will be evaluated using the data&rsquo;s value and its <a href="#//api/name/index">index</a> at run time.</li>
+</ul>
+
 
 <p>The latter two options allow the attributes to easily be defined by the <a href="#//api/name/data">data</a> being represented.</p>
 
