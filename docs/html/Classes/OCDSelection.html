@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>OCDView Class Reference</title>
+		<title>OCDSelection Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
 		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
@@ -16,7 +16,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">OCDView Class Reference</h1>
+				<h1 class="hideInXcode">OCDSelection Class Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -43,13 +43,13 @@
 	
 	<option value="instance_methods">Instance Methods</option>
 	
-	<option value="//api/name/appendNode:">&nbsp;&nbsp;&nbsp;&nbsp;- appendNode:</option>
+	<option value="//api/name/setData:usingKey:">&nbsp;&nbsp;&nbsp;&nbsp;- setData:usingKey:</option>
 	
-	<option value="//api/name/appendNode:withTransition:completion:">&nbsp;&nbsp;&nbsp;&nbsp;- appendNode:withTransition:completion:</option>
+	<option value="//api/name/setEnter:">&nbsp;&nbsp;&nbsp;&nbsp;- setEnter:</option>
 	
-	<option value="//api/name/remove:">&nbsp;&nbsp;&nbsp;&nbsp;- remove:</option>
+	<option value="//api/name/setExit:">&nbsp;&nbsp;&nbsp;&nbsp;- setExit:</option>
 	
-	<option value="//api/name/selectAllWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- selectAllWithIdentifier:</option>
+	<option value="//api/name/setUpdate:">&nbsp;&nbsp;&nbsp;&nbsp;- setUpdate:</option>
 	
 	
 	
@@ -79,13 +79,13 @@
 
 <li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appendNode:">appendNode:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setData:usingKey:">setData:usingKey:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appendNode:withTransition:completion:">appendNode:withTransition:completion:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setEnter:">setEnter:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remove:">remove:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setExit:">setExit:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/selectAllWithIdentifier:">selectAllWithIdentifier:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/setUpdate:">setUpdate:</a></span></li>
 	
 </ul></li>
 
@@ -94,7 +94,7 @@
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="OCDView Class Reference" name="top"></a>
+				<a title="OCDSelection Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -103,7 +103,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">OCDView Class Reference</h1>
+						<h1 class="title title-header">OCDSelection Class Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -111,10 +111,10 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">UIView</td>
+	<td class="specification-value">NSObject</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">OCDView.h<br />OCDView.m</td>
+	<td class="specification-value">OCDSelection.h<br />OCDSelection.m</td>
 </tr>
 						</tbody></table></div>
 					
@@ -124,14 +124,7 @@
 					<div class="section section-overview">
 						<a title="Overview" name="overview"></a>
 						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>An OCDView plays host to all OCD content. Using an OCDView you can</p>
-
-<ul>
-<li>Append new nodes (optionally with animations)</li>
-<li>Remove existing nodes</li>
-<li>Create selections</li>
-</ul>
-
+						<p>Selections allow you to join data to them and define the behavior of entering nodes, updated nodes, and exciting nodes. All selections have an identifier which is defined by the user when created via the <a href="../Classes/OCDView.html">OCDView</a>.</p>
 					</div>
 					
 					
@@ -149,29 +142,29 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/selectAllWithIdentifier:">&ndash;&nbsp;selectAllWithIdentifier:</a></code>
-		<span class="tooltip"><p>The primary way you&rsquo;ll want to interact with OCDView objects. Getting a seleciton allows you to join data to it in order to create, update and delete <a href="../Classes/OCDNode.html">OCDNode</a> objects.</p></span>
+		<code><a href="#//api/name/setData:usingKey:">&ndash;&nbsp;setData:usingKey:</a></code>
+		<span class="tooltip"><p>Joins a data array with <a href="../Classes/OCDNode.html">OCDNode</a> objects. Nodes which don&rsquo;t already exist are created and put into an &ldquo;enter&rdquo; state which can then be appended within the block passed to <a href="#//api/name/setEnter:">setEnter:</a> method. Data with existing nodes are put into an updated state and can be modified in the block passed to the <a href="#//api/name/setUpdate:">setUpdate:</a> method. Nodes with removed data are moved to the &ldquo;exit&rdquo; state and can modified in the block passed to setExit before they are removed frome the <a href="#//api/name/view">view</a>.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/appendNode:">&ndash;&nbsp;appendNode:</a></code>
-		<span class="tooltip"><p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p></span>
+		<code><a href="#//api/name/setEnter:">&ndash;&nbsp;setEnter:</a></code>
+		<span class="tooltip"><p>Sets the block which will be executed on selected nodes that are entering the <a href="#//api/name/view">view</a>.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/appendNode:withTransition:completion:">&ndash;&nbsp;appendNode:withTransition:completion:</a></code>
-		<span class="tooltip"><p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView with a given animation and completion block. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p></span>
+		<code><a href="#//api/name/setUpdate:">&ndash;&nbsp;setUpdate:</a></code>
+		<span class="tooltip"><p>Sets the block which will be executed on selected nodes that are remaining in the <a href="#//api/name/view">view</a> and being updated.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/remove:">&ndash;&nbsp;remove:</a></code>
-		<span class="tooltip"><p>Allows you to manually remove a node from an OCDView.</p></span>
+		<code><a href="#//api/name/setExit:">&ndash;&nbsp;setExit:</a></code>
+		<span class="tooltip"><p>Sets the block which will be executed on selected nodes that are exiting the <a href="#//api/name/view">view</a>.</p></span>
 	</span>
 	
 	
@@ -193,18 +186,18 @@
 						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/appendNode:" title="appendNode:"></a>
-	<h3 class="subsubtitle method-title">appendNode:</h3>
+	<a name="//api/name/setData:usingKey:" title="setData:usingKey:"></a>
+	<h3 class="subsubtitle method-title">setData:usingKey:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p>
+		<p>Joins a data array with <a href="../Classes/OCDNode.html">OCDNode</a> objects. Nodes which don&rsquo;t already exist are created and put into an &ldquo;enter&rdquo; state which can then be appended within the block passed to <a href="#//api/name/setEnter:">setEnter:</a> method. Data with existing nodes are put into an updated state and can be modified in the block passed to the <a href="#//api/name/setUpdate:">setUpdate:</a> method. Nodes with removed data are moved to the &ldquo;exit&rdquo; state and can modified in the block passed to setExit before they are removed frome the <a href="#//api/name/view">view</a>.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)appendNode:(OCDNode *)<em>node</em></code></div>
+	<div class="method-subsection method-declaration"><code>- (OCDSelection *)setData:(NSArray *)<em>dataArray</em> usingKey:(id)<em>key</em></code></div>
 
     
 	
@@ -212,156 +205,13 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>node</em></dt>
-			<dd><p>The node to add.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/appendNode:withTransition:completion:" title="appendNode:withTransition:completion:"></a>
-	<h3 class="subsubtitle method-title">appendNode:withTransition:completion:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView with a given animation and completion block. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)appendNode:(OCDNode *)<em>node</em> withTransition:(OCDNodeAnimationBlock)<em>transition</em> completion:(OCDNodeAnimationCompletionBlock)<em>completion</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>node</em></dt>
-			<dd><p>The node to add.</p></dd>
+			<dt><em>dataArray</em></dt>
+			<dd><p>An array of objects which will be joined with OCDNodes.</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>transition</em></dt>
-			<dd><p>The animation block.</p></dd>
-		</dl>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>completion</em></dt>
-			<dd><p>The compelition block.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/remove:" title="remove:"></a>
-	<h3 class="subsubtitle method-title">remove:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Allows you to manually remove a node from an OCDView.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)remove:(OCDNode *)<em>node</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>node</em></dt>
-			<dd><p>The node to remove from the view.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/selectAllWithIdentifier:" title="selectAllWithIdentifier:"></a>
-	<h3 class="subsubtitle method-title">selectAllWithIdentifier:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>The primary way you&rsquo;ll want to interact with OCDView objects. Getting a seleciton allows you to join data to it in order to create, update and delete <a href="../Classes/OCDNode.html">OCDNode</a> objects.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (OCDSelection *)selectAllWithIdentifier:(NSString *)<em>identifier</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>identifier</em></dt>
-			<dd><p>The identifier of the node(s) you would like to be selected.</p></dd>
+			<dt><em>key</em></dt>
+			<dd><p>An object which acts as a primary key for the data. Can be nil.</p></dd>
 		</dl>
 		
 	</div>
@@ -370,7 +220,7 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>An <a href="../Classes/OCDSelection.html">OCDSelection</a> object representing the selection.</p>
+		<p>The selection that was messaged.</p>
 	</div>
 	
 	
@@ -385,7 +235,160 @@
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
+		<code class="declared-in-ref">OCDSelection.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setEnter:" title="setEnter:"></a>
+	<h3 class="subsubtitle method-title">setEnter:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the block which will be executed on selected nodes that are entering the <a href="#//api/name/view">view</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (OCDSelection *)setEnter:(OCDSelectionBlock)<em>enterBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>enterBlock</em></dt>
+			<dd><p>An array of objects which will be joined with OCDNodes.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The selection that was messaged.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">OCDSelection.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setExit:" title="setExit:"></a>
+	<h3 class="subsubtitle method-title">setExit:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the block which will be executed on selected nodes that are exiting the <a href="#//api/name/view">view</a>.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (OCDSelection *)setExit:(OCDSelectionBlock)<em>exitBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>exitBlock</em></dt>
+			<dd><p>An array of objects which will be joined with OCDNodes.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The selection that was messaged.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">OCDSelection.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/setUpdate:" title="setUpdate:"></a>
+	<h3 class="subsubtitle method-title">setUpdate:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Sets the block which will be executed on selected nodes that are remaining in the <a href="#//api/name/view">view</a> and being updated.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>- (OCDSelection *)setUpdate:(OCDSelectionBlock)<em>updateBlock</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>updateBlock</em></dt>
+			<dd><p>An array of objects which will be joined with OCDNodes.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>The selection that was messaged.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">OCDSelection.h</code><br />
 	</div>				
 	
 	
@@ -404,7 +407,7 @@
 				<div id="footer">
 					<hr />
 					<div class="footer-copyright">
-						<p><span class="copyright">&copy; 2013 Tilde Inc. All rights reserved. (Last updated: 2013-03-21)</span><br />
+						<p><span class="copyright">&copy; 2013 Tilde Inc. All rights reserved. (Last updated: 2013-03-20)</span><br />
 						
 						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.1 (build 858)</a>.</span></p>
 						
