@@ -149,7 +149,7 @@
         // TODO: These should be broken out into subclasses as some point.
         switch (self.nodeType) {
             case OCDNodeTypeCircle: {
-                if ([attribute isEqualToString:@"r"]) {
+                if ([attribute isEqualToString:@"radius"]) {
                     _radius = [value floatValue];
                     newPath = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, _radius, _radius), NULL);
                 }

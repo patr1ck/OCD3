@@ -177,13 +177,6 @@
             [node runAnimations];
             [CATransaction commit];
         }
-        
-//        if (node.exitTransition) {
-//            node.shouldFireExit = YES;
-//            [node runExitAnimations];
-//        } else {
-//            [node fireExitBlock];
-//        }
     }
     
     return self;

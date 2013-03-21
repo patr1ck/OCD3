@@ -53,7 +53,7 @@
 /**
  Allows you to manually remove a node from an OCDView.
  
- @param node The node to remove.
+ @param node The node to remove from the view.
  */
 - (void)remove:(OCDNode *)node;
 

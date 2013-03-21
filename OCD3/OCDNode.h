@@ -65,17 +65,49 @@ typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
 + (id)nodeWithIdentifier:(NSString *)identifier;
 
 /**
- Creates a node with a given identifier.
+ Allows you to set values on node.
  
- @param identifier The identifier string.
+ This can be used to set values on the underlying CAShapeLayer that OCDNode represents. Any CAShapeLayer property you can set with setValue:forKey: will also work here.
+ 
+ There are several kinds of values you can pass:
+
+    - A normal value, like an NSString or NSNumber.
+    - An OCDNodeData object, which will substitute for the joined data's value at run time.
+    - An OCDSelectionValueBlock, which will be evaluated using the data's value and its index at run time.
+ 
+ The latter two options allow the attributes to easily be defined by the data being represented.
+ 
+ Further, there is a special path prefix you can use, "shape" as an easy way of configuring OCDNode shape properties. These are:
+ 
+ OCDNodeTypeCircle
+    CGFloat radius
+ 
+ OCDNodeTypeRectangle
+    CGFloat height
+    CGFloat width
+ 
+ OCDNodeTypeLine
+    CGPoint startPoint
+    CGPoint endPoint
+ 
+ OCDNodeTypeArc
+    CGFloat innerRadius
+    CGFloat outerRadius
+    CGFloat startAngle
+    CGFloat endAngle
+ 
+ Like normal values, they should be boxed in either NSNumbers or NSValue objects.
+ 
+ @param value The identifier string.
+ @param path The path of the attribute you are trying to set. Can be things like "shape.width" or "transform.scale.x"
  */
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
 
 /**
- Creates a node with a given identifier.
- 
+ Allows animation(s) to be set on the node. These animations are run after the node has been updated with the latest attributes.
+
  @param animationBlock A block which creates appropriate animations and adds them to the group animation.
- @param completion 
+ @param completion A block of code which will be run when the animation completes or is cancelled.
  */
 - (void)setTransition:(OCDNodeAnimationBlock)animationBlock completion:(OCDNodeAnimationCompletionBlock)completion;
 
