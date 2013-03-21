@@ -71,9 +71,9 @@ typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
  
  There are several kinds of values you can pass:
 
-    - A normal value, like an NSString or NSNumber.
-    - An OCDNodeData object, which will substitute for the joined data's value at run time.
-    - An OCDSelectionValueBlock, which will be evaluated using the data's value and its index at run time.
+- A normal value, like an NSString or NSNumber.
+- An OCDNodeData object, which will substitute for the joined data's value at run time.
+- An OCDSelectionValueBlock, which will be evaluated using the data's value and its index at run time.
  
  The latter two options allow the attributes to easily be defined by the data being represented.
  
