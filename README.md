@@ -40,3 +40,5 @@ classes try to help with node layout, similar to the `d3.layout` library.
 ## Documentation
 
 Appledoc-generated documentation is available for most classes here: [OCD3 Documentation](http://tildeio.github.com/OCD3/docs/)
+
+Also, a simple tutorial is available on the wiki: [Animated Bar Chart](https://github.com/tildeio/OCD3/wiki/Tutorial:-Animated-Bar-Chart)
