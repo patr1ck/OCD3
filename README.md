@@ -1,7 +1,7 @@
 # OCD3
 
 
-A not-yet-primetime-ready, Core Animation-based, D3.js-inspired drawing library for Cocoa Touch.
+OCD3 is a Core Animation-based, D3.js-inspired drawing library for Cocoa Touch.
 Specifically, OCD3 uses CAShapeLayer, along with CAAnimations and D3.js-style enter/update/exit 
 patterns to do data-bound drawing in a view.
 
