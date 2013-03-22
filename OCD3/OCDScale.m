@@ -8,15 +8,14 @@
 #import "OCDScale.h"
 
 typedef enum {
-    OCDScaleTypeLinear,
-    OCDScaleTypeOrdinal
+    OCDScaleTypeLinear
 } OCDScaleType;
 
 @interface OCDScale () {
-    NSUInteger _domainStart;
-    NSUInteger _domainEnd;
-    NSUInteger _rangeStart;
-    NSUInteger _rangeEnd;
+    CGFloat _domainStart;
+    CGFloat _domainEnd;
+    CGFloat _rangeStart;
+    CGFloat _rangeEnd;
 }
 
 @property (nonatomic, strong) NSArray *data;
@@ -26,24 +25,19 @@ typedef enum {
 
 @implementation OCDScale
 
-+ (id)ordinalScaleWithData:(NSArray *)data rangeStart:(NSUInteger)startIndex rangeEnd:(NSUInteger)endIndex;
++ (id)linearScaleWithDomainStart:(CGFloat)startNum
+                       domainEnd:(CGFloat)endNum
+                      rangeStart:(CGFloat)startIndex
+                        rangeEnd:(CGFloat)endIndex;
 {
-    return nil;
-}
-
-+ (id)linearScaleWithDomainStart:(NSNumber *)startNum
-                       domainEnd:(NSNumber *)endNum
-                      rangeStart:(NSUInteger)startIndex
-                        rangeEnd:(NSUInteger)endIndex;
-{
-    OCDScale *scale = [[OCDScale alloc] initWithDomainStart:[startNum floatValue]
-                                                domainEnd:[endNum floatValue]
+    OCDScale *scale = [[OCDScale alloc] initWithDomainStart:startNum
+                                                domainEnd:endNum
                                                rangeStart:startIndex
                                                  rangeEnd:endIndex];
     return scale;
 }
 
-- (id)initWithDomainStart:(CGFloat)domainStart domainEnd:(CGFloat)domainEnd rangeStart:(NSUInteger)rangeStart rangeEnd:(NSUInteger)rangeEnd;
+- (id)initWithDomainStart:(CGFloat)domainStart domainEnd:(CGFloat)domainEnd rangeStart:(CGFloat)rangeStart rangeEnd:(CGFloat)rangeEnd;
 {
     self = [super init];
     if (self) {
@@ -56,10 +50,8 @@ typedef enum {
     return self;
 }
 
-- (id)scaleValue:(NSNumber *)value;
-{
-    CGFloat valuef = [value floatValue];
-    
+- (CGFloat)scaleValue:(CGFloat)value;
+{    
     switch (self.scaleType) {
         case OCDScaleTypeLinear: {
             // Shift the domain and range to be zero based
@@ -67,20 +59,17 @@ typedef enum {
             CGFloat shiftedRangeEnd = (float) _rangeEnd - _rangeStart;
             
             // scale the number
-            CGFloat scaled = (float) ( (float) (shiftedRangeEnd * (valuef - _domainStart)) / shiftedDomainEnd ) + _rangeStart;
-            return [NSNumber numberWithFloat:scaled];
+            CGFloat scaled = (float) ( (float) (shiftedRangeEnd * (value - _domainStart)) / shiftedDomainEnd ) + _rangeStart;
+            return scaled;
             break;
         }
-            
-        case OCDScaleTypeOrdinal:
-            
-            break;
+
             
         default:
             break;
     }
     
-    return nil;
+    return 0;
 }
 
 @end

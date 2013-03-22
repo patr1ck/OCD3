@@ -294,7 +294,7 @@
         // If the value is a scale, scale the data
         
         OCDScale *scale = (OCDScale *)value;
-        CGFloat scaleValue = [[scale scaleValue:[NSNumber numberWithInt:self.index]] floatValue];
+        CGFloat scaleValue = [scale scaleValue:self.index];
         CGFloat scaledDataValue = [(NSNumber *)self.data floatValue] * scaleValue;
         return [NSNumber numberWithFloat:scaledDataValue];
     } else {

@@ -137,8 +137,11 @@
 
 - (OCDSelection *)setEnter:(OCDSelectionBlock)enterBlock;
 {
-    for (OCDNode *node in self.enteringNodeArray) {        
-        enterBlock(node); // the block is responsible for appending it to the view.
+    for (OCDNode *node in self.enteringNodeArray) {
+        
+        if (enterBlock != nil) {
+            enterBlock(node); // the block is responsible for appending it to the view.
+        }
         [node updateAttributes];
         
         if (node.transition) {
@@ -153,7 +156,11 @@
 - (OCDSelection *)setUpdate:(OCDSelectionBlock)updateBlock;
 {
     for (OCDNode *node in self.updatedNodeArray) {
-        updateBlock(node);
+        
+        if (updateBlock != nil) {
+            updateBlock(node);
+        }
+        
         [node updateAttributes];
         
         if (node.transition) {
@@ -170,7 +177,10 @@
 {
     for (OCDNode *node in self.exitingNodeArray) {
         [node updateAttributes];
-        exitBlock(node);
+        
+        if (exitBlock != nil) {
+            exitBlock(node);
+        }
 
         if (node.transition) {
             [CATransaction begin];

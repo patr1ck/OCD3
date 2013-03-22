@@ -9,15 +9,11 @@
 
 @interface OCDScale : NSObject
 
-+ (id)ordinalScaleWithData:(NSArray *)data
-                rangeStart:(NSUInteger)startIndex
-                  rangeEnd:(NSUInteger)endIndex;
++ (id)linearScaleWithDomainStart:(CGFloat)startNum
+                       domainEnd:(CGFloat)endNum
+                      rangeStart:(CGFloat)startIndex
+                        rangeEnd:(CGFloat)endIndex;
 
-+ (id)linearScaleWithDomainStart:(NSNumber *)startNum
-                       domainEnd:(NSNumber *)endNum
-                      rangeStart:(NSUInteger)startIndex
-                        rangeEnd:(NSUInteger)endIndex;
-
-- (id)scaleValue:(NSNumber *)value;
+- (CGFloat)scaleValue:(CGFloat)value;
 
 @end
