@@ -105,7 +105,6 @@
         // We add the index value again to give it a 1px space from the previous bar.
         [node setValue:^(id data, NSUInteger index){
             CGFloat scaledValue = [xScale scaleValue:index];
-            NSLog(@"Setting X pos: %f", scaledValue);
             return [NSNumber numberWithFloat:scaledValue + index];
         } forAttributePath:@"position.x"];
         

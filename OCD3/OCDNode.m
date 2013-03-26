@@ -39,6 +39,8 @@
 
 @implementation OCDNode
 
+@synthesize data = _data;
+
 + (id)nodeWithIdentifier:(NSString *)identifier;
 {
     OCDNode *node = [[OCDNode alloc] init];
@@ -221,7 +223,7 @@
     }
 }
 
-- (CGPathRef)generateArcPath
+- (CGPathRef)generateArcPath CF_RETURNS_RETAINED
 {
     float center = _outerRadius;
     CGMutablePathRef path = CGPathCreateMutable();    
@@ -256,6 +258,29 @@
     animationGroup.delegate = self;
     if (self.transition) {
         self.transition(animationGroup, self.data, self.index);
+        
+        BOOL includesShapeChange = NO;
+        for (CAPropertyAnimation *animation in [animationGroup animations]) {
+            NSString *keypath = [animation keyPath];
+            if ([keypath rangeOfString:@"shape"].location != NSNotFound) {
+                includesShapeChange = YES;
+            }
+        }
+        
+        if (includesShapeChange) {
+            // If the user is trying to animate the shape, the figure out what the old shape
+            // is and what the new shape will be.
+            CGPathRef fromShape = self.shapeLayer.path;
+            CGPathRef toShape = nil;
+            
+            CABasicAnimation *shapeAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+            shapeAnimation.fromValue = (__bridge id)fromShape;
+            shapeAnimation.toValue = (__bridge id)toShape;
+            shapeAnimation.duration = 1.0f;
+            
+            [animationGroup setAnimations:[animationGroup.animations arrayByAddingObject:shapeAnimation]];
+        }
+        
     }
     [self.shapeLayer addAnimation:animationGroup forKey:@"runningAnimations"];
 }
@@ -272,6 +297,15 @@
     [self.attributesDictionary setValue:value forKey:path];
 }
 
+- (id)keyedData
+{
+    if (self.key) {
+        return [_data objectForKey:self.key];
+    }
+    
+    return _data;
+}
+
 - (id)interpolateValueAtPath:(NSString *)path
 {
     id value = [self.attributesDictionary objectForKey:path];
@@ -281,14 +315,15 @@
         // If the value is a block, evalute it before passing it through.
         
         OCDSelectionValueBlock block = (OCDSelectionValueBlock)value;
-        NSValue *newValue = block(self.data, self.index);
-        return newValue;
+        return block(self.data, self.index);
+        
     } else if ([value isKindOfClass:[OCDNodeData class]]) {
         
         // If the value is a special "OCDNodeData" type, pull the data for the node and pass it through.
         
-        NSValue *newValue = self.data;
+        NSValue *newValue = [self keyedData];
         return newValue;
+        
     } else if ([value isKindOfClass:[OCDScale class]]) {
         
         // If the value is a scale, scale the data
@@ -297,6 +332,7 @@
         CGFloat scaleValue = [scale scaleValue:self.index];
         CGFloat scaledDataValue = [(NSNumber *)self.data floatValue] * scaleValue;
         return [NSNumber numberWithFloat:scaledDataValue];
+        
     } else {
         // Pass it through
         return value;
