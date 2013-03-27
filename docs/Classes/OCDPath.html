@@ -2,7 +2,7 @@
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
-		<title>OCDView Class Reference</title>
+		<title>OCDPath Class Reference</title>
 		<meta id="xcode-display" name="xcode-display" content="render"/>
 		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
 		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
@@ -16,7 +16,7 @@
 			</div>
 			
 			<div id="title" role="banner">
-				<h1 class="hideInXcode">OCDView Class Reference</h1>
+				<h1 class="hideInXcode">OCDPath Class Reference</h1>
 			</div>
 			<ul id="headerButtons" role="toolbar">
 				<li id="toc_button">
@@ -25,8 +25,6 @@
 				<li id="jumpto_button" role="navigation">
 					<select id="jumpTo">
 	<option value="top">Jump To&#133;</option>
-	
-	<option value="overview">Overview</option>
 	
 	
 	
@@ -39,17 +37,17 @@
 	
 	
 	
+	<option value="class_methods">Class Methods</option>
+	
+	<option value="//api/name/arcWithInnerRadius:outerRadus:startAngle:endAngle:">&nbsp;&nbsp;&nbsp;&nbsp;+ arcWithInnerRadius:outerRadus:startAngle:endAngle:</option>
+	
+	<option value="//api/name/circleWithRadius:">&nbsp;&nbsp;&nbsp;&nbsp;+ circleWithRadius:</option>
+	
+	<option value="//api/name/lineWithStartPoint:endPoint:">&nbsp;&nbsp;&nbsp;&nbsp;+ lineWithStartPoint:endPoint:</option>
+	
+	<option value="//api/name/rectangleWithWidth:height:">&nbsp;&nbsp;&nbsp;&nbsp;+ rectangleWithWidth:height:</option>
 	
 	
-	<option value="instance_methods">Instance Methods</option>
-	
-	<option value="//api/name/appendNode:">&nbsp;&nbsp;&nbsp;&nbsp;- appendNode:</option>
-	
-	<option value="//api/name/appendNode:withTransition:completion:">&nbsp;&nbsp;&nbsp;&nbsp;- appendNode:withTransition:completion:</option>
-	
-	<option value="//api/name/remove:">&nbsp;&nbsp;&nbsp;&nbsp;- remove:</option>
-	
-	<option value="//api/name/selectAllWithIdentifier:">&nbsp;&nbsp;&nbsp;&nbsp;- selectAllWithIdentifier:</option>
 	
 	
 	
@@ -60,8 +58,6 @@
 		<nav id="tocContainer" class="isShowingTOC">
 			<ul id="toc" role="tree">
 				
-<li role="treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#overview">Overview</a></span></li>
-
 
 
 
@@ -75,26 +71,26 @@
 
 
 
-
-
-<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#class_methods">Class Methods</a></span><ul>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appendNode:">appendNode:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/arcWithInnerRadius:outerRadus:startAngle:endAngle:">arcWithInnerRadius:outerRadus:startAngle:endAngle:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/appendNode:withTransition:completion:">appendNode:withTransition:completion:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/circleWithRadius:">circleWithRadius:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/remove:">remove:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/lineWithStartPoint:endPoint:">lineWithStartPoint:endPoint:</a></span></li>
 	
-	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/selectAllWithIdentifier:">selectAllWithIdentifier:</a></span></li>
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/rectangleWithWidth:height:">rectangleWithWidth:height:</a></span></li>
 	
 </ul></li>
+
+
 
 
 			</ul>
 		</nav>
 		<article>
 			<div id="contents" class="isShowingTOC" role="main">
-				<a title="OCDView Class Reference" name="top"></a>
+				<a title="OCDPath Class Reference" name="top"></a>
 				<div class="main-navigation navigation-top">
 					<ul>
 	<li><a href="../index.html">Index</a></li>
@@ -103,7 +99,7 @@
 				</div>
 				<div id="header">
 					<div class="section-header">
-						<h1 class="title title-header">OCDView Class Reference</h1>
+						<h1 class="title title-header">OCDPath Class Reference</h1>
 					</div>		
 				</div>
 				<div id="container">	
@@ -111,28 +107,13 @@
 					<div class="section section-specification"><table cellspacing="0"><tbody>
 						<tr>
 	<td class="specification-title">Inherits from</td>
-	<td class="specification-value">UIView</td>
+	<td class="specification-value">NSObject</td>
 </tr><tr>
 	<td class="specification-title">Declared in</td>
-	<td class="specification-value">OCDView.h<br />OCDView.m</td>
+	<td class="specification-value">OCDPath.h<br />OCDPath.m</td>
 </tr>
 						</tbody></table></div>
 					
-					
-					
-					
-					<div class="section section-overview">
-						<a title="Overview" name="overview"></a>
-						<h2 class="subtitle subtitle-overview">Overview</h2>
-						<p>An OCDView plays host to all OCD content. Using an OCDView you can</p>
-
-<ul>
-<li>Append new nodes (optionally with animations)</li>
-<li>Remove existing nodes</li>
-<li>Create selections</li>
-</ul>
-
-					</div>
 					
 					
 					
@@ -149,29 +130,29 @@
 						<ul class="task-list">
 							<li>
 	<span class="tooltip">
-		<code><a href="#//api/name/selectAllWithIdentifier:">&ndash;&nbsp;selectAllWithIdentifier:</a></code>
-		<span class="tooltip"><p>The primary way you&rsquo;ll want to interact with OCDView objects. Getting a seleciton allows you to join data to it in order to create, update and delete <a href="../Classes/OCDNode.html">OCDNode</a> objects.</p></span>
+		<code><a href="#//api/name/rectangleWithWidth:height:">+&nbsp;rectangleWithWidth:height:</a></code>
+		<span class="tooltip"><p>Creates a path for a rectangle.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/appendNode:">&ndash;&nbsp;appendNode:</a></code>
-		<span class="tooltip"><p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p></span>
+		<code><a href="#//api/name/circleWithRadius:">+&nbsp;circleWithRadius:</a></code>
+		<span class="tooltip"><p>Creates a path for a circle.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/appendNode:withTransition:completion:">&ndash;&nbsp;appendNode:withTransition:completion:</a></code>
-		<span class="tooltip"><p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView with a given animation and completion block. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p></span>
+		<code><a href="#//api/name/lineWithStartPoint:endPoint:">+&nbsp;lineWithStartPoint:endPoint:</a></code>
+		<span class="tooltip"><p>Creates a path for a line.</p></span>
 	</span>
 	
 	
 </li><li>
 	<span class="tooltip">
-		<code><a href="#//api/name/remove:">&ndash;&nbsp;remove:</a></code>
-		<span class="tooltip"><p>Allows you to manually remove a node from an OCDView.</p></span>
+		<code><a href="#//api/name/arcWithInnerRadius:outerRadus:startAngle:endAngle:">+&nbsp;arcWithInnerRadius:outerRadus:startAngle:endAngle:</a></code>
+		<span class="tooltip"><p>Creates a path for an arc.</p></span>
 	</span>
 	
 	
@@ -186,25 +167,23 @@
 					
 					
 					
-					
-					
 					<div class="section section-methods">
-						<a title="Instance Methods" name="instance_methods"></a>
-						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						<a title="Class Methods" name="class_methods"></a>
+						<h2 class="subtitle subtitle-methods">Class Methods</h2>
 						
 						<div class="section-method">
-	<a name="//api/name/appendNode:" title="appendNode:"></a>
-	<h3 class="subsubtitle method-title">appendNode:</h3>
+	<a name="//api/name/arcWithInnerRadius:outerRadus:startAngle:endAngle:" title="arcWithInnerRadius:outerRadus:startAngle:endAngle:"></a>
+	<h3 class="subsubtitle method-title">arcWithInnerRadius:outerRadus:startAngle:endAngle:</h3>
 	
 	
 	
 	<div class="method-subsection brief-description">
-		<p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p>
+		<p>Creates a path for an arc.</p>
 	</div>		
 	
     
 
-	<div class="method-subsection method-declaration"><code>- (void)appendNode:(OCDNode *)<em>node</em></code></div>
+	<div class="method-subsection method-declaration"><code>+ (CGPathRef)arcWithInnerRadius:(CGFloat)<em>innerRadius</em> outerRadus:(CGFloat)<em>outerRadius</em> startAngle:(CGFloat)<em>startAngle</em> endAngle:(CGFloat)<em>endAngle</em></code></div>
 
     
 	
@@ -212,156 +191,23 @@
 		<h4 class="method-subtitle parameter-title">Parameters</h4>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>node</em></dt>
-			<dd><p>The node to add.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/appendNode:withTransition:completion:" title="appendNode:withTransition:completion:"></a>
-	<h3 class="subsubtitle method-title">appendNode:withTransition:completion:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Allows you to manually add <a href="#//api/name/nodes">nodes</a> to an OCDView with a given animation and completion block. Note that you could call -updateAttributes on the node itself before adding it, to ensure its values have been applied to the underlying layer.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)appendNode:(OCDNode *)<em>node</em> withTransition:(OCDNodeAnimationBlock)<em>transition</em> completion:(OCDNodeAnimationCompletionBlock)<em>completion</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>node</em></dt>
-			<dd><p>The node to add.</p></dd>
+			<dt><em>innerRadius</em></dt>
+			<dd><p>The start point of the line</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>transition</em></dt>
-			<dd><p>The animation block.</p></dd>
+			<dt><em>outerRadius</em></dt>
+			<dd><p>The end point of the line</p></dd>
 		</dl>
 		
 		<dl class="argument-def parameter-def">
-			<dt><em>completion</em></dt>
-			<dd><p>The compelition block.</p></dd>
+			<dt><em>startAngle</em></dt>
+			<dd><p>The start point of the line</p></dd>
 		</dl>
 		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/remove:" title="remove:"></a>
-	<h3 class="subsubtitle method-title">remove:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>Allows you to manually remove a node from an OCDView.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (void)remove:(OCDNode *)<em>node</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
 		<dl class="argument-def parameter-def">
-			<dt><em>node</em></dt>
-			<dd><p>The node to remove from the view.</p></dd>
-		</dl>
-		
-	</div>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<div class="method-subsection declared-in-section">
-		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
-	</div>				
-	
-	
-</div>
-						
-						<div class="section-method">
-	<a name="//api/name/selectAllWithIdentifier:" title="selectAllWithIdentifier:"></a>
-	<h3 class="subsubtitle method-title">selectAllWithIdentifier:</h3>
-	
-	
-	
-	<div class="method-subsection brief-description">
-		<p>The primary way you&rsquo;ll want to interact with OCDView objects. Getting a seleciton allows you to join data to it in order to create, update and delete <a href="../Classes/OCDNode.html">OCDNode</a> objects.</p>
-	</div>		
-	
-    
-
-	<div class="method-subsection method-declaration"><code>- (OCDSelection *)selectAllWithIdentifier:(NSString *)<em>identifier</em></code></div>
-
-    
-	
-	<div class="method-subsection arguments-section parameters">
-		<h4 class="method-subtitle parameter-title">Parameters</h4>
-		
-		<dl class="argument-def parameter-def">
-			<dt><em>identifier</em></dt>
-			<dd><p>The identifier of the node(s) you would like to be selected.</p></dd>
+			<dt><em>endAngle</em></dt>
+			<dd><p>The end point of the line</p></dd>
 		</dl>
 		
 	</div>
@@ -370,7 +216,7 @@
 	
 	<div class="method-subsection return">
 		<h4 class="method-subtitle parameter-title">Return Value</h4>
-		<p>An <a href="../Classes/OCDSelection.html">OCDSelection</a> object representing the selection.</p>
+		<p>A path with for a line with the specified start and end points</p>
 	</div>
 	
 	
@@ -385,13 +231,178 @@
 	
 	<div class="method-subsection declared-in-section">
 		<h4 class="method-subtitle">Declared In</h4>
-		<code class="declared-in-ref">OCDView.h</code><br />
+		<code class="declared-in-ref">OCDPath.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/circleWithRadius:" title="circleWithRadius:"></a>
+	<h3 class="subsubtitle method-title">circleWithRadius:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates a path for a circle.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (CGPathRef)circleWithRadius:(CGFloat)<em>radius</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>radius</em></dt>
+			<dd><p>The circle&rsquo;s radius.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A path with for a circles with specified radius</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">OCDPath.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/lineWithStartPoint:endPoint:" title="lineWithStartPoint:endPoint:"></a>
+	<h3 class="subsubtitle method-title">lineWithStartPoint:endPoint:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates a path for a line.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (CGPathRef)lineWithStartPoint:(CGPoint)<em>startPoint</em> endPoint:(CGPoint)<em>endPoint</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>startPoint</em></dt>
+			<dd><p>The start point of the line</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>endPoint</em></dt>
+			<dd><p>The end point of the line</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A path with for a line with the specified start and end points</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">OCDPath.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/rectangleWithWidth:height:" title="rectangleWithWidth:height:"></a>
+	<h3 class="subsubtitle method-title">rectangleWithWidth:height:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates a path for a rectangle.</p>
+	</div>		
+	
+    
+
+	<div class="method-subsection method-declaration"><code>+ (CGPathRef)rectangleWithWidth:(CGFloat)<em>width</em> height:(CGFloat)<em>height</em></code></div>
+
+    
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>width</em></dt>
+			<dd><p>The rectangle&rsquo;s width.</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>height</em></dt>
+			<dd><p>The rectangle&rsquo;s width.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A path with a recangle</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">OCDPath.h</code><br />
 	</div>				
 	
 	
 </div>
 						
 					</div>
+					
+					
 					
 					
 				</div>
