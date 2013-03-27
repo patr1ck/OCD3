@@ -35,11 +35,13 @@
                                                                    usingKey:@"Percent"];
         
         [bars setEnter:^(OCDNode *node) {
+                        
+            CGPathRef newPath = [OCDPath rectangleWithWidth:barWidth
+                                                     height:[[node.data objectForKey:@"Percent"] floatValue]];
+            [node setValue:(__bridge id)newPath forAttributePath:@"path"];
             
             [node setNodeType:OCDNodeTypeRectangle];
-            [node setValue:[NSNumber numberWithFloat:barWidth] forAttributePath:@"shape.width"];
-            [node setValue:[OCDNodeData data] forAttributePath:@"shape.height"];
-            
+                         
             [node setValue:^(id data, NSUInteger index){
                 return [NSNumber numberWithFloat:index * (barWidth + kBarPaddingWidth)];
             } forAttributePath:@"position.x"];
@@ -53,9 +55,12 @@
             [node setValue:(id)[UIColor blueColor].CGColor forAttributePath:@"fillColor"];
             
             [view appendNode:node withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-                CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"shape.height"];
-                grow.fromValue = @0;
-                grow.toValue = [data objectForKey:@"Percent"];
+                CGPathRef oldPath = [OCDPath rectangleWithWidth:barWidth
+                                                         height:0];
+                
+                CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"path"];
+                grow.fromValue = (__bridge id)oldPath;
+                grow.toValue = (__bridge id)newPath;
                 grow.duration = 2;
                 
                 animationGroup.duration = 2;
