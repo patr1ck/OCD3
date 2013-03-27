@@ -36,12 +36,10 @@
         
         [bars setEnter:^(OCDNode *node) {
                         
-            CGPathRef newPath = [OCDPath rectangleWithWidth:barWidth
+            CGPathRef fullBar = [OCDPath rectangleWithWidth:barWidth
                                                      height:[[node.data objectForKey:@"Percent"] floatValue]];
-            [node setValue:(__bridge id)newPath forAttributePath:@"path"];
-            
-            [node setNodeType:OCDNodeTypeRectangle];
-                         
+            [node setValue:(__bridge id)fullBar forAttributePath:@"path"];
+                                     
             [node setValue:^(id data, NSUInteger index){
                 return [NSNumber numberWithFloat:index * (barWidth + kBarPaddingWidth)];
             } forAttributePath:@"position.x"];
@@ -57,14 +55,17 @@
             [view appendNode:node withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
                 CGPathRef oldPath = [OCDPath rectangleWithWidth:barWidth
                                                          height:0];
-                
                 CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"path"];
                 grow.fromValue = (__bridge id)oldPath;
-                grow.toValue = (__bridge id)newPath;
-                grow.duration = 2;
+                grow.toValue = (__bridge id)fullBar;
                 
-                animationGroup.duration = 2;
-                [animationGroup setAnimations:@[grow]];
+                CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.y"];
+                CGFloat dataValue = [[data objectForKey:@"Percent"] floatValue];
+                move.fromValue = [NSNumber numberWithFloat:kBarMaxHeight];
+                move.toValue = [NSNumber numberWithFloat:kBarMaxHeight - dataValue];
+                
+                animationGroup.duration = 4;
+                [animationGroup setAnimations:@[grow, move]];
             } completion:nil];
         }];
         

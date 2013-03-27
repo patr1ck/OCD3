@@ -45,7 +45,7 @@
                 animationGroup.duration = 30;
                 animationGroup.repeatCount = HUGE_VALF;
                 
-//                [animationGroup setAnimations:@[rotate]];
+                [animationGroup setAnimations:@[rotate]];
             } completion:^(BOOL finished) {
                 
             }];

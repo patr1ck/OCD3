@@ -66,7 +66,11 @@
 - (void)tick
 {    
     OCDNode *node = [OCDNode nodeWithIdentifier:@"circle"];
-    node.nodeType = OCDNodeTypeCircle;
+    
+    CGPathRef circlePath = [OCDPath circleWithRadius:10];
+    [node setValue:(__bridge_transfer id)circlePath forAttributePath:@"path"];
+    [node setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, 10, 10)] forAttributePath:@"bounds"];
+
     [node setValue:[NSValue valueWithCGPoint:_touchedPoint] forAttributePath:@"position"];
     double hue = (double) arc4random() / 0x100000000;
     [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"strokeColor"];
@@ -75,15 +79,18 @@
     [self.particlesView appendNode:node
                     withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
                         CABasicAnimation *fade = [CABasicAnimation animationWithKeyPath:@"opacity"];
-                        fade.fromValue = @1.0;
                         fade.toValue = @0.0;
-                        CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"transform"];
-                        grow.fromValue = [NSValue valueWithCATransform3D:CATransform3DIdentity];
-                        grow.toValue = [NSValue valueWithCATransform3D:CATransform3DMakeScale(5, 5, 1)];
+                        
+                        CABasicAnimation *growBounds = [CABasicAnimation animationWithKeyPath:@"bounds"];
+                        growBounds.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, 100, 100)];
+                        
+                        CABasicAnimation *growShape = [CABasicAnimation animationWithKeyPath:@"path"];
+                        CGPathRef circlePathBig = [OCDPath circleWithRadius:100];
+                        growShape.toValue = (__bridge_transfer id)circlePathBig;
                         
                         animationGroup.removedOnCompletion = NO;
                         animationGroup.fillMode = kCAFillModeForwards;
-                        [animationGroup setAnimations:@[fade, grow]];
+                        [animationGroup setAnimations:@[fade, growBounds, growShape]];
                     }
                         completion:^(BOOL finished) {
                             [self.particlesView remove:node];

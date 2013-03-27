@@ -50,11 +50,11 @@
         
         // Create the line on the bottom and add it.
         OCDNode *line = [OCDNode nodeWithIdentifier:@"line"];
-        line.nodeType = OCDNodeTypeLine;
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(0, kBarMaxHeight - 0.5)]
-      forAttributePath:@"shape.startPoint"];
-        [line setValue:[NSValue valueWithCGPoint:CGPointMake(movingBarView.bounds.size.width, kBarMaxHeight - 0.5)]
-      forAttributePath:@"shape.endPoint"];
+        CGPathRef linePath = [OCDPath lineWithStartPoint:CGPointMake(0, kBarMaxHeight - 0.5)
+                                            endPoint:CGPointMake(movingBarView.bounds.size.width, kBarMaxHeight - 0.5)];
+        [line setValue:(__bridge_transfer id)linePath forAttributePath:@"path"];
+        [line setValue:@1 forAttributePath:@"strokeWidth"];
+        [line setValue:(id)[UIColor blackColor].CGColor forAttributePath:@"strokeColor"];
         [line setValue:[NSNumber numberWithInt:100] forAttributePath:@"zPosition"]; // ensure it's in front
         [line updateAttributes]; // This is automatically called on entering nodes, but since this is being created outside of a data join, we'll just call it manually.
         [self.movingBarView appendNode:line];
@@ -98,9 +98,6 @@
     
     [bars setEnter:^(OCDNode *node) {
         
-        // We want to represent our data as a bar chart, so each data point will be a rectangle
-        [node setNodeType:OCDNodeTypeRectangle];
-        
         // The x position depends on which peice of data we're looking at, so we use our scale to set it
         // We add the index value again to give it a 1px space from the previous bar.
         [node setValue:^(id data, NSUInteger index){
@@ -117,13 +114,10 @@
         } forAttributePath:@"position.y"];
         
         
-        // Set the width and height of the bars. Here, the height is a function: the scaled data.
-        [node setValue:[NSNumber numberWithFloat:_barWidth] forAttributePath:@"shape.width"];
-        [node setValue:^(id data, NSUInteger index){
-            CGFloat computed = [yScale scaleValue:[[data objectForKey:@"value"] floatValue]];
-            return [NSNumber numberWithFloat:computed];
-        } forAttributePath:@"shape.height"];
-        
+        // Set the width and height of the bars.
+        CGFloat height = [yScale scaleValue:[[node.data objectForKey:@"value"] floatValue]];
+        CGPathRef shape = [OCDPath rectangleWithWidth:_barWidth height:height];
+        [node setValue:(__bridge_transfer id)shape forAttributePath:@"path"];
         
         // Set a random color for the bar
         double hue = (double) arc4random() / ARC4RANDOM_MAX;

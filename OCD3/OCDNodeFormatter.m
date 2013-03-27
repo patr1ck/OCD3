@@ -8,6 +8,7 @@
 
 #import "OCDNodeFormatter.h"
 #import "OCDNode.h"
+#import "OCDPath.h"
 
 typedef enum {
     OCDNodeFormatterTypeArc
@@ -16,6 +17,8 @@ typedef enum {
 @interface OCDNodeFormatter ()
 @property (nonatomic, assign) OCDNodeFormatterType formatterType;
 @property (nonatomic, strong) NSDictionary *attributeDictionary;
+@property (nonatomic, assign) CGFloat innerRadius;
+@property (nonatomic, assign) CGFloat outerRadius;
 @end
 
 @implementation OCDNodeFormatter
@@ -25,8 +28,8 @@ typedef enum {
     OCDNodeFormatter *arcFormatter = [[OCDNodeFormatter alloc] init];
     arcFormatter.formatterType = OCDNodeFormatterTypeArc;
     
-    [arcFormatter setValue:[NSNumber numberWithFloat:innerRadius] forAttributePath:@"shape.innerRadius"];
-    [arcFormatter setValue:[NSNumber numberWithFloat:outerRadius] forAttributePath:@"shape.outerRadius"];
+    arcFormatter.innerRadius = innerRadius;
+    arcFormatter.outerRadius = outerRadius;
     [arcFormatter setValue:[NSNumber numberWithFloat:outerRadius] forAttributePath:@"position.x"];
     [arcFormatter setValue:[NSNumber numberWithFloat:outerRadius] forAttributePath:@"position.y"];
     
@@ -43,9 +46,7 @@ typedef enum {
 }
 
 - (void)formatNode:(OCDNode *)node;
-{
-    node.nodeType = OCDNodeTypeArc;
-    
+{    
     for (NSString *key in [self.attributeDictionary keyEnumerator]) {
         [node setValue:[self.attributeDictionary valueForKey:key] forAttributePath:key];
     }
@@ -53,8 +54,14 @@ typedef enum {
     switch (self.formatterType) {
         case OCDNodeFormatterTypeArc: {
             NSDictionary *dataDictionary = (NSDictionary *)node.data;
-            [node setValue:[dataDictionary objectForKey:@"startAngle"] forAttributePath:@"shape.startAngle"];
-            [node setValue:[dataDictionary objectForKey:@"endAngle"] forAttributePath:@"shape.endAngle"];
+            [node setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, self.outerRadius*2, self.outerRadius*2)] forAttributePath:@"bounds"];
+            
+            CGPathRef path = [OCDPath arcWithInnerRadius:self.innerRadius
+                                              outerRadus:self.outerRadius
+                                              startAngle:[[dataDictionary objectForKey:@"startAngle"] floatValue]
+                                                endAngle:[[dataDictionary objectForKey:@"endAngle"] floatValue]];
+            
+            [node setValue:(__bridge_transfer id)path forAttributePath:@"path"];
             break;
         }
             

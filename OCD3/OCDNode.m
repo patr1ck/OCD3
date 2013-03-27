@@ -46,15 +46,10 @@
     OCDNode *node = [[OCDNode alloc] init];
     node.identifier = identifier;
     node.attributesDictionary = [[NSMutableDictionary alloc] initWithCapacity:10];
+    
+    [node instantiateLayer];
+    
     return node;
-}
-
-- (void)setNodeType:(OCDNodeType)nodeType
-{
-    _nodeType = nodeType;
-    if (!self.shapeLayer) {
-        [self instantiateLayer];
-    }
 }
 
 - (void)instantiateLayer;
@@ -62,49 +57,6 @@
     self.shapeLayer = [CAShapeLayer layer];
     self.shapeLayer.fillColor = [UIColor blueColor].CGColor;
     self.shouldFireExit = NO;
-    
-    switch (self.nodeType) {
-        case OCDNodeTypeCircle: {
-            CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 20, 20), NULL);
-            self.shapeLayer.path = path;
-            CGPathRelease(path);
-            self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
-            break;
-        }
-        case OCDNodeTypeLine:{
-            CGMutablePathRef path = CGPathCreateMutable();
-            CGPathMoveToPoint(path, NULL, 0, 0);
-            CGPathAddLineToPoint(path, NULL, 0, 10);
-            self.shapeLayer.path = path;
-            self.shapeLayer.strokeColor = [UIColor blackColor].CGColor;
-            self.shapeLayer.lineWidth = 1.f;
-            CGPathRelease(path);
-            break;
-        }
-            
-        case OCDNodeTypeRectangle: {
-            CGPathRef path = CGPathCreateWithRect(CGRectMake(0, 0, 20, 20), NULL);
-            self.shapeLayer.path = path;
-            CGPathRelease(path);
-            _previousHeight = 20;
-            _previousWidth = 20;
-            self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
-            self.shapeLayer.anchorPoint = CGPointMake(0, 0);
-            break;
-        }
-        case OCDNodeTypeArc: {
-            CGPathRef path = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, 20, 20), NULL);
-            self.shapeLayer.path = path;
-            CGPathRelease(path);
-            self.shapeLayer.bounds = CGRectMake(0, 0, 20, 20);
-            _innerRadius = 0.0f;
-            _outerRadius = 0.0f;
-            break;
-        }
-            
-        default:
-            break;
-    }
 }
 
 - (void)setText:(NSString *)text
@@ -134,123 +86,6 @@
     }
 }
 
-// Internal method which applies the values to the given paths.
-- (void)_setValue:(id)value forAttributePath:(NSString *)path
-{    
-    NSArray *array = [path componentsSeparatedByString:@"."];
-    if ([[array objectAtIndex:0] isEqualToString:@"shape"]) {
-
-        if ([array count] < 2) {
-            NSLog(@"ERROR: Attribute Path incompelete.");
-            return;
-        }
-        NSString *attribute = [array objectAtIndex:1];
-        
-        CGPathRef newPath = nil;
-        
-        // TODO: These should be broken out into subclasses as some point.
-        switch (self.nodeType) {
-            case OCDNodeTypeCircle: {
-                if ([attribute isEqualToString:@"radius"]) {
-                    _radius = [value floatValue];
-                    newPath = CGPathCreateWithEllipseInRect(CGRectMake(0, 0, _radius, _radius), NULL);
-                }
-                self.shapeLayer.bounds = CGRectMake(0, 0, _radius*2, _radius*2);
-                break;
-            }
-            case OCDNodeTypeLine:{
-                if ([attribute isEqualToString:@"startPoint"]) {
-                    CGPoint startPoint = [value CGPointValue];
-                    newPath = (CGPathRef) CGPathCreateMutable();
-                    CGPathMoveToPoint((CGMutablePathRef)newPath, NULL, startPoint.x, startPoint.y);
-                    CGPathAddLineToPoint((CGMutablePathRef) newPath, NULL, _previousEndPoint.x, _previousEndPoint.y);
-                    _previousStartPoint = startPoint;
-                } else if ([attribute isEqualToString:@"endPoint"]) {
-                    CGPoint endPoint = [value CGPointValue];
-                    newPath = (CGPathRef) CGPathCreateMutable();
-                    CGPathMoveToPoint((CGMutablePathRef)newPath, NULL, _previousStartPoint.x, _previousStartPoint.y);
-                    CGPathAddLineToPoint((CGMutablePathRef) newPath, NULL, endPoint.x, endPoint.y);
-                    _previousEndPoint = endPoint;
-                }
-                break;
-            }
-                
-            case OCDNodeTypeRectangle: {
-                if ([attribute isEqualToString:@"width"]) {
-                    float width = [value floatValue];
-                    newPath = CGPathCreateWithRect(CGRectMake(0, 0, width, _previousHeight), NULL);
-                    _previousWidth = width;
-                    self.shapeLayer.bounds = CGRectMake(0, 0, width, _previousHeight);
-                } else if ([attribute isEqualToString:@"height"]) {
-                    float height = [value floatValue];
-                    newPath = CGPathCreateWithRect(CGRectMake(0, 0, _previousWidth, height), NULL);
-                    _previousHeight = height;
-                    self.shapeLayer.bounds = CGRectMake(0, 0, _previousWidth, height);
-                }
-                break;
-            }
-                
-            case OCDNodeTypeArc: {
-                if ([attribute isEqualToString:@"startAngle"]) {
-                    float angle = [value floatValue];
-                    _startAngle = angle;
-                } else if ([attribute isEqualToString:@"endAngle"]) {
-                    float angle = [value floatValue];
-                    _endAngle = angle;
-                } else if ([attribute isEqualToString:@"outerRadius"]) {
-                    float radius = [value floatValue];
-                    _outerRadius = radius;
-                } else if ([attribute isEqualToString:@"innerRadius"]) {
-                    float radius = [value floatValue];
-                    _innerRadius = radius;
-                }
-                
-                newPath = [self generateArcPath];
-                
-                self.shapeLayer.bounds = CGRectMake(0, 0, _outerRadius*2, _outerRadius*2);
-                break;
-            }
-                
-            default:
-                break;
-        }
-        
-        self.shapeLayer.path = newPath;
-        CGPathRelease(newPath);
-        
-    } else {
-        [self.shapeLayer setValue:value forKeyPath:path];
-    }
-}
-
-- (CGPathRef)generateArcPath CF_RETURNS_RETAINED
-{
-    float center = _outerRadius;
-    CGMutablePathRef path = CGPathCreateMutable();    
-    CGPathMoveToPoint(path, NULL, center, center);
-    
-    CGPoint arcStartPointOuter = CGPointMake(center + _outerRadius * cosf(_startAngle), center + _outerRadius * sinf(_startAngle));    
-    
-    // Some basic trig at play here: http://en.wikipedia.org/wiki/Circle#Equations
-    if (_innerRadius != 0) {
-        CGPoint arcStartPointInner = CGPointMake(center + _innerRadius * cosf(_startAngle), center + _innerRadius * sinf(_startAngle));
-        CGPathMoveToPoint(path, NULL, arcStartPointInner.x, arcStartPointInner.y);
-    }
-    
-    CGPathAddLineToPoint(path, NULL, arcStartPointOuter.x, arcStartPointOuter.y);
-    CGPathAddArc(path, NULL, center, center, _outerRadius, _startAngle, _endAngle, 0);
-    
-    if (_innerRadius != 0) {
-        CGPoint arcEndPointInner = CGPointMake(center + _innerRadius * cosf(_endAngle), center + _innerRadius * sinf(_endAngle));
-        CGPathAddLineToPoint(path, NULL, arcEndPointInner.x, arcEndPointInner.y);
-        CGPathAddArc(path, NULL, center, center, _innerRadius, _endAngle, _startAngle, 1);
-    } else {
-        CGPathAddLineToPoint(path, NULL, center, center);
-    }
-        
-    return path;
-}
-
 - (void)runAnimations;
 {
     CAAnimationGroup *animationGroup = [CAAnimationGroup animation];
@@ -258,29 +93,6 @@
     animationGroup.delegate = self;
     if (self.transition) {
         self.transition(animationGroup, self.data, self.index);
-        
-        BOOL includesShapeChange = NO;
-        for (CAPropertyAnimation *animation in [animationGroup animations]) {
-            NSString *keypath = [animation keyPath];
-            if ([keypath rangeOfString:@"shape"].location != NSNotFound) {
-                includesShapeChange = YES;
-            }
-        }
-        
-        if (includesShapeChange) {
-            // If the user is trying to animate the shape, the figure out what the old shape
-            // is and what the new shape will be.
-            CGPathRef fromShape = self.shapeLayer.path;
-            CGPathRef toShape = nil;
-            
-            CABasicAnimation *shapeAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
-            shapeAnimation.fromValue = (__bridge id)fromShape;
-            shapeAnimation.toValue = (__bridge id)toShape;
-            shapeAnimation.duration = 1.0f;
-            
-            [animationGroup setAnimations:[animationGroup.animations arrayByAddingObject:shapeAnimation]];
-        }
-        
     }
     [self.shapeLayer addAnimation:animationGroup forKey:@"runningAnimations"];
 }
@@ -343,7 +155,7 @@
 - (void)updateAttributes
 {
     for (NSString *path in [self.attributesDictionary allKeys]) {
-        [self _setValue:[self interpolateValueAtPath:path] forAttributePath:path];
+        [self.shapeLayer setValue:[self interpolateValueAtPath:path] forKeyPath:path];
     }
 }
 
@@ -362,7 +174,7 @@
 
 - (NSString *)description
 {
-    return [NSString stringWithFormat:@"OCDNode: %p - nodeType: %d - shapeLayer: %@", self, self.nodeType, self.shapeLayer];
+    return [NSString stringWithFormat:@"OCDNode: %p - shapeLayer: %@", self, self.shapeLayer];
 }
 
 

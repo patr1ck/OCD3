@@ -8,13 +8,6 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
-typedef enum {
-    OCDNodeTypeCircle,
-    OCDNodeTypeLine,
-    OCDNodeTypeRectangle,
-    OCDNodeTypeArc
-} OCDNodeType;
-
 typedef void (^OCDNodeAnimationBlock)(CAAnimationGroup *animationGroup, id data, NSUInteger index);
 typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
 
@@ -28,18 +21,6 @@ typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
  It can be used to later select the node.
  */
 @property (nonatomic, readonly) NSString *identifier;
-
-/**
- nodeType defines the shape the node takes. Current options are:
- 
- - OCDNodeTypeCircle
- - OCDNodeTypeLine
- - OCDNodeTypeRectangle
- - OCDNodeTypeArc
- 
- Different types have different properties which can be modified, but all are CAShapeLayers.
- */
-@property (nonatomic, assign) OCDNodeType nodeType;
 
 /**
  The data this node represents.
@@ -77,29 +58,8 @@ typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
  
  The latter two options allow the attributes to easily be defined by the data being represented.
  
- Further, there is a special path prefix you can use, "shape" as an easy way of configuring OCDNode shape properties. These are:
- 
- OCDNodeTypeCircle
-    CGFloat radius
- 
- OCDNodeTypeRectangle
-    CGFloat height
-    CGFloat width
- 
- OCDNodeTypeLine
-    CGPoint startPoint
-    CGPoint endPoint
- 
- OCDNodeTypeArc
-    CGFloat innerRadius
-    CGFloat outerRadius
-    CGFloat startAngle
-    CGFloat endAngle
- 
- Like normal values, they should be boxed in either NSNumbers or NSValue objects.
- 
  @param value The identifier string.
- @param path The path of the attribute you are trying to set. Can be things like "shape.width" or "transform.scale.x"
+ @param path The path of the attribute you are trying to set. Can be things like "position.y", "opacity", or "transform.scale.x"
  */
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
 
