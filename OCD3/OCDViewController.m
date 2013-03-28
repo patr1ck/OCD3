@@ -13,12 +13,14 @@
 #import "PieChartView.h"
 #import "OMGParticles.h"
 #import "RisingBarChart.h"
+#import "PieAndBar.h"
 
 typedef enum {
     OCDViewExampleBarChart = 0,
     OCDViewExamplePieChart,
     OCDViewExampleOMGParticles,
-    OCDViewExampleRisingBar
+    OCDViewExampleRisingBar,
+    OCDViewExamplePieAndBar
 } OCDViewExample;
 
 @implementation OCDViewController
@@ -34,7 +36,7 @@ typedef enum {
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    return 4;
+    return 5;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -61,6 +63,10 @@ typedef enum {
             
         case OCDViewExampleRisingBar:
             cell.textLabel.text = @"Rising Bar Chart";
+            break;
+            
+        case OCDViewExamplePieAndBar:
+            cell.textLabel.text = @"Pie and Bar Chart";
             break;
             
         default:
@@ -103,6 +109,11 @@ typedef enum {
             RisingBarChart *risingView = [[RisingBarChart alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
             [demoView.view addSubview:risingView];
             break;
+        }
+            
+        case OCDViewExamplePieAndBar: {
+            PieAndBar *pieAndBar = [[PieAndBar alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
+            [demoView.view addSubview:pieAndBar];
         }
             
         default:

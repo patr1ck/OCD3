@@ -13,6 +13,7 @@
 		CDAB210E16E9255B0009183A /* OCDPieLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = CDAB210D16E9255B0009183A /* OCDPieLayout.m */; };
 		CDBFE1AF1700FEB000DFF195 /* RisingBarChart.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBFE1AE1700FEB000DFF195 /* RisingBarChart.m */; };
 		CDBFE1B217026EBD00DFF195 /* OCDPath.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBFE1B117026EBD00DFF195 /* OCDPath.m */; };
+		CDBFE1B517041F0100DFF195 /* PieAndBar.m in Sources */ = {isa = PBXBuildFile; fileRef = CDBFE1B417041F0100DFF195 /* PieAndBar.m */; };
 		CDCA60F816D804DE004A0E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F716D804DE004A0E6E /* UIKit.framework */; };
 		CDCA60FA16D804DE004A0E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F916D804DE004A0E6E /* Foundation.framework */; };
 		CDCA60FC16D804DE004A0E6E /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */; };
@@ -60,6 +61,8 @@
 		CDBFE1AE1700FEB000DFF195 /* RisingBarChart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RisingBarChart.m; sourceTree = "<group>"; };
 		CDBFE1B017026EBD00DFF195 /* OCDPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OCDPath.h; sourceTree = "<group>"; };
 		CDBFE1B117026EBD00DFF195 /* OCDPath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OCDPath.m; sourceTree = "<group>"; };
+		CDBFE1B317041F0100DFF195 /* PieAndBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PieAndBar.h; sourceTree = "<group>"; };
+		CDBFE1B417041F0100DFF195 /* PieAndBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PieAndBar.m; sourceTree = "<group>"; };
 		CDCA60F416D804DE004A0E6E /* OCD3.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OCD3.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDCA60F716D804DE004A0E6E /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		CDCA60F916D804DE004A0E6E /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -135,6 +138,8 @@
 				CDDA4E5216EFEEBD00A4AF35 /* OMGParticles.m */,
 				CDBFE1AD1700FEB000DFF195 /* RisingBarChart.h */,
 				CDBFE1AE1700FEB000DFF195 /* RisingBarChart.m */,
+				CDBFE1B317041F0100DFF195 /* PieAndBar.h */,
+				CDBFE1B417041F0100DFF195 /* PieAndBar.m */,
 			);
 			name = "Example Views";
 			sourceTree = "<group>";
@@ -253,12 +258,12 @@
 		CDCA613516D8053A004A0E6E /* Private */ = {
 			isa = PBXGroup;
 			children = (
-				CDCA613A16D80556004A0E6E /* OCDView.m */,
 				CDCA614716D84558004A0E6E /* OCDView_Private.h */,
 				CDCA613B16D80556004A0E6E /* OCDSelection_Private.h */,
-				CDCA613C16D80556004A0E6E /* OCDSelection.m */,
 				CDCA613D16D80556004A0E6E /* OCDNode_Private.h */,
+				CDCA613A16D80556004A0E6E /* OCDView.m */,
 				CDCA613E16D80556004A0E6E /* OCDNode.m */,
+				CDCA613C16D80556004A0E6E /* OCDSelection.m */,
 				CDCA613F16D80556004A0E6E /* OCDScale.m */,
 				CDAB210A16E81A400009183A /* OCDNodeFormatter.m */,
 				CDAB210D16E9255B0009183A /* OCDPieLayout.m */,
@@ -392,6 +397,7 @@
 				CDDA4E5316EFEEBD00A4AF35 /* OMGParticles.m in Sources */,
 				CDBFE1AF1700FEB000DFF195 /* RisingBarChart.m in Sources */,
 				CDBFE1B217026EBD00DFF195 /* OCDPath.m in Sources */,
+				CDBFE1B517041F0100DFF195 /* PieAndBar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
