@@ -109,6 +109,15 @@
     [self.attributesDictionary setValue:value forKey:path];
 }
 
+- (id)valueForAttributePath:(NSString *)path;
+{
+    id value = [self.attributesDictionary objectForKey:path];
+    if (!value) {
+        value = [self.shapeLayer valueForKeyPath:path];
+    }
+    return value;
+}
+
 - (id)keyedData
 {
     if (self.key) {

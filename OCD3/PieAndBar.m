@@ -28,37 +28,35 @@
     self = [super initWithFrame:frame];
     if (self) {
         OCDView *newView = [[OCDView alloc] initWithFrame:self.bounds];
-        [self addSubview:self.view];
+        [self addSubview:newView];
         self.view = newView;
         
         _isPie = YES;
         
         self.data = @[ @{@"Browser": @"Chrome",             @"Percent": @42},
-                    @{@"Browser": @"Safari",             @"Percent": @32},
-                    @{@"Browser": @"Internet Explorer",  @"Percent": @11},
-                    @{@"Browser": @"Firefox",            @"Percent": @10},
-                    @{@"Browser": @"Other",              @"Percent": @5} ];
+                       @{@"Browser": @"Safari",             @"Percent": @32},
+                       @{@"Browser": @"Internet Explorer",  @"Percent": @11},
+                       @{@"Browser": @"Firefox",            @"Percent": @10},
+                       @{@"Browser": @"Other",              @"Percent": @5} ];
         
     
-        self.arcFormatter = [OCDNodeFormatter arcNodeFormatterWithInnerRadius:100
-                                                                  outerRadius:(self.bounds.size.width/2)];
+        self.arcFormatter = [OCDNodeFormatter arcNodeFormatterWithInnerRadius:100.0f
+                                                                  outerRadius:(self.bounds.size.width/2.0f)];
         self.pieLayout = [OCDPieLayout layoutForDataArray:self.data usingKey:@"Percent"];
         self.pieLayout.startAngle = M_PI_2;
         self.pieLayout.endAngle = (2 * M_PI) + M_PI_2;
         OCDSelection *browsers = [[self.view selectAllWithIdentifier:@"browsers"] setData:[self.pieLayout layoutData]
-                                                                                 usingKey:nil];
+                                                                                 usingKey:@"Browser"];
         
         [browsers setEnter:^(OCDNode *node) {
             [self.arcFormatter formatNode:node];
             
-            NSLog(@"setting enter on node: %@", node);
-            
             double hue = (double) arc4random() / 0x100000000;
             [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
-            [self.view appendNode:node withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-            } completion:^(BOOL finished) {
-                
-            }];
+            
+//            [node setValue:(id)[UIColor lightGrayColor].CGColor forAttributePath:@"backgroundColor"];
+            
+            [self.view appendNode:node];
         }];
         
         UIButton *toggleButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
@@ -82,35 +80,49 @@
                                                                                  usingKey:@"Browser"];
         
         [browsers setUpdate:^(OCDNode *node) {
-            NSLog(@"setting update on node: %@", node);
-//            CGPathRef oldPath = [node valueForKeyPath:<#(NSString *)#>]
+            
+            NSValue *oldBounds = [node valueForAttributePath:@"bounds"];
+            [node setValue:[NSValue valueWithCGPoint:CGPointMake(0, 0)] forAttributePath:@"anchorPoint"];
+            [node setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, barWidth, kBarMaxHeight)] forAttributePath:@"bounds"];
+            
+    
+            CGPoint oldPos = [[node valueForAttributePath:@"position"] CGPointValue];
+
+            [node setValue:^(id data, NSUInteger index){
+                CGFloat dataValue = [[data objectForKey:@"Percent"] floatValue];
+                CGPoint pos = CGPointMake(index * (barWidth + kBarPaddingWidth), kBarMaxHeight - dataValue);
+                NSLog(@"New position: %@", NSStringFromCGPoint(pos));
+                return [NSValue valueWithCGPoint:pos];
+            } forAttributePath:@"position"];
+            
+            CGPathRef oldPath = (__bridge CGPathRef) [node valueForAttributePath:@"path"];
             CGPathRef fullBar = [OCDPath rectangleWithWidth:barWidth
                                                      height:[[node.data objectForKey:@"Percent"] floatValue]];
             [node setValue:(__bridge id)fullBar forAttributePath:@"path"];
+
             
-            [node setValue:^(id data, NSUInteger index){
-                return [NSNumber numberWithFloat:index * (barWidth + kBarPaddingWidth)];
-            } forAttributePath:@"position.x"];
-            
-            [node setValue:^(id data, NSUInteger index){
-                CGFloat dataValue = [[data objectForKey:@"Percent"] floatValue];
-                return [NSNumber numberWithFloat:kBarMaxHeight - dataValue];
-            } forAttributePath:@"position.y"];
-            
-            
-            [node setValue:(id)[UIColor blueColor].CGColor forAttributePath:@"fillColor"];
-            
-            [self.view appendNode:node withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
-                CABasicAnimation *grow = [CABasicAnimation animationWithKeyPath:@"path"];
-                grow.toValue = (__bridge id)fullBar;
+            [node setTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+                CABasicAnimation *shapeChange = [CABasicAnimation animationWithKeyPath:@"path"];
+                shapeChange.fromValue = (__bridge id)oldPath;
+                shapeChange.toValue = (__bridge_transfer id)fullBar;
                 
-                CABasicAnimation *move = [CABasicAnimation animationWithKeyPath:@"position.y"];
+                CABasicAnimation *positionChange = [CABasicAnimation animationWithKeyPath:@"position"];
+                positionChange.fromValue = [NSValue valueWithCGPoint:oldPos];
                 CGFloat dataValue = [[data objectForKey:@"Percent"] floatValue];
-                move.fromValue = [NSNumber numberWithFloat:kBarMaxHeight];
-                move.toValue = [NSNumber numberWithFloat:kBarMaxHeight - dataValue];
+                positionChange.toValue = [NSValue valueWithCGPoint:CGPointMake(index * (barWidth + kBarPaddingWidth),
+                                                                            kBarMaxHeight - dataValue)];
                 
-                animationGroup.duration = 4;
-                [animationGroup setAnimations:@[grow, move]];
+                CABasicAnimation *anchorChange = [CABasicAnimation animationWithKeyPath:@"anchorPoint"];
+                anchorChange.fromValue = [NSValue valueWithCGPoint:CGPointMake(0.5, 0.5)];
+                anchorChange.toValue = [NSValue valueWithCGPoint:CGPointMake(0, 0)];
+                
+                CABasicAnimation *boundsChange = [CABasicAnimation animationWithKeyPath:@"bounds"];
+                boundsChange.fromValue = oldBounds;
+                boundsChange.toValue = [NSValue valueWithCGRect:CGRectMake(0, 0, barWidth, kBarMaxHeight)];
+                
+                
+                animationGroup.duration = 1;
+                [animationGroup setAnimations:@[positionChange, shapeChange, anchorChange, boundsChange]];
             } completion:nil];
         }];
         
@@ -124,6 +136,9 @@
                         NSLog(@"setting update on node: %@", node);
             double hue = (double) arc4random() / 0x100000000;
             [node setValue:(id)[UIColor colorWithHue:hue saturation:0.95f brightness:0.95f alpha:1.0f].CGColor forAttributePath:@"fillColor"];
+            [self.view appendNode:node withTransition:^(CAAnimationGroup *animationGroup, id data, NSUInteger index) {
+                
+            } completion:nil];
         }];
     }
     

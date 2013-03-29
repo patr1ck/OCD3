@@ -55,7 +55,6 @@ typedef enum {
         case OCDNodeFormatterTypeArc: {
             NSDictionary *dataDictionary = (NSDictionary *)node.data;
             [node setValue:[NSValue valueWithCGRect:CGRectMake(0, 0, self.outerRadius*2, self.outerRadius*2)] forAttributePath:@"bounds"];
-            
             CGPathRef path = [OCDPath arcWithInnerRadius:self.innerRadius
                                               outerRadus:self.outerRadius
                                               startAngle:[[dataDictionary objectForKey:@"startAngle"] floatValue]

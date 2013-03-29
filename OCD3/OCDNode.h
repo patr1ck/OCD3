@@ -46,7 +46,7 @@ typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
 + (id)nodeWithIdentifier:(NSString *)identifier;
 
 /**
- Allows you to set values on node.
+ Allows you to set values on the node.
  
  This can be used to set values on the underlying CAShapeLayer that OCDNode represents. Any CAShapeLayer property you can set with setValue:forKey: will also work here.
  
@@ -62,6 +62,18 @@ typedef void (^OCDNodeAnimationCompletionBlock)(BOOL finished);
  @param path The path of the attribute you are trying to set. Can be things like "position.y", "opacity", or "transform.scale.x"
  */
 - (void)setValue:(id)value forAttributePath:(NSString *)path;
+
+
+/**
+ Allows you to get values from the node.
+ 
+ This can be used to get values from the underlying CAShapeLayer that OCDNode represents. It could also return a block, if it was set.
+ 
+ @param path The path of the attribute you are trying to retrieve. Can be things like "position.y", "opacity", or "transform.scale.x"
+ @return The object for the attribute at the given path.
+ */
+- (id)valueForAttributePath:(NSString *)path;
+
 
 /**
  Allows animation(s) to be set on the node. These animations are run after the node has been updated with the latest attributes.

@@ -73,7 +73,15 @@
             
             // See if we have an existing node for this key/value. If we do, updated it.
             for (OCDNode *existingNode in self.selectedNodes) {
-                if ([[existingNode.data objectForKey:key] isEqual:lookupValue]) {
+                id originalData = [existingNode.data objectForKey:key];
+                
+                // Extract the embedded data, if one exists
+                NSDictionary *embeddedData = [existingNode.data objectForKey:@"data"];
+                if (embeddedData) {
+                    originalData = [embeddedData objectForKey:key];
+                }
+                
+                if ([originalData isEqual:lookupValue]) {
                     existingNode.data = data;
                     existingNode.index = index;
                     [self.updatedNodeArray addObject:existingNode];
@@ -161,7 +169,12 @@
             updateBlock(node);
         }
         
+        [CATransaction begin];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
+        
         [node updateAttributes];
+        
+        [CATransaction commit];
         
         if (node.transition) {
             [CATransaction begin];
