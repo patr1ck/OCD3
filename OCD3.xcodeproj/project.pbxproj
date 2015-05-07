@@ -25,7 +25,6 @@
 		CDCA610E16D804DF004A0E6E /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = CDCA610D16D804DF004A0E6E /* Default-568h@2x.png */; };
 		CDCA611116D804DF004A0E6E /* OCDViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CDCA611016D804DF004A0E6E /* OCDViewController.m */; };
 		CDCA611416D804DF004A0E6E /* OCDViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CDCA611216D804DF004A0E6E /* OCDViewController.xib */; };
-		CDCA611C16D804DF004A0E6E /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA611B16D804DF004A0E6E /* SenTestingKit.framework */; };
 		CDCA611D16D804DF004A0E6E /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F716D804DE004A0E6E /* UIKit.framework */; };
 		CDCA611E16D804DF004A0E6E /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDCA60F916D804DE004A0E6E /* Foundation.framework */; };
 		CDCA612616D804DF004A0E6E /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CDCA612416D804DF004A0E6E /* InfoPlist.strings */; };
@@ -80,7 +79,6 @@
 		CDCA611016D804DF004A0E6E /* OCDViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OCDViewController.m; sourceTree = "<group>"; };
 		CDCA611316D804DF004A0E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/OCDViewController.xib; sourceTree = "<group>"; };
 		CDCA611A16D804DF004A0E6E /* OCD3Tests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = OCD3Tests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDCA611B16D804DF004A0E6E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		CDCA612316D804DF004A0E6E /* OCD3Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "OCD3Tests-Info.plist"; sourceTree = "<group>"; };
 		CDCA612516D804DF004A0E6E /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CDCA612716D804DF004A0E6E /* OCD3Tests.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OCD3Tests.h; sourceTree = "<group>"; };
@@ -118,7 +116,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CDCA611C16D804DF004A0E6E /* SenTestingKit.framework in Frameworks */,
 				CDCA611D16D804DF004A0E6E /* UIKit.framework in Frameworks */,
 				CDCA611E16D804DF004A0E6E /* Foundation.framework in Frameworks */,
 			);
@@ -170,7 +167,6 @@
 				CDCA60F716D804DE004A0E6E /* UIKit.framework */,
 				CDCA60F916D804DE004A0E6E /* Foundation.framework */,
 				CDCA60FB16D804DE004A0E6E /* CoreGraphics.framework */,
-				CDCA611B16D804DF004A0E6E /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -309,7 +305,7 @@
 			name = OCD3Tests;
 			productName = OCD3Tests;
 			productReference = CDCA611A16D804DF004A0E6E /* OCD3Tests.octest */;
-			productType = "com.apple.product-type.bundle";
+			productType = "com.apple.product-type.bundle.unit-test";
 		};
 /* End PBXNativeTarget section */
 
@@ -318,6 +314,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = OCD;
+				LastTestingUpgradeCheck = 0630;
 				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Patrick B. Gibson";
 			};
@@ -532,13 +529,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCD3/OCD3-Prefix.pch";
 				INFOPLIST_FILE = "OCD3Tests/OCD3Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Debug;
 		};
@@ -549,13 +546,13 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
 					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+					"$(inherited)",
 				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "OCD3/OCD3-Prefix.pch";
 				INFOPLIST_FILE = "OCD3Tests/OCD3Tests-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUNDLE_LOADER)";
-				WRAPPER_EXTENSION = octest;
 			};
 			name = Release;
 		};

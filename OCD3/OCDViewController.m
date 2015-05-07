@@ -85,34 +85,35 @@ typedef enum {
     demoView.view.backgroundColor = [UIColor whiteColor];
     CGSize viewSize = demoView.view.bounds.size;
 
+    CGFloat navBarHeight = self.navigationController.navigationBar.bounds.size.height;
     
     switch (indexPath.row) {
         case OCDViewExampleBarChart: {
-            BarChartView *barChart = [[BarChartView alloc] initWithFrame:CGRectMake(0, 20, viewSize.width, 100)];
+            BarChartView *barChart = [[BarChartView alloc] initWithFrame:CGRectMake(0, 20 + navBarHeight, viewSize.width, 100)];
             [demoView.view addSubview:barChart];
             break;
         }
             
         case OCDViewExamplePieChart: {
-            PieChartView *pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(0, 20, viewSize.width, viewSize.width)];
+            PieChartView *pieChart = [[PieChartView alloc] initWithFrame:CGRectMake(0, 20 + navBarHeight, viewSize.width, viewSize.width)];
             [demoView.view addSubview:pieChart];
             break;
         }
             
         case OCDViewExampleOMGParticles: {
-            OMGParticles *particlesView = [[OMGParticles alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
+            OMGParticles *particlesView = [[OMGParticles alloc] initWithFrame:CGRectMake(0, navBarHeight, viewSize.width, viewSize.height)];
             [demoView.view addSubview:particlesView];
             break;
         }
         
         case OCDViewExampleRisingBar: {
-            RisingBarChart *risingView = [[RisingBarChart alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
+            RisingBarChart *risingView = [[RisingBarChart alloc] initWithFrame:CGRectMake(0, navBarHeight, viewSize.width, viewSize.height)];
             [demoView.view addSubview:risingView];
             break;
         }
             
         case OCDViewExamplePieAndBar: {
-            PieAndBar *pieAndBar = [[PieAndBar alloc] initWithFrame:CGRectMake(0, 0, viewSize.width, viewSize.height)];
+            PieAndBar *pieAndBar = [[PieAndBar alloc] initWithFrame:CGRectMake(0, navBarHeight, viewSize.width, viewSize.height)];
             [demoView.view addSubview:pieAndBar];
         }
             

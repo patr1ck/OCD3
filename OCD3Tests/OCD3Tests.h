@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Patrick B. Gibson. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import <XCTest/XCTest.h>
 
-@interface OCD3Tests : SenTestCase
+@interface OCD3Tests : XCTestCase
 
 @end

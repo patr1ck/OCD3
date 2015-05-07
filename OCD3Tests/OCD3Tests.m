@@ -26,7 +26,7 @@
 
 - (void)testExample
 {
-    STFail(@"Unit tests are not implemented yet in OCD3Tests");
+    XCTFail(@"Unit tests are not implemented yet in OCD3Tests");
 }
 
 @end

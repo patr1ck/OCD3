@@ -81,9 +81,9 @@
 
 - (NSDictionary *)nextData
 {
-    int value = MAX(kBarMinHeight, MIN(kBarMaxHeight, abs(_vector + kBarMinHeight * ( (((double)arc4random() / ARC4RANDOM_MAX)) - 0.5) )));
+    int value = MAX(kBarMinHeight, MIN(kBarMaxHeight, fabs(_vector + kBarMinHeight * ( (((double)arc4random() / ARC4RANDOM_MAX)) - 0.5) )));
     _vector = value;
-    return @{ @"value": [NSNumber numberWithInt:value], @"time": [NSNumber numberWithInt:_time++] };
+    return @{ @"value": [NSNumber numberWithInt:value], @"time": [NSNumber numberWithUnsignedLong:_time++] };
 }
 
 - (void)redrawChart
